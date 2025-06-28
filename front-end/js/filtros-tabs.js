@@ -150,15 +150,6 @@ function filtrarYMostrarProductos () {
   // Mostrar los productos filtrados en pantalla
   funcionRenderizado(productosFiltrados)
 
-  // Hacer scroll suave hacia la sección de productos
-  const productosContainer = document.querySelector('.divProductos')
-  if (productosContainer) {
-    productosContainer.scrollIntoView({
-      behavior: 'smooth',
-      block: 'start'
-    })
-  }
-
   console.log(`✅ Mostrados ${productosFiltrados.length} productos filtrados`)
 }
 
