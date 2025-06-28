@@ -1,5 +1,5 @@
+import { requireAuth } from '../admin/auth-guard.js'
 import { tokenUtils } from '../config/api.js'
-import { requireAuth } from './auth-guard.js'
 import { DashboardState } from './modules/dashboard-state.js'
 import { configurarEventListeners, configurarInterfazSegunRol } from './modules/interface-manager.js'
 import { cargarProductos } from './modules/products-manager.js'

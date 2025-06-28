@@ -1,4 +1,4 @@
-import { requireAuth } from './auth-guard.js'
+import { requireAuth } from '../auth-guard.js'
 import { configurarPreviewImagenes } from './utils/image-utils.js'
 import { deshabilitarBotonTemporal } from './utils/ui-utils.js'
 import {

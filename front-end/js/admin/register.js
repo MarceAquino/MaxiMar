@@ -6,8 +6,8 @@
 //
 // MODULAR: Utiliza módulos utilitarios compartidos para evitar duplicación
 
-import { API_ROUTES, tokenUtils } from '../config/api.js'
-import { logout, requireAuth } from './auth-guard.js'
+import { API_ROUTES, tokenUtils } from '../../config/api.js'
+import { logout, requireAuth } from '../auth-guard.js'
 
 // import { showAlert, showErrorList } from './utils/ui-utils.js'
 import {
