@@ -1,0 +1,1369 @@
+/* Estilos para el admin secreto */
+
+/* Transición suave para el carrusel cuando hace flip */
+.carousel {
+    transition: all 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+/* Efecto de volteo del carrusel */
+.carousel.flip-mode {
+    transform: rotateY(180deg);
+}
+
+/* Volteo del contenido interno del carrusel */
+.carousel-inner.flip-mode {
+    transform: rotateY(180deg);
+}
+
+/* Panel secreto del administrador */
+.secret-admin-panel {
+    display: none;
+    /* Oculto por defecto */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    min-width: 300px;
+    animation: secretReveal 1s ease-out;
+}
+
+/* Animación de aparición del panel secreto */
+@keyframes secretReveal {
+    0% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.5) rotateY(180deg);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1) rotateY(0deg);
+    }
+}
+
+/* Título del panel secreto */
+.secret-admin-panel h2 {
+    margin-bottom: 20px;
+    font-size: 1.8rem;
+    font-weight: bold;
+}
+
+/* Icono del administrador con animación */
+.secret-admin-panel .admin-icon {
+    font-size: 3rem;
+    margin-bottom: 20px;
+    color: #ffd700;
+    animation: pulse 2s infinite;
+}
+
+/* Animación de pulso para el icono */
+@keyframes pulse {
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.1);
+    }
+}
+
+/* Botón de acceso al admin */
+.admin-access-btn {
+    background: linear-gradient(135deg, #ffd700, #ffed4e);
+    color: #333;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 25px;
+    font-weight: bold;
+    margin-top: 15px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+/* Efecto hover del botón admin */
+.admin-access-btn:hover {
+    background: linear-gradient(135deg, #ffed4e, #ffd700);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(255, 215, 0, 0.4);
+    color: #333;
+}
+
+/* Elementos que se ocultan en modo admin */
+.hidden-in-admin {
+    transition: opacity 0.5s ease;
+}
+
+/* Cuando está activo el modo admin */
+.admin-mode .hidden-in-admin {
+    opacity: 0.3;
+    pointer-events: none;
+}
+
+/* Indicador de secuencia (opcional para debug) */
+.sequence-indicator {
+    position: fixed;
+    top: 100px;
+    right: 20px;
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 0.8rem;
+    z-index: 999;
+    display: none;
+}
+
+/* Ocultar el botón admin original cuando está activo el modo secreto */
+.admin-mode .btn-warning {
+    display: none;
+}
+
+/* Estilos para campos dinámicos de productos */
+.campos-dinamicos {
+    transition: all 0.3s ease-in-out;
+}
+
+/* Animación suave al mostrar/ocultar campos */
+#camposAlimento, #camposJuguete,
+#camposAlimentoCrear, #camposJugueteCrear {
+    transition: opacity 0.3s ease-in-out, height 0.3s ease-in-out;
+}
+
+/* Pequeña mejora visual para los campos deshabilitados */
+.form-select:disabled, .form-control:disabled {
+    background-color: #f8f9fa;
+    opacity: 0.7;
+}
+
+/* Estilos para el dashboard de productos */
+.producto-card {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    overflow: hidden;
+    border: 1px solid #e9ecef;
+}
+
+.producto-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.producto-card-header {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    padding: 1rem;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.producto-card-body {
+    padding: 1.25rem;
+}
+
+.producto-badge {
+    font-size: 0.75rem;
+    padding: 0.25rem 0.5rem;
+    border-radius: 50px;
+}
+
+.producto-badge.alimento {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.producto-badge.juguete {
+    background-color: #ffeaa7;
+    color: #856404;
+}
+
+.producto-precio {
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: #28a745;
+}
+
+.producto-stock {
+    font-size: 0.9rem;
+}
+
+.producto-stock.bajo {
+    color: #dc3545;
+}
+
+.producto-stock.medio {
+    color: #ffc107;
+}
+
+.producto-stock.alto {
+    color: #28a745;
+}
+
+.producto-acciones {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+    margin-top: 1rem;
+}
+
+/* Vista de lista */
+.vista-lista {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+.vista-lista .producto-card {
+    border-radius: 8px;
+    margin-bottom: 0;
+    display: block;
+    width: 100%;
+}
+
+.vista-lista .producto-card-body {
+    display: grid;
+    grid-template-columns: 1fr auto auto auto auto auto;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 1.25rem;
+    min-height: 60px;
+}
+
+.vista-lista .producto-info {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    min-width: 0;
+}
+
+.vista-lista .producto-info > div {
+    min-width: 200px;
+}
+
+.vista-lista .producto-badge {
+    justify-self: center;
+    text-align: center;
+    min-width: 80px;
+}
+
+.vista-lista .producto-mascota {
+    justify-self: center;
+    text-align: center;
+    min-width: 70px;
+}
+
+.vista-lista .producto-precio {
+    justify-self: center;
+    text-align: center;
+    min-width: 100px;
+    font-weight: bold;
+}
+
+.vista-lista .producto-stock {
+    justify-self: center;
+    text-align: center;
+    min-width: 80px;
+}
+
+.vista-lista .producto-acciones {
+    justify-self: center;
+    display: flex;
+    gap: 0.5rem;
+    margin: 0;
+}
+
+/* Desactivar efectos hover molestos en vista lista */
+.vista-lista .producto-card:hover {
+    transform: none !important;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Filtros */
+.filtro-section {
+    background: white;
+    border-radius: 10px;
+    padding: 1rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 1.5rem;
+}
+
+/* Controles de vista */
+.vista-controles {
+    background: white;
+    border-radius: 8px;
+    padding: 0.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.producto-card {
+    animation: fadeIn 0.5s ease-out;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .producto-card-body {
+        padding: 1rem;
+    }
+
+    .vista-lista .producto-card-body {
+        grid-template-columns: 1fr;
+        gap: 0.75rem;
+        text-align: center;
+    }
+
+    .vista-lista .producto-info {
+        justify-content: center;
+        text-align: center;
+    }
+
+    .vista-lista .producto-badge,
+    .vista-lista .producto-mascota,
+    .vista-lista .producto-precio,
+    .vista-lista .producto-stock {
+        justify-self: center;
+    }
+
+    .vista-lista .producto-acciones {
+        justify-self: center;
+    }
+}
+
+@media (max-width: 576px) {
+    .vista-lista .producto-card-body {
+        grid-template-columns: 1fr 1fr;
+        gap: 0.5rem;
+    }
+
+    .vista-lista .producto-info {
+        grid-column: 1 / -1;
+    }
+
+    .vista-lista .producto-acciones {
+        grid-column: 1 / -1;
+        justify-self: center;
+    }
+}
+
+@media (min-width: 1200px) {
+    .vista-lista .producto-card-body {
+        grid-template-columns: 2fr auto auto auto auto auto;
+        gap: 2rem;
+    }
+}
+
+/* Producto desactivado - tarjeta gris */
+.producto-card.inactivo {
+    background-color: #f8f9fa !important;
+    opacity: 0.7;
+    border-color: #dee2e6 !important;
+}
+
+.producto-card.inactivo .producto-card-header {
+    background: linear-gradient(135deg, #e9ecef 0%, #dee2e6 100%) !important;
+}
+
+.producto-card.inactivo .card-title,
+.producto-card.inactivo h6 {
+    color: #6c757d !important;
+}
+
+.producto-card.inactivo .producto-precio {
+    color: #6c757d !important;
+}
+
+/* Modo oscuro para el dashboard */
+[data-bs-theme="dark"] .producto-card {
+    background: #2d3748 !important;
+    border-color: #4a5568 !important;
+    color: #e2e8f0 !important;
+}
+
+[data-bs-theme="dark"] .producto-card-header {
+    background: linear-gradient(135deg, #2d3748 0%, #1a202c 100%) !important;
+    border-bottom-color: #4a5568 !important;
+    color: #e2e8f0 !important;
+}
+
+[data-bs-theme="dark"] .producto-badge.alimento {
+    background-color: #2f855a !important;
+    color: #c6f6d5 !important;
+}
+
+[data-bs-theme="dark"] .producto-badge.juguete {
+    background-color: #d69e2e !important;
+    color: #fef5e7 !important;
+}
+
+[data-bs-theme="dark"] .producto-precio {
+    color: #68d391 !important;
+}
+
+[data-bs-theme="dark"] .producto-stock.bajo {
+    color: #fc8181 !important;
+}
+
+[data-bs-theme="dark"] .producto-stock.medio {
+    color: #f6e05e !important;
+}
+
+[data-bs-theme="dark"] .producto-stock.alto {
+    color: #68d391 !important;
+}
+
+[data-bs-theme="dark"] .producto-card h6,
+[data-bs-theme="dark"] .producto-card .card-title {
+    color: #e2e8f0 !important;
+}
+
+[data-bs-theme="dark"] .producto-card .text-muted,
+[data-bs-theme="dark"] .text-muted {
+    color: #a0aec0 !important;
+}
+
+[data-bs-theme="dark"] .producto-card-body {
+    color: #e2e8f0 !important;
+}
+
+/* Productos inactivos en modo oscuro */
+[data-bs-theme="dark"] .producto-card.inactivo {
+    background-color: #1a202c !important;
+    opacity: 0.6 !important;
+    border-color: #2d3748 !important;
+}
+
+[data-bs-theme="dark"] .producto-card.inactivo .producto-card-header {
+    background: linear-gradient(135deg, #1a202c 0%, #171923 100%) !important;
+}
+
+[data-bs-theme="dark"] .producto-card.inactivo .card-title,
+[data-bs-theme="dark"] .producto-card.inactivo h6 {
+    color: #718096 !important;
+}
+
+[data-bs-theme="dark"] .producto-card.inactivo .producto-precio {
+    color: #718096 !important;
+}
+
+[data-bs-theme="dark"] .producto-card.inactivo .text-muted {
+    color: #4a5568 !important;
+}
+
+/* Vista de lista en modo oscuro */
+[data-bs-theme="dark"] .vista-lista .producto-mascota {
+    color: #a0aec0 !important;
+}
+
+/* Filtros en modo oscuro */
+[data-bs-theme="dark"] .filtro-section {
+    background: #2d3748 !important;
+    border-color: #4a5568 !important;
+    color: #e2e8f0 !important;
+}
+
+[data-bs-theme="dark"] .form-control,
+[data-bs-theme="dark"] .form-select {
+    background-color: #2d3748 !important;
+    border-color: #4a5568 !important;
+    color: #e2e8f0 !important;
+}
+
+[data-bs-theme="dark"] .form-control:focus,
+[data-bs-theme="dark"] .form-select:focus {
+    background-color: #2d3748 !important;
+    border-color: #63b3ed !important;
+    color: #e2e8f0 !important;
+    box-shadow: 0 0 0 0.2rem rgba(99, 179, 237, 0.25) !important;
+}
+
+[data-bs-theme="dark"] .form-control::placeholder {
+    color: #a0aec0 !important;
+}
+
+[data-bs-theme="dark"] option {
+    background-color: #2d3748 !important;
+    color: #e2e8f0 !important;
+}
+
+/* Botones en modo oscuro */
+[data-bs-theme="dark"] .btn-outline-secondary {
+    border-color: #4a5568 !important;
+    color: #e2e8f0 !important;
+}
+
+[data-bs-theme="dark"] .btn-outline-secondary:hover,
+[data-bs-theme="dark"] .btn-outline-secondary.active {
+    background-color: #4a5568 !important;
+    border-color: #4a5568 !important;
+    color: #ffffff !important;
+}
+
+[data-bs-theme="dark"] .badge.bg-info {
+    background-color: #3182ce !important;
+}
+
+/* Labels y texto en modo oscuro */
+[data-bs-theme="dark"] .form-label,
+[data-bs-theme="dark"] label {
+    color: #e2e8f0 !important;
+}
+
+[data-bs-theme="dark"] .fw-bold {
+    color: #e2e8f0 !important;
+}
+
+[data-bs-theme="dark"] h5,
+[data-bs-theme="dark"] h6,
+[data-bs-theme="dark"] .h5,
+[data-bs-theme="dark"] .h6 {
+    color: #e2e8f0 !important;
+}
+
+/* Controles de vista en modo oscuro */
+[data-bs-theme="dark"] .vista-controles {
+    background: #2d3748 !important;
+    border-color: #4a5568 !important;
+}
+
+[data-bs-theme="dark"] .form-check-input:checked {
+    background-color: #3182ce !important;
+    border-color: #3182ce !important;
+}
+
+[data-bs-theme="dark"] .form-check-label {
+    color: #e2e8f0 !important;
+}
+
+/* Alertas en modo oscuro */
+[data-bs-theme="dark"] .alert-danger {
+    background-color: #2d1b1e !important;
+    border-color: #5c2b2b !important;
+    color: #fc8181 !important;
+}
+
+/* Estilos para la barra lateral del admin */
+.sidebar {
+  border-right: 1px solid #dee2e6;
+  background-color: var(--bs-light) !important;
+  transition: background-color 0.3s ease;
+}
+
+[data-bs-theme="dark"] .sidebar {
+  background-color: var(--bs-dark) !important;
+  border-right-color: var(--bs-border-color);
+}
+
+.sidebar-link {
+  color: #495057;
+  transition: all 0.3s ease;
+  border-bottom: 1px solid #f8f9fa;
+}
+
+[data-bs-theme="dark"] .sidebar-link {
+  color: var(--bs-light);
+  border-bottom-color: var(--bs-border-color);
+}
+
+.sidebar-link:hover {
+  background-color: #fff3cd;
+  color: #ff6b35;
+  transform: translateX(5px);
+}
+
+[data-bs-theme="dark"] .sidebar-link:hover {
+  background-color: rgba(255, 107, 53, 0.2);
+  color: #ff8c69;
+}
+
+.sidebar-link.active {
+  background-color: #ff6b35;
+  color: white;
+}
+
+.sidebar-link.active:hover {
+  background-color: #e55a2b;
+  color: white;
+}
+
+/* Estilos para enlaces deshabilitados */
+.sidebar-link.disabled {
+  color: #6c757d !important;
+  cursor: not-allowed !important;
+  opacity: 0.5;
+}
+
+[data-bs-theme="dark"] .sidebar-link.disabled {
+  color: #6c757d !important;
+}
+
+.sidebar-link.disabled:hover {
+  background-color: transparent !important;
+  transform: none !important;
+  color: #6c757d !important;
+}
+
+.sidebar-link.disabled i {
+  color: #6c757d !important;
+}
+
+.content-section {
+  transition: opacity 0.3s ease;
+}
+
+/* Tarjetas de administradores */
+.admin-card {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.admin-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+}
+
+.admin-status {
+  font-size: 0.9em;
+  padding: 4px 8px;
+  border-radius: 20px;
+}
+
+.admin-status.activo {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.admin-status.inactivo {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+/* Tarjetas de ventas */
+.venta-card {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.venta-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.venta-total {
+  font-size: 1.2em;
+  font-weight: bold;
+  color: #28a745;
+}
+
+.venta-fecha {
+  color: #6c757d;
+  font-size: 0.9em;
+}
+
+/* Tema naranja para el dashboard */
+.badge.bg-info, .badge.bg-primary {
+  background-color: #ff6b35 !important;
+}
+
+.btn-outline-secondary:hover {
+  background-color: #ff6b35;
+  border-color: #ff6b35;
+}
+
+.btn-outline-primary {
+  color: #ff6b35;
+  border-color: #ff6b35;
+}
+
+.btn-outline-primary:hover {
+  background-color: #ff6b35;
+  border-color: #ff6b35;
+}
+
+/* Personalización de botones de vista */
+.btn-check:checked + .btn-outline-secondary {
+  background-color: #ff6b35;
+  border-color: #ff6b35;
+  color: white;
+}
+
+/* Estilos para las vistas de cuadrícula y lista */
+.vista-toggle {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.vista-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.vista-lista .admin-card,
+.vista-lista .venta-card {
+  margin-bottom: 0;
+  border-radius: 8px;
+}
+
+.vista-lista .admin-card .card-body,
+.vista-lista .venta-card .card-body {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+}
+
+.vista-lista .admin-info,
+.vista-lista .venta-info {
+  flex: 1;
+}
+
+.vista-lista .admin-info h6,
+.vista-lista .venta-info h6 {
+  margin-bottom: 5px;
+  font-size: 1rem;
+}
+
+.vista-lista .admin-info small,
+.vista-lista .venta-info small {
+  color: #6c757d;
+  font-size: 0.875rem;
+}
+
+.vista-lista .admin-actions {
+  margin-left: 20px;
+}
+
+.vista-lista .admin-status {
+  margin: 0 15px;
+  font-size: 0.85rem;
+}
+
+.vista-lista .venta-total {
+  margin: 0 15px;
+  font-weight: bold;
+  color: #ff6b35;
+  font-size: 1.1rem;
+}
+
+.vista-lista .text-muted {
+  margin: 0 15px;
+  font-size: 0.9rem;
+}
+
+/* Header sin tema naranja */
+.custom-header {
+  background: linear-gradient(135deg, #6c757d 0%, #495057 100%);
+  color: white;
+}
+
+.custom-header h1 {
+  color: white;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+/* Badges con tema naranja */
+.badge.bg-info {
+  background: linear-gradient(135deg, #ff6b35, #f7931e) !important;
+  color: white;
+}
+
+/* Botones con tema naranja */
+.btn-outline-secondary {
+  border-color: #ff6b35;
+  color: #ff6b35;
+}
+
+.btn-outline-secondary:hover,
+.btn-outline-secondary:focus {
+  background-color: #ff6b35;
+  border-color: #ff6b35;
+  color: white;
+}
+
+/* Selects y inputs con tema naranja */
+.form-select:focus,
+.form-control:focus {
+  border-color: #ff6b35;
+  box-shadow: 0 0 0 0.2rem rgba(255, 107, 53, 0.25);
+}
+
+/* Títulos de secciones */
+.content-section h2 {
+  color: #ff6b35;
+  border-bottom: 2px solid #ff6b35;
+  padding-bottom: 10px;
+  margin-bottom: 30px;
+}
+
+/* Hover en tarjetas */
+.admin-card:hover,
+.venta-card:hover,
+.producto-card:hover {
+  box-shadow: 0 8px 25px rgba(255, 107, 53, 0.15);
+  border: 1px solid rgba(255, 107, 53, 0.2);
+}
+
+/* Mejoras para el modo oscuro */
+[data-bs-theme="dark"] .custom-header {
+  background: linear-gradient(135deg, #343a40 0%, #212529 100%);
+}
+
+[data-bs-theme="dark"] .sidebar {
+  background-color: #212529 !important;
+  border-right-color: #495057;
+}
+
+[data-bs-theme="dark"] .sidebar-link {
+  color: #adb5bd;
+}
+
+[data-bs-theme="dark"] .sidebar-link:hover {
+  background-color: rgba(255, 107, 53, 0.2);
+  color: #ff8c69;
+}
+
+[data-bs-theme="dark"] .content-section h2 {
+  color: #ff8c69;
+  border-bottom-color: #ff8c69;
+}
+
+[data-bs-theme="dark"] .admin-card:hover,
+[data-bs-theme="dark"] .venta-card:hover,
+[data-bs-theme="dark"] .producto-card:hover {
+  box-shadow: 0 8px 25px rgba(255, 140, 105, 0.2);
+  border-color: rgba(255, 140, 105, 0.3);
+}
+
+/* Modo oscuro para tarjetas de administradores */
+[data-bs-theme="dark"] .admin-card {
+  background: #2d3748 !important;
+  border-color: #4a5568 !important;
+  color: #e2e8f0 !important;
+}
+
+[data-bs-theme="dark"] .admin-card h5,
+[data-bs-theme="dark"] .admin-card h6 {
+  color: #e2e8f0 !important;
+}
+
+[data-bs-theme="dark"] .admin-card .text-muted {
+  color: #a0aec0 !important;
+}
+
+[data-bs-theme="dark"] .admin-status.activo {
+  background-color: rgba(45, 55, 72, 0.8) !important;
+  color: #68d391 !important;
+  border: 1px solid #2f855a;
+}
+
+[data-bs-theme="dark"] .admin-status.inactivo {
+  background-color: rgba(45, 55, 72, 0.8) !important;
+  color: #fc8181 !important;
+  border: 1px solid #e53e3e;
+}
+
+/* Modo oscuro para tarjetas de ventas */
+[data-bs-theme="dark"] .venta-card {
+  background: #2d3748 !important;
+  border-color: #4a5568 !important;
+  color: #e2e8f0 !important;
+}
+
+[data-bs-theme="dark"] .venta-card h6 {
+  color: #e2e8f0 !important;
+}
+
+[data-bs-theme="dark"] .venta-card .text-muted {
+  color: #a0aec0 !important;
+}
+
+[data-bs-theme="dark"] .venta-total {
+  color: #68d391 !important;
+}
+
+[data-bs-theme="dark"] .venta-fecha {
+  color: #a0aec0 !important;
+}
+
+/* Modo oscuro para vistas de lista */
+[data-bs-theme="dark"] .vista-lista .admin-card .card-body,
+[data-bs-theme="dark"] .vista-lista .venta-card .card-body {
+  background: #2d3748 !important;
+  color: #e2e8f0 !important;
+}
+
+[data-bs-theme="dark"] .vista-lista .admin-info h6,
+[data-bs-theme="dark"] .vista-lista .venta-info h6 {
+  color: #e2e8f0 !important;
+}
+
+[data-bs-theme="dark"] .vista-lista .admin-info small,
+[data-bs-theme="dark"] .vista-lista .venta-info small {
+  color: #a0aec0 !important;
+}
+
+[data-bs-theme="dark"] .vista-lista .venta-total {
+  color: #68d391 !important;
+}
+
+/* Estilos adicionales para consistencia en modo oscuro */
+[data-bs-theme="dark"] .content-section {
+  color: #e2e8f0;
+}
+
+[data-bs-theme="dark"] .alert {
+  background-color: #2d3748 !important;
+  border-color: #4a5568 !important;
+  color: #e2e8f0 !important;
+}
+
+[data-bs-theme="dark"] .form-select,
+[data-bs-theme="dark"] .form-control {
+  background-color: #2d3748 !important;
+  border-color: #4a5568 !important;
+  color: #e2e8f0 !important;
+}
+
+[data-bs-theme="dark"] .form-select:focus,
+[data-bs-theme="dark"] .form-control:focus {
+  background-color: #2d3748 !important;
+  border-color: #ff6b35 !important;
+  color: #e2e8f0 !important;
+  box-shadow: 0 0 0 0.2rem rgba(255, 107, 53, 0.25);
+}
+
+[data-bs-theme="dark"] .btn-check:checked + .btn-outline-secondary {
+  background-color: #ff6b35 !important;
+  border-color: #ff6b35 !important;
+  color: white !important;
+}
+
+[data-bs-theme="dark"] .btn-outline-secondary {
+  border-color: #4a5568 !important;
+  color: #a0aec0 !important;
+}
+
+[data-bs-theme="dark"] .btn-outline-secondary:hover {
+  background-color: #ff6b35 !important;
+  border-color: #ff6b35 !important;
+  color: white !important;
+}
+
+/* Estilos para tarjetas de venta expandibles */
+.venta-card.clickable {
+  cursor: pointer;
+  position: relative;
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+.venta-card.clickable:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(255, 107, 53, 0.2);
+}
+
+.venta-card.expandida {
+  transform: none;
+  box-shadow: 0 8px 25px rgba(255, 107, 53, 0.3);
+}
+
+.venta-card-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 107, 53, 0.9);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+
+.venta-card.clickable:hover .venta-card-overlay {
+  opacity: 1;
+}
+
+.venta-card.expandida .venta-card-overlay {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.venta-card-overlay i {
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+.venta-card-overlay span {
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+/* Estilos para el detalle expandido */
+.venta-detalle-expandido {
+  border-top: 2px solid #ff6b35;
+  padding: 15px;
+  background-color: #f8f9fa;
+  margin-top: 15px;
+  border-radius: 0 0 8px 8px;
+  animation: slideDown 0.3s ease;
+}
+
+[data-bs-theme="dark"] .venta-detalle-expandido {
+  background-color: #1a202c;
+  border-top-color: #ff6b35;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    max-height: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+  to {
+    opacity: 1;
+    max-height: 500px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+  }
+}
+
+.detalle-loading {
+  text-align: center;
+  padding: 20px;
+  color: #6c757d;
+}
+
+.detalle-venta-content {
+  font-size: 0.9rem;
+}
+
+.detalle-header {
+  margin-bottom: 15px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #dee2e6;
+}
+
+[data-bs-theme="dark"] .detalle-header {
+  border-bottom-color: #4a5568;
+}
+
+.detalle-productos h6 {
+  color: #ff6b35;
+  font-size: 1rem;
+}
+
+.productos-lista {
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.producto-detalle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid #e9ecef;
+}
+
+[data-bs-theme="dark"] .producto-detalle {
+  border-bottom-color: #4a5568;
+}
+
+.producto-detalle:last-child {
+  border-bottom: none;
+}
+
+.producto-info {
+  flex: 1;
+}
+
+.producto-cantidad {
+  min-width: 60px;
+  text-align: center;
+  font-weight: bold;
+  color: #ff6b35;
+}
+
+.producto-subtotal {
+  min-width: 80px;
+  text-align: right;
+  font-weight: bold;
+}
+
+.detalle-total {
+  margin-top: 15px;
+  padding-top: 10px;
+  border-top: 2px solid #ff6b35;
+  font-size: 1.1rem;
+}
+
+.detalle-total .text-success {
+  color: #ff6b35 !important;
+}
+
+/* Estilos para la vista de lista clickeable */
+.vista-lista .venta-card.clickable .venta-actions {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+}
+
+.vista-lista .venta-card.clickable .venta-actions i {
+  font-size: 1.2rem;
+  transition: all 0.3s ease;
+}
+
+.vista-lista .venta-card.clickable:hover .venta-actions i {
+  color: #ff6b35 !important;
+  transform: scale(1.2);
+}
+
+/* Mejoras adicionales para el detalle expandido */
+.venta-card.expandida .venta-card-content {
+  border-bottom: 1px solid #dee2e6;
+  padding-bottom: 15px;
+}
+
+[data-bs-theme="dark"] .venta-card.expandida .venta-card-content {
+  border-bottom-color: #4a5568;
+}
+
+.vista-lista .venta-card.expandida {
+  background: linear-gradient(to bottom, #ffffff 0%, #f8f9fa 100%);
+}
+
+[data-bs-theme="dark"] .vista-lista .venta-card.expandida {
+  background: linear-gradient(to bottom, #2d3748 0%, #1a202c 100%);
+}
+
+/* Scroll suave para listas de productos largas */
+.productos-lista::-webkit-scrollbar {
+  width: 6px;
+}
+
+.productos-lista::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 3px;
+}
+
+.productos-lista::-webkit-scrollbar-thumb {
+  background: #ff6b35;
+  border-radius: 3px;
+}
+
+.productos-lista::-webkit-scrollbar-thumb:hover {
+  background: #e55a2b;
+}
+
+[data-bs-theme="dark"] .productos-lista::-webkit-scrollbar-track {
+  background: #4a5568;
+}
+
+/* Hover en productos individuales */
+.producto-detalle:hover {
+  background-color: rgba(255, 107, 53, 0.1);
+  border-radius: 4px;
+  margin: 0 -5px;
+  padding: 8px 5px;
+}
+
+[data-bs-theme="dark"] .producto-detalle:hover {
+  background-color: rgba(255, 107, 53, 0.2);
+}
+
+/* ========================================
+   ESTILOS PARA IMÁGENES EN DASHBOARD
+   ======================================== */
+
+/* Contenedor de imagen en tarjetas grid */
+.producto-imagen-wrapper {
+  position: relative;
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+  border-radius: 8px 8px 0 0;
+  background-color: #f8f9fa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Imagen principal del producto */
+.producto-imagen {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transition: transform 0.3s ease;
+}
+
+/* Efecto hover en las imágenes */
+.producto-card:hover .producto-imagen {
+  transform: scale(1.05);
+}
+
+/* Carousel de imágenes específico para productos */
+.producto-carousel {
+  width: 100%;
+  height: 100%;
+}
+
+.producto-carousel .carousel-inner {
+  height: 100%;
+}
+
+.producto-carousel .carousel-item {
+  height: 100%;
+}
+
+/* Indicadores del carousel más pequeños */
+.producto-carousel .carousel-indicators {
+  bottom: 8px;
+  margin-bottom: 0;
+}
+
+.producto-carousel .carousel-indicators button {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin: 0 2px;
+  opacity: 0.5;
+}
+
+.producto-carousel .carousel-indicators button.active {
+  opacity: 1;
+}
+
+/* Controles del carousel más discretos */
+.producto-carousel .carousel-control-prev,
+.producto-carousel .carousel-control-next {
+  width: 30px;
+  height: 30px;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(0, 0, 0, 0.3);
+  border-radius: 50%;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.producto-carousel .carousel-control-prev {
+  left: 8px;
+}
+
+.producto-carousel .carousel-control-next {
+  right: 8px;
+}
+
+.producto-card:hover .carousel-control-prev,
+.producto-card:hover .carousel-control-next {
+  opacity: 1;
+}
+
+.producto-carousel .carousel-control-prev-icon,
+.producto-carousel .carousel-control-next-icon {
+  width: 12px;
+  height: 12px;
+}
+
+/* Imagen mini para vista lista */
+.producto-imagen-mini {
+  width: 80px;
+  height: 80px;
+  min-width: 80px;
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: #f8f9fa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 15px;
+}
+
+.producto-imagen-lista {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* Ajustes para la vista lista con imágenes */
+.vista-lista .producto-card {
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  margin-bottom: 15px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.vista-lista .producto-card:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px);
+}
+
+/* Imagen placeholder cuando no se puede cargar */
+.producto-imagen[src*="notFount.png"],
+.producto-imagen-lista[src*="notFount.png"] {
+  filter: grayscale(1) opacity(0.5);
+  background-color: #e9ecef;
+}
+
+/* Responsive para imágenes */
+@media (max-width: 768px) {
+  .producto-imagen-wrapper {
+    height: 150px;
+  }
+
+  .producto-imagen-mini {
+    width: 60px;
+    height: 60px;
+    min-width: 60px;
+    margin-right: 10px;
+  }
+
+  .producto-carousel .carousel-control-prev,
+  .producto-carousel .carousel-control-next {
+    width: 25px;
+    height: 25px;
+  }
+
+  .producto-carousel .carousel-indicators button {
+    width: 6px;
+    height: 6px;
+  }
+}

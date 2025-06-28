@@ -1,0 +1,25 @@
+{
+  "name": "front-end",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "standard": "^17.1.2"
+  },
+  "eslintConfig": {
+    "extends": "standard",
+    "env": {
+      "browser": true,
+      "es2021": true
+    }
+  },
+  "dependencies": {
+    "zod": "^3.25.67"
+  }
+}

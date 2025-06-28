@@ -1,0 +1,387 @@
+/* ===== VARIABLES DE COLORES ===== */
+:root {
+    --primary-orange: #ff6b35;
+    --primary-orange-hover: #e55a2b;
+    --primary-orange-light: #fff4f0;
+    --bg-light: #fafafa;
+    --card-bg: #ffffff;
+    --text-dark: #2d3748;
+    --border-light: #e2e8f0;
+    --shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.08);
+    --shadow-medium: 0 8px 30px rgba(0, 0, 0, 0.12);
+}
+
+[data-bs-theme="dark"] {
+    --primary-orange: #ff7a50;
+    --primary-orange-hover: #ff6b35;
+    --primary-orange-light: #2d1b14;
+    --bg-light: #1a1a1a;
+    --card-bg: #2d2d2d;
+    --text-dark: #e2e8f0;
+    --border-light: #4a5568;
+    --shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.3);
+    --shadow-medium: 0 8px 30px rgba(0, 0, 0, 0.4);
+}
+
+/* ===== ESTILOS GENERALES ===== */
+body {
+    background: linear-gradient(135deg, var(--bg-light) 0%, var(--primary-orange-light) 100%);
+    color: var(--text-dark);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    transition: all 0.3s ease;
+}
+
+/* ===== HEADER MODERNO ===== */
+.custom-header {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border-light);
+    height: 80px;
+    box-shadow: var(--shadow-soft);
+}
+
+[data-bs-theme="dark"] .custom-header {
+    background: rgba(45, 45, 45, 0.95);
+}
+
+.welcome-text {
+    color: var(--text-dark);
+}
+
+.custom-header h1 {
+    background: linear-gradient(135deg, var(--primary-orange), #ff8c42);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+}
+
+/* ===== LOGO FLOTANTE ===== */
+.floating-logo {
+    position: absolute;
+    top: 15px;
+    left: 20px;
+    height: 50px;
+    z-index: 1050;
+    transition: transform 0.3s ease;
+}
+
+.floating-logo:hover {
+    transform: scale(1.05);
+}
+
+/* ===== BOTÓN DE TEMA MODERNO ===== */
+#themeBtn {
+    background: var(--card-bg);
+    border: 1px solid var(--border-light);
+    border-radius: 12px;
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    box-shadow: var(--shadow-soft);
+}
+
+#themeBtn:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-medium);
+    background: var(--primary-orange);
+    border-color: var(--primary-orange);
+}
+
+#themeBtn #themeIcon {
+    color: var(--text-dark);
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+}
+
+#themeBtn:hover #themeIcon {
+    color: white;
+    transform: rotate(180deg);
+}
+
+/* ===== CARRUSEL ULTRA MODERNO ===== */
+.modern-carousel {
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: var(--shadow-medium);
+    position: relative;
+}
+
+.carousel-item {
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.carousel-img {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+}
+
+.carousel-item:hover .carousel-img {
+    transform: scale(1.02);
+}
+
+/* Controles del carrusel minimalistas */
+.carousel-control-prev,
+.carousel-control-next {
+    width: 50px;
+    height: 50px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 50%;
+    top: 50%;
+    transform: translateY(-50%);
+    border: none;
+    box-shadow: var(--shadow-soft);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    opacity: 0.8;
+}
+
+.carousel-control-prev {
+    left: 20px;
+}
+
+.carousel-control-next {
+    right: 20px;
+}
+
+.carousel-control-prev:hover,
+.carousel-control-next:hover {
+    background: var(--primary-orange);
+    transform: translateY(-50%) scale(1.1);
+    opacity: 1;
+    box-shadow: var(--shadow-medium);
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    width: 20px;
+    height: 20px;
+    filter: invert(0.5);
+    transition: filter 0.3s ease;
+}
+
+.carousel-control-prev:hover .carousel-control-prev-icon,
+.carousel-control-next:hover .carousel-control-next-icon {
+    filter: invert(1);
+}
+
+/* Indicadores modernos con líneas */
+.carousel-indicators {
+    bottom: 20px;
+    margin-bottom: 0;
+}
+
+.carousel-indicators button {
+    width: 30px;
+    height: 4px;
+    border-radius: 2px;
+    background: rgba(255, 255, 255, 0.5);
+    border: none;
+    margin: 0 4px;
+    transition: all 0.3s ease;
+    opacity: 0.7;
+}
+
+.carousel-indicators button:hover {
+    background: rgba(255, 255, 255, 0.8);
+    transform: scaleY(1.2);
+}
+
+.carousel-indicators button.active {
+    background: var(--primary-orange);
+    width: 40px;
+    opacity: 1;
+}
+
+/* ===== CARD DE LOGIN MODERNA ===== */
+.login-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border-light);
+    border-radius: 20px;
+    box-shadow: var(--shadow-medium);
+    backdrop-filter: blur(20px);
+    transition: all 0.3s ease;
+}
+
+.login-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+}
+
+.login-card h2 {
+    color: var(--text-dark);
+    font-weight: 600;
+    margin-bottom: 2rem;
+}
+
+.form-control {
+    border: 2px solid var(--border-light);
+    border-radius: 12px;
+    padding: 12px 16px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background: var(--card-bg);
+    color: var(--text-dark);
+}
+
+.form-control:focus {
+    border-color: var(--primary-orange);
+    box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.1);
+    background: var(--card-bg);
+    color: var(--text-dark);
+}
+
+/* ===== BOTÓN PRINCIPAL MODERNO ===== */
+.btn-orange {
+    background: linear-gradient(135deg, var(--primary-orange), #ff8c42);
+    border: none;
+    color: white;
+    padding: 14px 28px;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+    box-shadow: var(--shadow-soft);
+}
+
+.btn-orange::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s;
+}
+
+.btn-orange:hover {
+    background: linear-gradient(135deg, var(--primary-orange-hover), var(--primary-orange));
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-medium);
+    color: white;
+}
+
+.btn-orange:hover::before {
+    left: 100%;
+}
+
+.btn-orange:active {
+    transform: translateY(0);
+}
+
+/* ===== BOTÓN ADMIN OCULTO ===== */
+.admin-button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+}
+
+.btn-warning {
+    background: linear-gradient(135deg, #fbbf24, #f59e0b);
+    border: none;
+    color: #1f2937;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-weight: 500;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    box-shadow: var(--shadow-soft);
+}
+
+.btn-warning:hover {
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-medium);
+    color: #1f2937;
+}
+
+.hidden {
+    opacity: 0;
+    pointer-events: none;
+    transform: scale(0.8);
+    transition: all 0.3s ease;
+}
+
+/* ===== FOOTER MINIMALISTA ===== */
+footer {
+    background: var(--card-bg);
+    border-top: 1px solid var(--border-light);
+    color: var(--text-dark);
+    backdrop-filter: blur(20px);
+}
+
+/* ===== ESTILOS ESPECÍFICOS PARA DASHBOARD ===== */
+/* Ajustes para botones en dashboard que mantengan consistencia visual */
+.custom-header .btn-outline-secondary {
+    border-color: var(--border-light);
+    color: var(--text-dark);
+    transition: all 0.3s ease;
+}
+
+.custom-header .btn-outline-secondary:hover {
+    background-color: var(--orange-bg);
+    border-color: var(--primary-orange);
+    color: var(--primary-orange);
+    transform: translateY(-1px);
+}
+
+.custom-header .badge {
+    font-size: 0.75rem;
+    padding: 0.4rem 0.8rem;
+    border-radius: 12px;
+    font-weight: 500;
+}
+
+/* Responsive para dashboard navbar */
+@media (max-width: 768px) {
+    .custom-header .btn {
+        font-size: 0.8rem;
+        padding: 0.4rem 0.8rem;
+    }
+
+    .custom-header .btn .me-1 {
+        display: none;
+    }
+
+    .custom-header .badge {
+        font-size: 0.7rem;
+        padding: 0.3rem 0.6rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .custom-header .btn {
+        font-size: 0.75rem;
+        padding: 0.375rem 0.6rem;
+        min-width: auto;
+    }
+}
+
+/* ===== ANIMACIONES SUAVES ===== */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.login-card {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+.modern-carousel {
+    animation: fadeInUp 0.6s ease-out 0.2s both;
+}
