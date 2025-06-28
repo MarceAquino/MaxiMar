@@ -1,0 +1,129 @@
+:root {
+    --primary-orange: #f4cd92;
+    --primary-orange-hover: #f9b459;
+    --primary-orange-light: #ffe8c2;
+    --bg-light: #fff7e6;
+    --card-bg: #fff3d1;
+    --text-dark: #7a4a00;
+    --border-light: #f9c878;
+}
+
+[data-bs-theme="dark"] {
+    --primary-orange: #a56a1b;
+    --primary-orange-hover: #d18b2c;
+    --primary-orange-light: #5a3d05;
+    --bg-light: #3b2e0f;
+    --card-bg: #5c4413;
+    --text-dark: #f1dba7;
+    --border-light: #7a5c15;
+}
+
+/* ===== BODY ===== */
+body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    background: var(--primary-orange-light);
+    color: var(--text-dark);
+}
+
+/* ===== NAV ===== */
+
+/* ===== HEADER ===== */
+.custom-header {
+    background: var(--primary-orange);
+    height: 5rem;
+    border-bottom: 2px solid var(--primary-orange-hover);
+}
+[data-bs-theme="dark"] body{
+    background: var(--primary-orange);
+}
+
+[data-bs-theme="dark"] .custom-header {
+    background: var(--primary-orange-light);
+}
+
+/* ===== LOGO FLOTANTE ===== */
+.floating-logo {
+    position: absolute;
+    top: 5px;
+    left: 10px;
+    height: 65px;
+    z-index: 1050;
+}
+
+.welcome-text {
+    color: var(--text-dark);
+}
+
+/* ===== BOTÓN DE MODO OSCURO===== */
+#themeBtn {
+    background: var(--primary-orange);
+    border: 2px solid var(--text-dark);
+    border-radius: 50px;
+    width: 50px;
+    height: 50px;
+    transition: all 0.3s ease;
+    box-shadow: var(--shadow-soft);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+#themeIcon{
+    color: var(--text-dark);
+}
+
+#themeBtn:hover {
+    background: var(--primary-orange-hover);
+    border-color: var(--text-dark);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+/* ===== FOOTER MINIMALISTA ===== */
+footer {
+    background: var(--primary-orange);
+    border-top: 2px solid var(--primary-orange-hover);
+    color: var(--text-dark);
+}
+
+[data-bs-theme="dark"] footer {
+    background: var(--primary-orange-light);
+}
+.floating-exit-btn {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    z-index: 1050;
+
+    padding: 10px 15px;
+    /* ⬅️ Aumenta el tamaño */
+    font-size: 1.2rem;
+    /* ⬅️ Texto más grande */
+    border-radius: 12px;
+    /* ⬅️ Bordes más suaves */
+
+    background-color: rgb(184, 82, 82);
+    /* Color base opcional */
+    color: #fff;
+    border: none;
+
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    /* Sombra más notoria */
+    white-space: nowrap;
+
+    transition: transform 0.2s ease;
+}
+
+.floating-exit-btn:hover {
+    transform: scale(1.05);
+    cursor: pointer; }
+
+#welcomeMessage {
+    color: var(--primary-orang);
+    font-size: 1rem;
+    text-align: center;
+    border: 2px solid var(--text-dark);
+    border-radius: 8px;
+    padding: 4px 8px;
+    display: inline-block;     }

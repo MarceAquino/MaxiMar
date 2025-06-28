@@ -1,0 +1,62 @@
+.login-card{
+    background: var(--card-bg);
+    border: 2.5px solid var(--border-light);
+    border-radius: 20px;
+    box-shadow: var(--shadow-medium);
+    backdrop-filter: blur(20px);
+    transition: all 0.3s ease;
+}
+
+.btn{
+    border: 2px solid var(--border-light);
+    border-radius: 50px;
+    padding: 10px 20px;
+    font-weight: bold;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-medium);
+    border-color: var(--primary-orange-hover);
+    background: var(--primary-orange-hover);
+}
+.login-card {
+    color: var(--text-dark);
+}
+.form-control {
+    background: var(--card-bg);
+    color: var(--text-dark);
+    border-color: var(--border-light);
+}
+
+.form-control:focus {
+    border-color: var(--primary-orange-hover);
+    box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.1);
+    background: var(--card-bg);
+    color: var(--text-dark);
+}
+
+.input-group-text {
+    background: var(--card-bg);
+    color: var(--text-dark);
+    border-color: var(--border-light);
+}
+
+.text-decoration-none {
+    color: black;
+}
+.btn{
+    background: var(--primary-orange);
+    border: 2px solid var(--primary-orange-hover);
+    color: var(--text-dark)
+}
+
+.btn:hover {
+    background: var(--primary-orange-hover);
+    color: black;
+}
+[data-bs-theme="dark"] .btn {
+    color: var(--text-dark);
+    background: var(--primary-orange-light)
+
+}

@@ -1,0 +1,80 @@
+/* ===== ESTILOS PARA TICKET DE COMPRA ===== */
+
+
+/* Header del ticket con tema naranja */
+.ticket-header {
+    background: var(--primary-orange);
+    color:var(--text-dark);
+    padding: 1rem;
+    text-align: center;
+}
+/* Datos del usuario */
+.datos-usuario {
+    background: var(--orange-bg);
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    border-left: 3px solid var(--primary-orange);
+    border: 1px solid var(--border-light);
+}
+h3{
+    color: var(--text-dark);
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+.fas{
+    color: var(--text-dark);
+}
+/* Caja de totales */
+.total-box {
+    background: var(--orange-bg);
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-top: 2rem;
+    border: 1px solid var(--border-light);
+}
+
+/* Estilos para la tabla */
+.table {
+    background: var(--card-bg);
+    color: var(--text-dark);
+    border: 1px solid var(--border-light);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.table th {
+    font-weight: 600;
+    background: var(--orange-bg);
+    color: var(--text-dark);
+    border-color: var(--border-light);
+}
+
+.table td {
+    background: var(--card-bg);
+    color: var(--text-dark);
+    border-color: var(--border-light);
+}
+
+.table-active td,
+.table-active th {
+    background: var(--primary-orange);
+    color: white;
+}
+
+/* Botones con tema consistente */
+.btn-warning {
+    background: var(--primary-orange);
+    border: none;
+    color: var(--text-dark);
+    font-weight: 500;
+    transition: all 0.3s ease;
+    box-shadow: var(--shadow-soft);
+}
+
+.btn-warning:hover {
+    background: var(--primary-orange-hover);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-medium);
+    color: var(--text-dark);
+}

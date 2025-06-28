@@ -1,0 +1,312 @@
+/* ======================
+   SIDEBAR NAVIGATION
+====================== */
+.sidebar-link {
+  color: var(--text-dark);
+  transition: all 0.3s ease;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.sidebar-link:hover {
+  background-color: var(--primary-orange-light);
+  color: var(--primary-orange-hover);
+  transform: translateX(5px);
+}
+
+.sidebar-link.active {
+  background-color: var(--primary-orange);
+  color: white;
+}
+
+.sidebar-link.active:hover {
+  background-color: var(--primary-orange-hover);
+  color: white;
+}
+
+.sidebar-link.disabled {
+  color: #6c757d;
+  cursor: not-allowed;
+}
+
+.sidebar-link.disabled:hover {
+  background-color: transparent;
+  transform: none;
+  color: #6c757d;
+}
+
+/* ======================
+ TARJETAS PRINCIPALES
+====================== */
+.producto-card,
+.admin-card,
+.venta-card {
+  background: var(--card-bg);
+  border-radius: 12px;
+  border: 1px solid var(--border-light);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+.producto-card:hover,
+.admin-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.venta-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Tarjetas inactivas */
+.producto-card.inactivo {
+  opacity: 0.7;
+  background-color: var(--bg-light);
+}
+
+.producto-card.inactivo .producto-card-header {
+  background: var(--bg-light);
+}
+
+/* ======================
+ HEADERS Y CONTENIDO
+====================== */
+.producto-card-header {
+  background: var(--primary-orange);
+  padding: 1rem;
+  color: white;
+}
+
+.producto-card-body {
+  padding: 1.25rem;
+}
+
+.admin-card,
+.venta-card {
+  padding: 20px;
+}
+
+/* ======================
+ BADGES Y ETIQUETAS
+====================== */
+.producto-badge {
+  font-size: 0.75rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 50px;
+  font-weight: 500;
+}
+
+.producto-badge.alimento {
+  background-color: #28a745;
+  color: white;
+}
+
+.producto-badge.juguete {
+  background-color: #ffc107;
+  color: #000;
+}
+
+.admin-status {
+  font-size: 0.9rem;
+  padding: 4px 8px;
+  border-radius: 20px;
+  font-weight: 500;
+}
+
+.admin-status.activo {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.admin-status.inactivo {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+/* ======================
+ PRECIOS Y STOCK
+====================== */
+.producto-precio,
+.venta-total {
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: var(--primary-orange);
+}
+
+.venta-total {
+  font-size: 1.2rem;
+}
+
+.producto-stock {
+  font-size: 0.9rem;
+}
+
+.producto-stock.bajo {
+  color: #dc3545;
+}
+
+.producto-stock.medio {
+  color: #ffc107;
+}
+
+.producto-stock.alto {
+  color: #28a745;
+}
+
+.venta-fecha {
+  color: #6c757d;
+  font-size: 0.9rem;
+}
+
+/* ======================
+ ACCIONES Y BOTONES
+====================== */
+.producto-acciones {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+/* Personalización de botones con tema naranja */
+.badge.bg-info,
+.badge.bg-primary {
+  background-color: var(--primary-orange) !important;
+  color: white;
+}
+
+.btn-outline-secondary:hover,
+.btn-outline-primary:hover {
+  background-color: var(--primary-orange);
+  border-color: var(--primary-orange);
+  color: white;
+}
+
+.btn-outline-primary {
+  color: var(--primary-orange);
+  border-color: var(--primary-orange);
+}
+
+.btn-check:checked+.btn-outline-secondary {
+  background-color: var(--primary-orange);
+  border-color: var(--primary-orange);
+  color: white;
+}
+
+/* ======================
+ FILTROS Y CONTROLES
+====================== */
+.filtro-section {
+  background: var(--card-bg);
+  border-radius: 10px;
+  padding: 1rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 1.5rem;
+}
+
+.vista-controles {
+  background: var(--card-bg);
+  border-radius: 8px;
+  padding: 0.5rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.content-section {
+  transition: opacity 0.3s ease;
+}
+
+/* ======================
+ DETALLE DE VENTAS
+====================== */
+.detalle-venta-content {
+  font-size: 0.9rem;
+}
+
+.detalle-header {
+  margin-bottom: 15px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.detalle-productos h6 {
+  color: var(--text-dark);
+  font-size: 1rem;
+}
+
+.productos-lista {
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.producto-detalle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.producto-detalle:last-child {
+  border-bottom: none;
+}
+
+.producto-info {
+  flex: 1;
+}
+
+.producto-cantidad {
+  min-width: 60px;
+  text-align: center;
+  font-weight: bold;
+  color: var(--primary-orange);
+}
+
+.producto-subtotal {
+  min-width: 80px;
+  text-align: right;
+  font-weight: bold;
+}
+
+.detalle-total {
+  margin-top: 15px;
+  padding-top: 10px;
+  border-top: 2px solid var(--primary-orange);
+  font-size: 1.1rem;
+}
+
+/* ======================
+ REGLAS GENERALES DEL DASHBOARD
+====================== */
+/* Sidebar fija en escritorio, offcanvas en mobile */
+.sidebar {
+  width: 250px;
+  min-height: calc(100vh - 70px);
+}
+
+@media (max-width: 991.98px) {
+  .sidebar {
+    width: 100vw;
+    min-height: 100vh;
+  }
+}
+
+/* Main content con margen izquierdo en escritorio */
+.dashboard-main {
+  background-color: var(--orange-bg);
+  min-height: calc(100vh - 70px);
+}
+
+/* Evitar que la última tarjeta se corte en grid */
+.row.g-4 {
+  margin-bottom: 0 !important;
+}
+
+.row.g-4 > [class^="col-"]:last-child {
+  margin-bottom: 2rem;
+}
+
+/* Ajuste para que el logo flotante no tape el botón hamburguesa */
+.floating-logo {
+  z-index: 1030;
+}

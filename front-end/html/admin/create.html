@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="es" data-bs-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="application-name" content="MaxiMar Pet Shop" />
+    <meta name="author" content="Maximiliano Arcieri, Marcelo Aquino" />
+    <meta
+      name="description"
+      content="MaxiMar Pet Shop - Venta de alimentos y juguetes para perros y gatos. Proyecto académico UTN Avellaneda."
+    />
+    <meta
+      name="keywords"
+      content="pet shop, mascotas, perros, gatos, alimentos, juguetes, UTN, programación 3, MaxiMar"
+    />
+
+    <!-- Título -->
+    <title>MaxiMar Pet Shop</title>
+
+    <!-- Favicon -->
+    <link rel="icon" href="../../img/icon.png" />
+
+    <!-- CSS externo -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+      rel="stylesheet"
+    />    <link rel="stylesheet" href="/front-end/css/style.css" />
+    <link rel="stylesheet" href="/front-end/css/admin.css" />
+    <link rel="stylesheet" href="/front-end/css/custom-alerts.css" />
+  </head>
+
+  <body class="d-flex flex-column min-vh-100">
+    <!-- Logo flotando -->
+    <img src="/front-end/img/logo.png" alt="Logo" class="floating-logo" />
+    <header>
+      <nav
+        class="navbar navbar-expand-lg shadow-sm custom-header position-relative"
+      >
+        <div class="container-fluid justify-content-center position-relative">
+          <!-- Título centrado -->
+          <h1
+            class="position-absolute top-50 start-50 translate-middle mb-0 fs-2 fw-bold d-none d-md-block"
+          >
+            MaxiMar Pet Shop
+          </h1>          <!-- Botones a la derecha -->
+          <div class="ms-auto d-flex gap-2 align-items-center">
+            <button class="btn btn-outline-light btn-sm" id="themeBtn">
+              <i class="fas fa-sun" id="themeIcon"></i>
+            </button>
+            <a
+              href="/front-end/html/admin/dashboard.html"
+              class="btn btn-secondary"
+            >
+              <i class="fas fa-arrow-left me-1"></i>Volver
+            </a>
+            <button class="btn btn-danger" id="logoutBtn">
+              <i class="fas fa-sign-out-alt me-1"></i>Cerrar sesión
+            </button>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container py-5">
+      <div class="form-wrapper p-4 rounded-4 shadow">        <div class="mb-4 text-center">
+          <h2 class="fw-semibold mb-1">Crear Nuevo Producto</h2>
+          <small class="text-muted">Completa el formulario para agregar un nuevo producto</small>
+        </div>
+
+        <form id="formCrearProducto" enctype="multipart/form-data">
+          <div class="mb-3">
+            <label for="codigoCrear" class="form-label">
+              Código <span class="text-danger">*</span>
+              <small class="text-muted">(mínimo 3 caracteres, máximo 20)</small>
+            </label>
+            <input
+              type="text"
+              class="form-control"
+              id="codigoCrear"
+              name="codigo"
+              minlength="3"
+              maxlength="20"
+              placeholder="Ej: PROD001, ALI-001, JUG-001"
+              required
+            />
+            <div class="invalid-feedback">
+              El código debe tener entre 3 y 20 caracteres
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="nombreCrear" class="form-label">
+              Nombre <span class="text-danger">*</span>
+              <small class="text-muted">(mínimo 3 caracteres, máximo 100)</small>
+            </label>
+            <input
+              type="text"
+              class="form-control"
+              id="nombreCrear"
+              name="nombre"
+              minlength="3"
+              maxlength="100"
+              placeholder="Ej: Alimento Premium para Perros"
+              required
+            />
+            <div class="invalid-feedback">
+              El nombre debe tener entre 3 y 100 caracteres
+            </div>
+          </div>          <div class="mb-3">
+            <label for="tipoProducto" class="form-label">Tipo de producto</label>
+            <select class="form-select" id="tipoProducto" name="tipo_producto" required>
+              <option value="">Seleccione...</option>
+              <option value="alimento">Alimento</option>
+              <option value="juguete">Juguete</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="tipoMascotaCrear" class="form-label">Tipo de mascota</label>
+            <select class="form-select" id="tipoMascotaCrear" name="tipo_mascota" required>
+              <option value="">Seleccione...</option>
+              <option value="gato">Gato</option>
+              <option value="perro">Perro</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="precioCrear" class="form-label">
+              Precio <span class="text-danger">*</span>
+              <small class="text-muted">(mínimo $0.01)</small>
+            </label>
+            <input
+              type="number"
+              step="0.01"
+              min="0.01"
+              class="form-control"
+              id="precioCrear"
+              name="precio"
+              placeholder="Ej: 150.50"
+              required
+            />
+            <div class="invalid-feedback">
+              El precio debe ser mayor a $0.01
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="marcaCrear" class="form-label">
+              Marca <span class="text-danger">*</span>
+              <small class="text-muted">(mínimo 2 caracteres, máximo 50)</small>
+            </label>
+            <input
+              type="text"
+              class="form-control"
+              id="marcaCrear"
+              name="marca"
+              minlength="2"
+              maxlength="50"
+              placeholder="Ej: Royal Canin, Purina, Kong"
+              required
+            />
+            <div class="invalid-feedback">
+              La marca debe tener entre 2 y 50 caracteres
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="stockCrear" class="form-label">
+              Stock <span class="text-danger">*</span>
+              <small class="text-muted">(número entero mayor o igual a 0)</small>
+            </label>
+            <input
+              type="number"
+              min="0"
+              step="1"
+              class="form-control"
+              id="stockCrear"
+              name="stock"
+              placeholder="Ej: 25"
+              required
+            />
+            <div class="invalid-feedback">
+              El stock debe ser un número entero mayor o igual a 0
+            </div>
+          </div>          <!-- Campos dinámicos según tipo de producto -->          <div id="camposAlimentoCrear" class="campos-dinamicos" style="display: none;">
+            <div class="mb-3">
+              <label class="form-label">Edad</label>
+              <select class="form-select" id="edadCrear" name="edad">
+                <option value="">Seleccione...</option>
+                <option value="adulto">Adulto</option>
+                <option value="cachorro">Cachorro</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Peso</label>
+              <select class="form-select" id="pesoCrear" name="peso">
+                <option value="">Seleccione...</option>
+                <option value="1kg">1kg</option>
+                <option value="3kg">3kg</option>
+                <option value="7kg">7kg</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Sabor</label>
+              <select class="form-select" id="saborCrear" name="sabor">
+                <option value="">Seleccione...</option>
+                <option value="pollo">Pollo</option>
+                <option value="pescado carne y vegetales">Pescado carne y vegetales</option>
+                <option value="carne">Carne</option>
+              </select>
+            </div>
+          </div>
+
+          <div id="camposJugueteCrear" class="campos-dinamicos" style="display: none;">
+            <div class="mb-3">
+              <label class="form-label">Tamaño</label>
+              <select class="form-select" id="tamanoCrear" name="tamano">
+                <option value="">Seleccione...</option>
+                <option value="chico">Chico</option>
+                <option value="mediano">Mediano</option>
+                <option value="grande">Grande</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Material</label>
+              <select class="form-select" id="materialCrear" name="material">
+                <option value="">Seleccione...</option>
+                <option value="tela">Tela</option>
+                <option value="plástico">Plástico</option>
+                <option value="goma">Goma</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Sección de imágenes -->
+          <div class="mb-3">
+            <label for="imagenesCrear" class="form-label">
+              <i class="fas fa-images me-2"></i>Imágenes del producto
+            </label>
+            <input
+              type="file"
+              class="form-control"
+              id="imagenesCrear"
+              name="imagenes"
+              accept="image/jpeg,image/jpg,image/png"
+              multiple
+              required
+            />            <div class="form-text">
+              <small class="text-muted">
+                <i class="fas fa-info-circle me-1"></i>
+                <strong>Selecciona hasta 5 imágenes:</strong> En el diálogo, mantén presionado <kbd>Ctrl</kbd> (Windows) o <kbd>Cmd</kbd> (Mac) para seleccionar múltiples archivos de una vez. Formatos: JPG, JPEG, PNG. Máximo 5MB por imagen.
+              </small>
+            </div>
+            <!-- Preview de imágenes -->
+            <div id="previewImagenes" class="mt-3 row g-2" style="display: none;">
+              <!-- Las previews se mostrarán aquí -->
+            </div>
+          </div>
+
+          <input type="hidden" id="categoriaCrear" name="categoria" value="" />
+          <button type="submit" class="btn btn-orange">Crear Producto</button>
+        </form>
+      </div>
+    </main>
+    <!-- Footer -->
+    <footer class="mt-auto py-3 text-center">
+      <small>
+        <i class="fas fa-code me-1"></i>
+        Dev por Marcelo Aquino y Maximiliano Arcieri
+      </small>
+    </footer>    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/front-end/js/theme.js"></script>
+    <script type="module" src="/front-end/js/admin-security.js"></script>
+    <script type="module" src="/front-end/js/admin/create.js"></script>
+</html>

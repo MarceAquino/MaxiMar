@@ -1,0 +1,118 @@
+/* ===== CARRUSEL ===== */
+/* Estilo base para las flechas del carrusel */
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    background-color: var(--primary-orange);
+    border-radius: 50%;
+    width: 2.2rem;
+    height: 2.2rem;
+}
+
+.carousel-control-prev {
+    left: -1.1rem;
+}
+.carousel-control-next {
+    right: -1.1rem;
+}
+
+/* Modo oscuro: solo cambia el color de fondo */
+[data-bs-theme="dark"] .carousel-control-prev-icon,
+[data-bs-theme="dark"] .carousel-control-next-icon {
+    background-color: black;
+}
+
+@media (max-width: 768px) {
+    .carousel-control-prev-icon,
+    .carousel-control-next-icon {
+            width: 1.5rem;
+            height: 1.5rem;
+        }
+    .carousel-control-prev {
+        left: -0.8rem;
+        }
+    .carousel-control-next {
+        right: -0.8rem;       }
+}
+
+/* ===== CARD DE LOGIN MODERNA ===== */
+.login-card {
+    background: transparent;
+    border: 2.5px solid var(--border-light);
+    border-radius: 20px;
+    box-shadow: var(--shadow-medium);
+    backdrop-filter: blur(20px);
+    transition: all 0.3s ease;
+    color: var(--text-dark);
+}
+
+.login-card:hover {
+    border-color: var(--primary-orange);
+}
+
+.form-control:focus {
+    border-color: var(--primary-orange);
+    box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.1);
+    background: var(--card-bg);
+    color: var(--text-dark);
+}
+
+.form-control {
+    background: var(--card-bg);
+    color: var(--text-dark);
+    border-color: var(--border-light);
+}
+
+[data-bs-theme="dark"] .form-control {
+    background: var(--card-bg);
+    color: var(--text-dark);
+    border-color: var(--border-light);
+}
+
+.btn-orange{
+    background: var(--primary-orange);
+    border: 2px solid var(--border-light);
+    color: var(--text-dark);
+    padding: 10px 20px;
+    border-radius: 50px;
+    font-weight: bold;
+}
+.btn-orange:hover {
+    background: var(--primary-orange-hover);
+    border-color: var(--primary-orange-hover);
+    color: var(--text-dark);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-medium);
+}
+
+/* ===== BOTÓN ADMIN OCULTO ===== */
+#secretButton {
+    transform: scale(0.5) rotate(180deg);
+    visibility: hidden;
+    opacity: 0;
+    background: var(--primary-orange);
+    border: 1px solid black;
+    font-weight: bold;
+    width: auto;
+    margin-top:1rem;
+    font-size: 0.8rem;
+    border-radius: 0.6rem;
+    transition: transform 0.5s ease, opacity 0.5s ease;
+    transform-origin: center;
+}
+
+#secretButton.show {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+    visibility: visible;
+}
+#secretButton:hover {
+    background: var(--primary-orange-hover);
+    transform: translateY(-1.5px);
+}
+
+[data-bs-theme="dark"] #secretButton{
+    background: var(--primary-orange-light);
+    border: 2px solid var(--border-light);
+}
+.invalid-feedback {
+    display: block}
