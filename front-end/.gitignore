@@ -1,0 +1,43 @@
+# === Node Modules ===
+node_modules/
+
+# === Logs ===
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# === Env Variables ===
+.env
+.env.*.local
+
+# === OS Files ===
+.DS_Store
+Thumbs.db
+
+# === Editor Configs ===
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# === Build outputs ===
+dist/
+build/
+coverage/
+
+# === System Files ===
+*.swp
+*.bak
+
+# === Optional ===
+# Ignora lockfiles si solo usás uno
+package-lock.json
+# yarn.lock
+
+# === TypeScript (si lo usás) ===
+*.tsbuildinfo
+
+# === Others (personalizá según tu stack) ===
+# public/uploads/        # por si usás multer u otros que suben archivos

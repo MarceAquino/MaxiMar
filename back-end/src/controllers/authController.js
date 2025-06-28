@@ -2,7 +2,7 @@ const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const { Admin } = require('../models')
 
-// Registrar nuevo administrador (solo SuperAdmin puede hacer esto)
+// Registrar nuevo administrador (solo SuperAdmin puede registrar administradores.)
 const registrarAdmin = async (req, res) => {
   try {
     const { email, nombre, password, rol = 'admin' } = req.body
@@ -57,19 +57,6 @@ const registrarAdmin = async (req, res) => {
     })
   } catch (error) {
     console.error('Error en registro de admin:', error)
-    if (error.name === 'SequelizeValidationError') {
-      return res.status(400).json({
-        message: 'Errores de validación',
-        errors: error.errors.map(err => ({
-          campo: err.path,
-          error: err.message
-        }))
-      })
-    }
-    res.status(500).json({
-      message: 'Error interno del servidor',
-      error: error.message
-    })
   }
 }
 
@@ -127,10 +114,6 @@ const loginAdmin = async (req, res) => {
     })
   } catch (error) {
     console.error('Error en login de admin:', error)
-    res.status(500).json({
-      message: 'Error interno del servidor',
-      error: error.message
-    })
   }
 }
 

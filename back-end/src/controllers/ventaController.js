@@ -53,7 +53,7 @@ const crearVenta = async (req, res) => {
       })
     }
 
-    const total = subtotal // Aquí podrías agregar descuentos, impuestos, etc.    // Crear la venta
+    const total = subtotal
     const nuevaVenta = await Venta.create({
       cliente: cliente || 'Cliente Anónimo',
       subtotal,
@@ -80,7 +80,6 @@ const crearVenta = async (req, res) => {
           { activo: 0 },
           { where: { producto_id: detalle.producto_id } }
         )
-        console.log(`⚠️ Producto "${productoActualizado.nombre}" desactivado por falta de stock`)
       }
     }
 
@@ -101,11 +100,7 @@ const crearVenta = async (req, res) => {
       }
     })
   } catch (error) {
-    console.error('Error al procesar venta:', error)
-    res.status(500).json({
-      message: 'Error interno del servidor al procesar la venta',
-      error: 'INTERNAL_ERROR'
-    })
+    console.error(error)
   }
 }
 
@@ -113,7 +108,6 @@ const crearVenta = async (req, res) => {
 const obtenerVenta = async (req, res) => {
   try {
     const { id } = req.params
-    console.log('🔍 Buscando venta con ID:', id)
 
     const venta = await Venta.findByPk(id, {
       include: [{
@@ -128,14 +122,11 @@ const obtenerVenta = async (req, res) => {
     })
 
     if (!venta) {
-      console.log('❌ Venta no encontrada:', id)
       return res.status(404).json({
         message: 'Venta no encontrada',
         error: 'SALE_NOT_FOUND'
       })
     }
-
-    console.log('✅ Venta encontrada:', venta.venta_id)
 
     // Generar número de orden
     const fechaFormateada = venta.fecha.toISOString().slice(0, 10).replace(/-/g, '')
@@ -158,23 +149,15 @@ const obtenerVenta = async (req, res) => {
         subtotal: detalle.subtotal
       }))
     }
-
-    console.log('📋 Respuesta:', response)
     res.json(response)
   } catch (error) {
-    console.error('❌ Error al obtener venta:', error)
-    res.status(500).json({
-      message: 'Error interno del servidor',
-      error: 'INTERNAL_ERROR'
-    })
+    console.error(error)
   }
 }
 
-// Obtener todas las ventas (solo para SuperAdmin)
+// Obtener todas las ventas.
 const obtenerTodasLasVentas = async (req, res) => {
   try {
-    console.log('🔍 Obteniendo todas las ventas para SuperAdmin')
-
     const ventas = await Venta.findAll({
       include: [{
         model: DetalleVenta,
@@ -187,8 +170,6 @@ const obtenerTodasLasVentas = async (req, res) => {
       }],
       order: [['fecha', 'DESC']]
     })
-
-    console.log(`✅ ${ventas.length} ventas encontradas`)
 
     const ventasFormateadas = ventas.map(venta => {
       const fechaFormateada = venta.fecha.toISOString().slice(0, 10).replace(/-/g, '')
@@ -210,11 +191,7 @@ const obtenerTodasLasVentas = async (req, res) => {
 
     res.json(ventasFormateadas)
   } catch (error) {
-    console.error('❌ Error al obtener todas las ventas:', error)
-    res.status(500).json({
-      message: 'Error interno del servidor',
-      error: 'INTERNAL_ERROR'
-    })
+    console.error(error)
   }
 }
 

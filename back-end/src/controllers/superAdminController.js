@@ -1,6 +1,6 @@
 const { Admin } = require('../models')
 
-// Listar todos los administradores (solo SuperAdmin)
+// Listar todos los administradores.
 const listarAdmins = async (req, res) => {
   try {
     const admins = await Admin.findAll({
@@ -13,15 +13,11 @@ const listarAdmins = async (req, res) => {
       admins
     })
   } catch (error) {
-    console.error('Error al listar administradores:', error)
-    res.status(500).json({
-      message: 'Error interno del servidor',
-      error: error.message
-    })
+    console.error(error)
   }
 }
 
-// Desactivar/Activar administrador (solo SuperAdmin)
+// Desactivar/Activar administrador.
 const toggleAdminStatus = async (req, res) => {
   try {
     const { id } = req.params
@@ -56,15 +52,11 @@ const toggleAdminStatus = async (req, res) => {
       }
     })
   } catch (error) {
-    console.error('Error al cambiar estado del administrador:', error)
-    res.status(500).json({
-      message: 'Error interno del servidor',
-      error: error.message
-    })
+    console.error(error)
   }
 }
 
-// Eliminar administrador (solo SuperAdmin)
+// Eliminar administrador.
 const eliminarAdmin = async (req, res) => {
   try {
     const { id } = req.params
@@ -89,11 +81,7 @@ const eliminarAdmin = async (req, res) => {
       message: 'Administrador eliminado correctamente'
     })
   } catch (error) {
-    console.error('Error al eliminar administrador:', error)
-    res.status(500).json({
-      message: 'Error interno del servidor',
-      error: error.message
-    })
+    console.error(error)
   }
 }
 

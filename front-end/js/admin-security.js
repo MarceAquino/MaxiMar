@@ -1,3 +1,9 @@
+// ======================================================================
+// SEGURIDAD ADICIONAL PARA PÁGINAS DE ADMIN - SIMPLE PARA ESTUDIANTES
+// ======================================================================
+// Este archivo agrega protecciones extras para las páginas de administración
+// Evita problemas cuando el usuario usa el botón "atrás" del navegador
+
 import { logout, requireAuth } from './auth-guard.js'
 
 // ======================================================================

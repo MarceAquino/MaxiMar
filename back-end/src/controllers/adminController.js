@@ -3,37 +3,39 @@ const { generateImageUrls } = require('../middlewares/upload')
 
 const crearProducto = async (req, res) => {
   try {
-    // Copiamos todos los datos que vienen del formulario o frontend
     const productoData = { ...req.body }
-    // Si se subieron archivos, generamos las URLs de las imágenes
-    // Si no, usamos una imagen por defecto llamada 'notFount.png'
+
+    // Procesar las imágenes subidas
     if (req.files && req.files.length > 0) {
       const imageUrls = generateImageUrls(req.files)
-      productoData.urls = JSON.stringify(imageUrls)
+      productoData.urls = JSON.stringify(imageUrls) // Convertir a JSON string
     } else {
+      // Si no hay imágenes, usar imágenes por defecto (formato compatible)
       productoData.urls = JSON.stringify(['notFount.png'])
     }
 
-    // Si el stock es 0, marcamos el producto como inactivo
+    // Verificar si el stock es 0 y desactivar automáticamente
     if (productoData.stock === 0 || productoData.stock === '0') {
       productoData.activo = false
     }
-    // Guardamos el producto en la base de datos
+
     const nuevoProducto = await Producto.create(productoData)
-    // Enviamos respuesta al frontend
-    res.json({
+    // Parsear las URLs para enviarlas en la respuesta
+    const urlsParseadas = JSON.parse(productoData.urls)
+
+    const respuesta = {
       message: 'Producto creado correctamente.',
-      producto: nuevoProducto
-    })
+      producto: nuevoProducto,
+      warning: productoData.stock === 0 ? 'Producto desactivado automáticamente por stock 0' : null,
+      images: urlsParseadas
+    }
+    res.json(respuesta)
   } catch (error) {
-    // Si algo falla, mostramos el error en consola y avisamos al frontend
-    console.error('❌ Error al crear producto:', error.message)
-    res.status(500).json({ message: 'Error interno del servidor' })
+    console.error(error)
   }
 }
 
 const actualizarProducto = async (req, res) => {
-  console.log('Llegó al PUT con ID:', req.params.id)
   try {
     // Verificar que el producto existe
     const producto = await Producto.findByPk(req.params.id)
@@ -42,7 +44,6 @@ const actualizarProducto = async (req, res) => {
         message: 'Producto no encontrado'
       })
     }
-
     // Si no es SuperAdmin, verificar que el producto esté activo
     if (req.admin.rol !== 'superadmin' && !producto.activo) {
       return res.status(403).json({
@@ -56,7 +57,7 @@ const actualizarProducto = async (req, res) => {
 
     // Manejar subida de nuevas imágenes si existen
     if (req.files && req.files.length > 0) {
-      const { generateImageUrls } = require('../middlewares/upload')
+      // const { generateImageUrls } = require('../middlewares/upload')
 
       // Generar URLs de las nuevas imágenes
       const nuevasImagenes = generateImageUrls(req.files)
@@ -72,16 +73,12 @@ const actualizarProducto = async (req, res) => {
       } else {
         productoData.urls = JSON.stringify(todasLasImagenes)
       }
-
-      console.log('📸 Nuevas imágenes agregadas:', nuevasImagenes)
-      console.log('🖼️ Total de imágenes del producto:', todasLasImagenes)
     }
 
     // Verificar si el stock es 0 y desactivar automáticamente
     if (productoData.stock === 0 || productoData.stock === '0') {
       productoData.activo = false
       warning = warning ? `${warning} Producto desactivado automáticamente por stock 0.` : 'Producto desactivado automáticamente por stock 0'
-      console.log('⚠️  Producto actualizado con stock 0, se desactiva automáticamente')
     }
 
     await Producto.update(productoData, {
@@ -94,20 +91,10 @@ const actualizarProducto = async (req, res) => {
     })
   } catch (error) {
     console.log(error)
-    if (error.name === 'SequelizeValidationError') {
-      return res.status(400).json({
-        message: 'Errores de validación',
-        errors: error.errors.map(err => ({
-          campo: err.path,
-          error: err.message
-        }))
-      })
-    }
-    res.status(500).json({ message: error.message })
   }
 }
 
-// Solo SuperAdmin puede desactivar productos manualmente
+// Solo SuperAdmin puede desactivar productos.
 const desactivarProducto = async (req, res) => {
   try {
     // Verificar que el usuario sea SuperAdmin
@@ -128,7 +115,6 @@ const desactivarProducto = async (req, res) => {
     })
   } catch (error) {
     console.log(error)
-    res.status(500).json({ message: error.message })
   }
 }
 
@@ -168,7 +154,6 @@ const activarProducto = async (req, res) => {
     })
   } catch (error) {
     console.log(error)
-    res.status(500).json({ message: error.message })
   }
 }
 
@@ -180,16 +165,6 @@ const borrarProducto = async (req, res) => {
     res.json('Registro eliminado correctamente.')
   } catch (error) {
     console.log(error)
-    if (error.name === 'SequelizeValidationError') {
-      return res.status(400).json({
-        message: 'Errores de validación',
-        errors: error.errors.map(err => ({
-          campo: err.path,
-          error: err.message
-        }))
-      })
-    }
-    res.status(500).json({ message: error.message })
   }
 }
 

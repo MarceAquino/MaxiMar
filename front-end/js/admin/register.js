@@ -6,18 +6,22 @@
 //
 // MODULAR: Utiliza módulos utilitarios compartidos para evitar duplicación
 
+import { API_ROUTES, tokenUtils } from '../../config/api.js'
 import { logout, requireAuth } from '../auth-guard.js'
-import { API_ROUTES, tokenUtils } from '../config/api.js'
 
-// Importar módulos utilitarios
+// import { showAlert, showErrorList } from './utils/ui-utils.js'
 import {
-    clearForm,
-    collectFormData,
-    setupPasswordToggle,
-    setupRealtimePasswordValidation
-} from './utils/form-utils.js'
-import { showAlert, showErrorList } from './utils/ui-utils.js'
-import { validateEmail, validatePassword, validateText } from './utils/validation-utils.js'
+  reactivarFormulario,
+  recopilarDatosAdmin
+  // setupPasswordToggle,
+  // setupRealtimePasswordValidation
+} from './utils/unified-form-utils.js'
+
+import {
+  validarEmail,
+  validarPassword,
+  validarNombre
+} from './utils/validation-utils.js'
 
 // ======================================================================
 // VARIABLES GLOBALES SIMPLES
@@ -37,7 +41,7 @@ function validarAdministrador (datos) {
   const errores = []
 
   // Validar nombre usando validation-utils
-  const nombreValidation = validateText(datos.nombre, {
+  const nombreValidation = validarNombre(datos.nombre, {
     required: true,
     minLength: 2,
     maxLength: 50,
@@ -48,7 +52,7 @@ function validarAdministrador (datos) {
   }
 
   // Validar email usando validation-utils
-  const emailValidation = validateEmail(datos.email, {
+  const emailValidation = validarEmail(datos.email, {
     required: true,
     fieldName: 'email'
   })
@@ -57,7 +61,7 @@ function validarAdministrador (datos) {
   }
 
   // Validar contraseña usando validation-utils
-  const passwordValidation = validatePassword(datos.password, {
+  const passwordValidation = validarPassword(datos.password, {
     required: true,
     minLength: 6,
     maxLength: 100,
@@ -84,8 +88,6 @@ function validarAdministrador (datos) {
 // INICIALIZACIÓN
 // ======================================================================
 document.addEventListener('DOMContentLoaded', async () => {
-  console.log('📝 Iniciando página de registro de admins (Modular)...')
-
   try {
     // 1. Verificar autenticación
     await requireAuth()
@@ -93,20 +95,15 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // 2. Verificar que sea SuperAdmin
     if (!usuarioActual || usuarioActual.rol !== 'superadmin') {
-      showAlert('❌ Solo el Super Administrador puede acceder a esta página', 'error')
       setTimeout(() => {
         window.location.href = '/front-end/html/admin/dashboard.html'
       }, 2000)
       return
     }
-
-    console.log('✅ SuperAdmin verificado:', usuarioActual.nombre)
-
     // 3. Configurar eventos
     configurarEventListeners()
   } catch (error) {
-    console.error('❌ Error en la inicialización:', error)
-    showAlert('❌ Error al cargar la página', 'error')
+    console.error(error)
   }
 })
 
@@ -127,12 +124,12 @@ function configurarEventListeners () {
       logoutBtn.addEventListener('click', logout)
     }
 
-    // Configurar validación en tiempo real para contraseñas usando form-utils
-    setupRealtimePasswordValidation('passwordAdmin', 'confirmPasswordAdmin')
+    // // Configurar validación en tiempo real para contraseñas usando form-utils
+    // setupRealtimePasswordValidation('passwordAdmin', 'confirmPasswordAdmin')
 
-    // Configurar toggles de visibilidad de contraseñas usando form-utils
-    setupPasswordToggle('togglePassword', 'passwordAdmin', 'passwordIcon')
-    setupPasswordToggle('toggleConfirmPassword', 'confirmPasswordAdmin', 'confirmPasswordIcon')
+    // // Configurar toggles de visibilidad de contraseñas usando form-utils
+    // setupPasswordToggle('togglePassword', 'passwordAdmin', 'passwordIcon')
+    // setupPasswordToggle('toggleConfirmPassword', 'confirmPasswordAdmin', 'confirmPasswordIcon')
 
     console.log('✅ Event listeners configurados correctamente')
   } catch (error) {
@@ -145,32 +142,27 @@ function configurarEventListeners () {
 // ======================================================================
 async function procesarRegistro (e) {
   e.preventDefault()
-  console.log('🚀 Iniciando registro de administrador...')
 
   try {
     // 1. Recopilar datos del formulario usando form-utils
-    const formFields = {
+    const datosFormulario = {
       nombre: 'nombreAdmin',
       email: 'emailAdmin',
       password: 'passwordAdmin',
       confirmarPassword: 'confirmPasswordAdmin'
     }
 
-    const datosAdmin = collectFormData(formFields)
-    console.log('📝 Datos recopilados:', { ...datosAdmin, password: '***', confirmarPassword: '***' })
+    const datosAdmin = recopilarDatosAdmin(datosFormulario)
 
     // 2. Validar datos usando la función de validación modular
     const validacion = validarAdministrador(datosAdmin)
     if (!validacion.esValido) {
-      showErrorList(validacion.errores, 'Se encontraron errores en el formulario')
       return
     }
 
     // 3. Mostrar que estamos procesando usando ui-utils
-    showAlert('⏳ Registrando administrador...', 'info')
 
     // 4. Enviar datos al servidor
-    console.log('📤 Enviando datos al servidor...')
     const response = await fetch(API_ROUTES.registrarAdmin, {
       method: 'POST',
       headers: {
@@ -189,14 +181,9 @@ async function procesarRegistro (e) {
     if (response.ok) {
       // 5. Registro exitoso
       console.log('✅ Administrador registrado exitosamente')
-      showAlert(
-        `✅ Administrador "${datosAdmin.nombre}" registrado exitosamente!<br>
-        <small>Email: ${datosAdmin.email}</small>`,
-        'success'
-      )
 
       // Limpiar formulario usando form-utils
-      clearForm('formRegistrarAdmin')
+      reactivarFormulario('formRegistrarAdmin')
 
       // Redirigir al dashboard después de 3 segundos
       setTimeout(() => {
@@ -209,7 +196,6 @@ async function procesarRegistro (e) {
     }
   } catch (error) {
     console.error('❌ Error al registrar administrador:', error)
-    showAlert('❌ Error de conexión. Verifique su conexión a internet.', 'error')
   }
 }
 
@@ -218,10 +204,10 @@ async function procesarRegistro (e) {
 // ======================================================================
 function manejarErrorRegistro (status, data) {
   if (status === 403) {
-    showAlert('❌ No tiene permisos para registrar administradores', 'error')
+    alert('❌ No tiene permisos para registrar administradores', 'error')
   } else if (status === 400 && data.error === 'EMAIL_EXISTS') {
-    showAlert('❌ Ya existe un administrador con este email', 'error')
+    alert('❌ Ya existe un administrador con este email', 'error')
   } else {
-    showAlert(`❌ ${data.message || 'Error al registrar administrador'}`, 'error')
+    alert(`❌ ${data.message || 'Error al registrar administrador'}`, 'error')
   }
 }

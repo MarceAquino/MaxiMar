@@ -3,8 +3,8 @@
 // ======================================================================
 // Funciones esenciales para manejo de formularios de productos
 
+import { API_ROUTES, tokenUtils } from '../../../config/api.js'
 import { logout } from '../../auth-guard.js'
-import { API_ROUTES, tokenUtils } from '../../config/api.js'
 import { mostrarErrores } from './ui-utils.js'
 
 // ======================================================================
@@ -39,9 +39,29 @@ export function configurarCamposDinamicosProducto (selectTipoId, contenedores) {
   console.log('⚙️ Campos dinámicos configurados')
 }
 
-// ======================================================================
-// RECOPILACIÓN DE DATOS
-// ======================================================================
+// ------------------------------------------------------------------
+//  RECOPILAR DATOS DEL FORMULARIO "Registrar Admin"
+// ------------------------------------------------------------------
+export function recopilarDatosAdmin () {
+  // IDs fijos de los inputs
+  const nombreInput = document.getElementById('nombreAdmin')
+  const emailInput = document.getElementById('emailAdmin')
+  const passwordInput = document.getElementById('passwordAdmin')
+  const confirmInput = document.getElementById('confirmPasswordAdmin')
+
+  // Comprobaciones mínimas para evitar null‑pointer
+  if (!nombreInput || !emailInput || !passwordInput || !confirmInput) {
+    throw new Error('Uno o más campos del formulario de administrador no fueron encontrados')
+  }
+
+  return {
+    nombre: nombreInput.value.trim(),
+    email: emailInput.value.trim(),
+    password: passwordInput.value,
+    confirmarPassword: confirmInput.value
+  }
+}
+
 export function recopilarDatosProducto (formId) {
   const form = document.getElementById(formId)
   if (!form) throw new Error(`Formulario '${formId}' no encontrado`)
