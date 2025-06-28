@@ -1,12 +1,3 @@
-// ======================================================================
-// TICKET DE COMPRA - MOSTRAR DETALLES DE VENTA PARA ESTUDIANTES
-// ======================================================================
-// Este archivo maneja la página del ticket/factura después de una compra
-// Incluye: cargar datos de venta, mostrar productos, generar PDF
-
-// ======================================================================
-// CONFIGURACIÓN DE LA API
-// ======================================================================
 const API_URL = 'http://localhost:3030/api' // URL base del servidor
 
 // ======================================================================
@@ -97,7 +88,7 @@ function mostrarDatosCliente (venta) {
 }
 
 // ======================================================================
-// MOSTRAR PRODUCTOS
+// MOSTRAR PRODUCTOS Escritorio
 // ======================================================================
 function mostrarProductos (productos) {
   const tbody = document.getElementById('productos-ticket')

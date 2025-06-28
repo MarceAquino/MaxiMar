@@ -3,7 +3,7 @@
 // ======================================================================
 // Este módulo maneja todas las operaciones relacionadas con ventas
 
-import { API_ROUTES, tokenUtils } from '../../../config/api.js'
+import { API_ROUTES, tokenUtils } from '../../config/api.js'
 import { DashboardState } from './dashboard-state.js'
 
 // ======================================================================
@@ -49,9 +49,6 @@ export function renderizarVentas () {
     return
   }
 
-  // Verificar si es vista grid o lista
-  const esVistaGrid = document.getElementById('vistaVentasGrid')?.checked ?? true
-
   contenedor.innerHTML = ''
 
   const ventas = DashboardState.getVentas()
@@ -72,69 +69,41 @@ export function renderizarVentas () {
     ordenarVentas(ordenSelect.value)
   }
 
-  // Configurar clases CSS según el tipo de vista
-  contenedor.className = esVistaGrid ? 'row g-4' : 'vista-lista'
+  contenedor.className = 'row g-4'
 
   ventas.forEach(venta => {
     const div = document.createElement('div')
-
-    // Configurar clases CSS
-    if (esVistaGrid) div.className = 'col-lg-4 col-md-6'
+    div.className = 'col-lg-2-4 col-md-4 col-12'
 
     const fecha = new Date(venta.fecha_venta).toLocaleDateString('es-AR')
     const total = parseFloat(venta.total || 0).toLocaleString('es-AR')
 
-    if (esVistaGrid) {
-      // Vista de cuadrícula
-      div.innerHTML = `
-        <div class="venta-card clickable" data-venta-id="${venta.venta_id}">
-          <div class="venta-card-content">
-            <div class="d-flex justify-content-between align-items-start mb-3">
-              <h6 class="mb-0">Venta #${venta.venta_id}</h6>
-              <span class="venta-total">$${total}</span>
-            </div>
-            <p class="venta-fecha mb-2">
-              <i class="fas fa-calendar me-2"></i>${fecha}
-            </p>
-            <p class="text-muted mb-2">
-              <i class="fas fa-user me-2"></i>${venta.nombre_cliente}
-            </p>
-            <p class="text-muted mb-0">
-              <i class="fas fa-boxes me-2"></i>${venta.cantidad_productos || 'N/A'} productos
-            </p>
-          </div>
-          <div class="venta-card-overlay">
-            <i class="fas fa-eye"></i>
-            <span>Ver detalle</span>
-          </div>
-          <div class="venta-detalle-expandido" style="display: none;">
-            <!-- El detalle se cargará aquí -->
-          </div>
-        </div>
-      `
-    } else {
-      // Vista de lista
-      div.innerHTML = `
-        <div class="venta-card clickable" data-venta-id="${venta.venta_id}">
-          <div class="card-body">
-            <div class="venta-info">
-              <h6 class="mb-1">Venta #${venta.venta_id}</h6>
-              <small class="text-muted">${fecha} | ${venta.nombre_cliente}</small>
-            </div>
+    div.innerHTML = `
+      <div class="venta-card clickable" data-venta-id="${venta.venta_id}">
+        <div class="venta-card-content">
+          <div class="d-flex justify-content-between align-items-start mb-3">
+            <h6 class="mb-0">Venta #${venta.venta_id}</h6>
             <span class="venta-total">$${total}</span>
-            <span class="text-muted">
-              <i class="fas fa-boxes me-1"></i>${venta.cantidad_productos || 'N/A'} productos
-            </span>
-            <div class="venta-actions">
-              <i class="fas fa-chevron-down"></i>
-            </div>
           </div>
-          <div class="venta-detalle-expandido" style="display: none;">
-            <!-- El detalle se cargará aquí -->
-          </div>
+          <p class="venta-fecha mb-2">
+            <i class="fas fa-calendar me-2"></i>${fecha}
+          </p>
+          <p class="text-muted mb-2">
+            <i class="fas fa-user me-2"></i>${venta.nombre_cliente}
+          </p>
+          <p class="text-muted mb-0">
+            <i class="fas fa-boxes me-2"></i>${venta.cantidad_productos || 'N/A'} productos
+          </p>
         </div>
-      `
-    }
+        <div class="venta-card-overlay">
+          <i class="fas fa-eye"></i>
+          <span>Ver detalle</span>
+        </div>
+        <div class="venta-detalle-expandido" style="display: none;">
+          <!-- El detalle se cargará aquí -->
+        </div>
+      </div>
+    `
 
     // Agregar event listener para el click
     const ventaCard = div.querySelector('.venta-card')

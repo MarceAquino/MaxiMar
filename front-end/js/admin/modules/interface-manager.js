@@ -6,11 +6,11 @@
 import { logout } from '../../auth-guard.js'
 import { cargarAdministradores, renderizarAdministradores } from './admins-manager.js'
 import { DashboardState } from './dashboard-state.js'
-import { aplicarFiltros, renderizarProductos } from './products-manager.js'
+import { aplicarFiltros } from './products-manager.js'
 import { cargarVentas, renderizarVentas } from './sales-manager.js'
 
 // ======================================================================
-// CONFIGURACIÓN DE INTERFAZ SEGÚN ROL
+// CONFIGURACIÓN DE INTERFAZ SEGUN ROL
 // ======================================================================
 export function configurarInterfazSegunRol () {
   const usuarioActual = DashboardState.getUsuarioActual()
@@ -98,22 +98,6 @@ export function configurarEventListeners () {
   document.getElementById('filtroCategoria').addEventListener('change', aplicarFiltros)
   document.getElementById('filtroMascota').addEventListener('change', aplicarFiltros)
   document.getElementById('filtroEstado').addEventListener('change', aplicarFiltros)
-
-  // Cambio de vista (grid vs lista)
-  document.getElementById('vistaGrid').addEventListener('change', renderizarProductos)
-  document.getElementById('vistaLista').addEventListener('change', renderizarProductos)
-
-  // Cambio de vista para administradores
-  const vistaAdminsGrid = document.getElementById('vistaAdminsGrid')
-  const vistaAdminsLista = document.getElementById('vistaAdminsLista')
-  if (vistaAdminsGrid) vistaAdminsGrid.addEventListener('change', renderizarAdministradores)
-  if (vistaAdminsLista) vistaAdminsLista.addEventListener('change', renderizarAdministradores)
-
-  // Cambio de vista para ventas
-  const vistaVentasGrid = document.getElementById('vistaVentasGrid')
-  const vistaVentasLista = document.getElementById('vistaVentasLista')
-  if (vistaVentasGrid) vistaVentasGrid.addEventListener('change', renderizarVentas)
-  if (vistaVentasLista) vistaVentasLista.addEventListener('change', renderizarVentas)
 
   // Botón de logout
   document.getElementById('logoutBtn').addEventListener('click', logout)

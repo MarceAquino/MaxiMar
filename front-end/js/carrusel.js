@@ -1,11 +1,11 @@
 document.addEventListener('DOMContentLoaded', function () {
-  // Lógica del truco del carrusel
   function setupCarruselTruco () {
     const clicks = []
     const codigo = ['right', 'right', 'right', 'left', 'left', 'left']
 
     const botonDerecha = document.querySelector('.carousel-control-next')
     const botonIzquierda = document.querySelector('.carousel-control-prev')
+
     const botonSecreto = document.getElementById('secretButton')
     const carrusel = document.getElementById('petCarousel')
 

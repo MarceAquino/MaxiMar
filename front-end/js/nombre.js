@@ -73,12 +73,16 @@ function configurarSistemaNombres () {
     } else {
       console.log('❌ Nombre muy corto, mostrando error')
 
-      // Mostrar campo como inválido
       campoNombreUsuario.classList.add('is-invalid')
+
+      // Mostrar mensaje de error en el div
+      const errorNombre = document.getElementById('errorNombre')
+      errorNombre.textContent = 'El nombre es demasiado corto'
 
       // Quitar error después de 3 segundos
       setTimeout(() => {
         campoNombreUsuario.classList.remove('is-invalid')
+        errorNombre.textContent = ''
       }, 3000)
     }
   })

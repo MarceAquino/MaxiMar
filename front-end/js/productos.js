@@ -1,11 +1,5 @@
-// ======================================================================
-// PRODUCTOS.JS - GESTIÓN DE PRODUCTOS PARA ESTUDIANTES
-// ======================================================================
-// Este archivo maneja la visualización y gestión de productos en la tienda
-// Incluye: carga de productos, renderizado, filtros, carrusel de imágenes
-
-import { API_ROUTES } from '../config/api.js'
 import { actualizarContadorCarrito, agregarAlCarrito } from './carrito.js'
+import { API_ROUTES } from './config/api.js'
 import { inicializarFiltros } from './filtros-tabs.js'
 
 // ======================================================================
@@ -156,7 +150,7 @@ function crearTarjetaProducto (producto) {
 
   // Crear el elemento principal
   const col = document.createElement('div')
-  col.className = 'col-xl-3 col-lg-4 col-md-6 col-sm-6'
+  col.className = 'col-12 col-lg-3'
 
   col.innerHTML = `
     <div class="card h-100 shadow-sm product-card">
@@ -277,13 +271,6 @@ function crearHTMLImagenes (imagenes, containerId, nombreProducto, tieneMultiple
         <button class="image-nav next" onclick="changeImage('${containerId}', 1)">
           <i class="fas fa-chevron-right"></i>
         </button>
-
-        <div class="image-indicators">
-          ${imagenes.map((_, index) => `
-            <button class="image-dot ${index === 0 ? 'active' : ''}"
-                    onclick="setImage('${containerId}', ${index})"></button>
-          `).join('')}
-        </div>
       `
 : ''}
     </div>`
@@ -345,7 +332,6 @@ function manejarAgregarAlCarrito (boton) {
   // Agregar al carrito (ahora retorna true/false)
   const agregadoExitoso = agregarAlCarrito(producto)
 
-  // Solo mostrar feedback si se agregó exitosamente
   if (agregadoExitoso) {
     mostrarFeedbackAgregar(boton)
     actualizarContadorCarrito()
@@ -353,37 +339,17 @@ function manejarAgregarAlCarrito (boton) {
   }
 }
 
-/**
- * Muestra feedback visual cuando se agrega un producto al carrito
- * @param {HTMLElement} boton - Botón que cambió de estado
- */
 function mostrarFeedbackAgregar (boton) {
-  // Guardar estado original
-  const originalHTML = boton.innerHTML
-  const originalClass = boton.className
+  const toast = document.createElement('div')
+  toast.className = 'toast-feedback'
+  toast.innerHTML = '<i class="fas fa-check-circle me-2"></i> Producto agregado al carrito'
+  document.body.appendChild(toast)
 
-  // Cambiar a estado "agregado"
-  boton.innerHTML = '<i class="fas fa-check me-2"></i> ¡Agregado!'
-  boton.className = 'btn btn-success w-100'
-  boton.disabled = true
-
-  // Restaurar estado original después de 1.5 segundos
   setTimeout(() => {
-    boton.innerHTML = originalHTML
-    boton.className = originalClass
-    boton.disabled = false
-  }, 1500)
+    toast.remove()
+  }, 2000)
 }
 
-// ======================================================================
-// FUNCIONES AUXILIARES
-// ======================================================================
-
-/**
- * Muestra un mensaje temporal al usuario
- * @param {string} mensaje - Texto del mensaje
- * @param {string} tipo - Tipo de alerta (info, success, warning, danger)
- */
 function mostrarMensaje (mensaje, tipo = 'info') {
   console.log(`💬 Mostrando mensaje: ${mensaje} (${tipo})`)
 
@@ -392,7 +358,6 @@ function mostrarMensaje (mensaje, tipo = 'info') {
     return window.customAlert.show(mensaje, tipo, { duration: 4000 })
   }
 
-  // Fallback a alertas Bootstrap
   const alerta = document.createElement('div')
   alerta.className = `alert alert-${tipo} alert-dismissible fade show position-fixed`
   alerta.style.cssText = 'top: 20px; right: 20px; z-index: 9999; min-width: 300px;'
@@ -401,10 +366,8 @@ function mostrarMensaje (mensaje, tipo = 'info') {
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
   `
 
-  // Agregar al DOM
   document.body.appendChild(alerta)
 
-  // Auto-remover después de 3 segundos
   setTimeout(() => {
     if (alerta.parentNode) {
       alerta.remove()
@@ -412,30 +375,19 @@ function mostrarMensaje (mensaje, tipo = 'info') {
   }, 3000)
 }
 
-// ======================================================================
-// INICIALIZACIÓN PRINCIPAL
-// ======================================================================
-
-/**
- * Inicializa la página cuando el DOM está cargado
- */
 document.addEventListener('DOMContentLoaded', async () => {
   console.log('🚀 Iniciando aplicación de productos...')
 
   try {
-    // 1. Cargar productos desde el servidor
     await cargarProductos()
 
-    // 2. Cargar carrito desde localStorage para mantener el contador
     const carritoGuardado = localStorage.getItem('carrito')
     if (carritoGuardado) {
       console.log('📦 Carrito encontrado en localStorage')
     }
 
-    // 3. Inicializar página de productos
     inicializarPaginaProductos()
 
-    // 4. Actualizar contador del carrito
     actualizarContadorCarrito()
 
     console.log('✅ Aplicación de productos iniciada correctamente')
@@ -445,10 +397,6 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 })
 
-// ======================================================================
-// EXPORTACIONES
-// ======================================================================
-
 export {
   cargarProductos,
   inicializarPaginaProductos,
@@ -456,16 +404,6 @@ export {
   renderizarProductos
 }
 
-// ======================================================================
-// FUNCIONES GLOBALES PARA NAVEGACIÓN DE IMÁGENES
-// ======================================================================
-// Estas funciones se hacen globales para ser llamadas desde los eventos onclick del HTML
-
-/**
- * Cambia la imagen mostrada en el carrusel de productos
- * @param {string} containerId - ID del contenedor de imágenes
- * @param {number} direccion - Dirección del cambio (-1 anterior, 1 siguiente)
- */
 window.changeImage = function (containerId, direccion) {
   const contenedor = document.getElementById(containerId)
   if (!contenedor) {
@@ -481,13 +419,12 @@ window.changeImage = function (containerId, direccion) {
 
   const imagenes = JSON.parse(img.dataset.images || '[]')
   if (imagenes.length <= 1) {
-    return // No hay múltiples imágenes para navegar
+    return
   }
 
   let indiceActual = parseInt(img.dataset.current || '0')
   indiceActual += direccion
 
-  // Navegación circular
   if (indiceActual >= imagenes.length) {
     indiceActual = 0
   }
@@ -495,21 +432,14 @@ window.changeImage = function (containerId, direccion) {
     indiceActual = imagenes.length - 1
   }
 
-  // Actualizar imagen
   img.src = imagenes[indiceActual]
   img.dataset.current = indiceActual.toString()
 
-  // Actualizar indicadores
   actualizarIndicadoresImagen(contenedor, indiceActual)
 
   console.log(`🖼️ Imagen cambiada a índice ${indiceActual}`)
 }
 
-/**
- * Establece una imagen específica en el carrusel
- * @param {string} containerId - ID del contenedor de imágenes
- * @param {number} indice - Índice de la imagen a mostrar
- */
 window.setImage = function (containerId, indice) {
   const contenedor = document.getElementById(containerId)
   if (!contenedor) {
@@ -529,21 +459,14 @@ window.setImage = function (containerId, indice) {
     return
   }
 
-  // Actualizar imagen
   img.src = imagenes[indice]
   img.dataset.current = indice.toString()
 
-  // Actualizar indicadores
   actualizarIndicadoresImagen(contenedor, indice)
 
   console.log(`🖼️ Imagen establecida en índice ${indice}`)
 }
 
-/**
- * Actualiza los indicadores visuales del carrusel de imágenes
- * @param {HTMLElement} contenedor - Contenedor del carrusel
- * @param {number} indiceActivo - Índice de la imagen activa
- */
 function actualizarIndicadoresImagen (contenedor, indiceActivo) {
   const indicadores = contenedor.querySelectorAll('.image-dot')
   indicadores.forEach((indicador, indice) => {

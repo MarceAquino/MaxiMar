@@ -10,7 +10,8 @@ const db = new Sequelize(
     host: DB_HOST,
     port: DB_PORT,
     dialect: 'mysql',
-    logging: false // opcional para no ver tantas consultas en consola
+    logging: false,
+    timezone: '-03:00'
   }
 )
 

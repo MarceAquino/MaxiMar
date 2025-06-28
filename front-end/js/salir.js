@@ -1,12 +1,3 @@
-// ======================================================================
-// SISTEMA DE LOGOUT - SIMPLE PARA ESTUDIANTES
-// ======================================================================
-// Este archivo maneja el botón de "Salir" para clientes
-// Limpia todos los datos guardados y regresa al inicio
-
-// ======================================================================
-// INICIALIZACIÓN CUANDO LA PÁGINA CARGA
-// ======================================================================
 document.addEventListener('DOMContentLoaded', () => {
   console.log('🚪 Configurando sistema de logout...')
 
@@ -16,29 +7,16 @@ document.addEventListener('DOMContentLoaded', () => {
   // Si existe el botón, configurar su evento
   if (botonSalir) {
     botonSalir.addEventListener('click', manejarSalida)
-    console.log('✅ Botón de salir configurado')
-  } else {
-    console.log('ℹ️ No hay botón de salir en esta página')
   }
 })
 
-// ======================================================================
-// FUNCIÓN: MANEJAR SALIDA DEL USUARIO
-// ======================================================================
-/**
- * Limpia todos los datos del usuario y regresa al inicio
- * @param {Event} evento - Evento del click
- */
 function manejarSalida (evento) {
-  evento.preventDefault() // Evitar comportamiento por defecto del enlace
+  evento.preventDefault()
 
-  console.log('🚪 Usuario cerrando sesión...')
+  const confirmar = confirm('¿Estás seguro que quieres salir?')
 
-  // Limpiar TODOS los datos guardados en localStorage
-  localStorage.clear()
-  console.log('🧹 Datos de localStorage limpiados')
-
-  // Regresar a la página principal
-  console.log('🏠 Redirigiendo al inicio...')
-  window.location.href = '/front-end/index.html'
+  if (confirmar) {
+    localStorage.clear()
+    window.location.href = evento.currentTarget.href
+  }
 }

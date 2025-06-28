@@ -1,41 +1,103 @@
-/* Animación del carrusel */
-.carousel-flip {
-    animation: flipCarousel 0.8s ease-in-out;
+/* ===== CARRUSEL ===== */
+/* Estilo base para las flechas del carrusel */
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    background-color: var(--primary-orange);
+    border-radius: 50%;
+    width: 2.2rem;
+    height: 2.2rem;
 }
 
-@keyframes flipCarousel {
-    0% {
-        transform: rotateY(0deg);
-    }
-
-    50% {
-        transform: rotateY(90deg);
-    }
-
-    100% {
-        transform: rotateY(0deg);
-    }
+.carousel-control-prev {
+    left: -1.1rem;
+}
+.carousel-control-next {
+    right: -1.1rem;
 }
 
-/* Estilos del botón secreto */
+/* Modo oscuro: solo cambia el color de fondo */
+[data-bs-theme="dark"] .carousel-control-prev-icon,
+[data-bs-theme="dark"] .carousel-control-next-icon {
+    background-color: black;
+}
+
+@media (max-width: 768px) {
+    .carousel-control-prev-icon,
+    .carousel-control-next-icon {
+            width: 1.5rem;
+            height: 1.5rem;
+        }
+    .carousel-control-prev {
+        left: -0.8rem;
+        }
+    .carousel-control-next {
+        right: -0.8rem;       }
+}
+
+/* ===== CARD DE LOGIN MODERNA ===== */
+.login-card {
+    background: transparent;
+    border: 2.5px solid var(--border-light);
+    border-radius: 20px;
+    box-shadow: var(--shadow-medium);
+    backdrop-filter: blur(20px);
+    transition: all 0.3s ease;
+    color: var(--text-dark);
+}
+
+.login-card:hover {
+    border-color: var(--primary-orange);
+}
+
+.form-control:focus {
+    border-color: var(--primary-orange);
+    box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.1);
+    background: var(--card-bg);
+    color: var(--text-dark);
+}
+
+.form-control {
+    background: var(--card-bg);
+    color: var(--text-dark);
+    border-color: var(--border-light);
+}
+
+[data-bs-theme="dark"] .form-control {
+    background: var(--card-bg);
+    color: var(--text-dark);
+    border-color: var(--border-light);
+}
+
+.btn-orange{
+    background: var(--primary-orange);
+    border: 2px solid var(--border-light);
+    color: var(--text-dark);
+    padding: 10px 20px;
+    border-radius: 50px;
+    font-weight: bold;
+}
+.btn-orange:hover {
+    background: var(--primary-orange-hover);
+    border-color: var(--primary-orange-hover);
+    color: var(--text-dark);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-medium);
+}
+
+/* ===== BOTÓN ADMIN OCULTO ===== */
 #secretButton {
-    opacity: 0;
     transform: scale(0.5) rotate(180deg);
     visibility: hidden;
-    background: linear-gradient(45deg, #ffd700, #ffed4e) !important;
-    border: none !important;
-    color: #333 !important;
+    opacity: 0;
+    background: var(--primary-orange);
+    border: 1px solid black;
     font-weight: bold;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-    box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4);
-    display: inline-block;
     width: auto;
-    padding: 8px 16px;
-    margin: 0;
-    font-size: 0.875rem;
-    border-radius: 0.375rem;
-    text-decoration: none;
-    transition: all 0.6s ease;
+    margin-top:1rem;
+    font-size: 0.8rem;
+    border-radius: 0.6rem;
+    transition: transform 0.5s ease, opacity 0.5s ease;
+    transform-origin: center;
 }
 
 #secretButton.show {
@@ -43,31 +105,14 @@
     transform: scale(1) rotate(0deg);
     visibility: visible;
 }
-
 #secretButton:hover {
-    background: linear-gradient(45deg, #ffed4e, #ffd700) !important;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(255, 215, 0, 0.6);
-    text-decoration: none;
+    background: var(--primary-orange-hover);
+    transform: translateY(-1.5px);
 }
 
-/* Contenedor para alinear a la izquierda */
-.admin-button-container {
-    display: flex;
-    justify-content: flex-start;
-    margin-top: 1rem;
+[data-bs-theme="dark"] #secretButton{
+    background: var(--primary-orange-light);
+    border: 2px solid var(--border-light);
 }
-
-/* ===== LOGO FLOTANTE ===== */
-.floating-logo {
-    position: absolute;
-    top: 15px;
-    left: 20px;
-    height: 50px;
-    z-index: 1050;
-    transition: transform 0.3s ease;
-}
-
-.floating-logo:hover {
-    transform: scale(1.05);
-}
+.invalid-feedback {
+    display: block}

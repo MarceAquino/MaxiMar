@@ -18,8 +18,5 @@
       "browser": true,
       "es2021": true
     }
-  },
-  "dependencies": {
-    "zod": "^3.25.67"
   }
 }

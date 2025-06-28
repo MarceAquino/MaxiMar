@@ -1,10 +1,5 @@
-// ======================================================================
-// GESTOR DE PRODUCTOS DEL DASHBOARD
-// ======================================================================
-// Este módulo maneja todas las operaciones relacionadas con productos
-
-import { API_ROUTES, tokenUtils } from '../../../config/api.js'
 import { logout } from '../../auth-guard.js'
+import { API_ROUTES, tokenUtils } from '../../config/api.js'
 import { DashboardState } from './dashboard-state.js'
 
 // ======================================================================
@@ -41,6 +36,14 @@ export function aplicarFiltros () {
   const mascotaFiltro = document.getElementById('filtroMascota').value
   const estadoFiltro = document.getElementById('filtroEstado').value
 
+  // Si todos los filtros están vacíos, mostrar todos los productos
+  if (!textoBusqueda && !categoriaFiltro && !mascotaFiltro && !estadoFiltro) {
+    DashboardState.setProductosFiltrados(DashboardState.getProductos())
+    renderizarProductos()
+    actualizarContador()
+    return
+  }
+
   // Filtrar productos según criterios
   const productosFiltrados = DashboardState.getProductos().filter(producto => {
     // ¿El nombre o código coincide con la búsqueda?
@@ -62,6 +65,13 @@ export function aplicarFiltros () {
   DashboardState.setProductosFiltrados(productosFiltrados)
   renderizarProductos()
   actualizarContador()
+
+  // Si no hay productos y el input de búsqueda está vacío, recargar todos
+  if (productosFiltrados.length === 0 && !textoBusqueda && !categoriaFiltro && !mascotaFiltro && !estadoFiltro) {
+    DashboardState.setProductosFiltrados(DashboardState.getProductos())
+    renderizarProductos()
+    actualizarContador()
+  }
 }
 
 // ======================================================================
@@ -70,10 +80,10 @@ export function aplicarFiltros () {
 export function renderizarProductos () {
   const contenedor = document.getElementById('contenedorProductos')
   const mensajeSinProductos = document.getElementById('mensajeSinProductos')
-  const esVistaGrid = document.getElementById('vistaGrid').checked
 
   // Limpiar contenedor
   contenedor.innerHTML = ''
+  contenedor.style.display = 'flex'
 
   // ¿No hay productos que mostrar?
   if (DashboardState.getProductosFiltrados().length === 0) {
@@ -86,12 +96,9 @@ export function renderizarProductos () {
   mensajeSinProductos.style.display = 'none'
   contenedor.style.display = 'flex'
 
-  // Configurar clases CSS según el tipo de vista
-  contenedor.className = esVistaGrid ? 'row g-4' : 'vista-lista'
-
   // Crear tarjeta para cada producto
   DashboardState.getProductosFiltrados().forEach(producto => {
-    const tarjeta = crearTarjetaProducto(producto, esVistaGrid)
+    const tarjeta = crearTarjetaProducto(producto)
     contenedor.appendChild(tarjeta)
   })
 }
@@ -99,23 +106,14 @@ export function renderizarProductos () {
 // ======================================================================
 // CREAR TARJETA HTML PARA UN PRODUCTO
 // ======================================================================
-export function crearTarjetaProducto (producto, esVistaGrid) {
+export function crearTarjetaProducto (producto) {
   const div = document.createElement('div')
-
-  // Configurar clases CSS
-  if (esVistaGrid) div.className = 'col-lg-4 col-md-6 col-sm-12'
-
+  div.className = 'col-lg-2-4 col-md-4 col-12'
   const stockClase = obtenerClaseStock(producto.stock)
   const categoriaClase = producto.categoria || 'alimento'
   const estadoClase = producto.activo ? '' : 'inactivo'
-
-  // ¿El usuario puede activar/desactivar productos?
   const esSuperAdmin = DashboardState.getUsuarioActual() && DashboardState.getUsuarioActual().rol === 'superadmin'
-
-  // ¿El usuario puede modificar este producto?
   const puedeModificar = esSuperAdmin || producto.activo
-
-  // Botones según permisos
   const botonesAccion = `
     ${puedeModificar
 ? `
@@ -142,72 +140,38 @@ export function crearTarjetaProducto (producto, esVistaGrid) {
     `
 : ''}
   `
-
-  // HTML de la tarjeta (vista grid)
-  if (esVistaGrid) {
-    div.innerHTML = `
-      <div class="producto-card position-relative ${estadoClase}">
-        <div class="producto-card-header">
-          <div class="d-flex justify-content-between align-items-center">
-            <span class="producto-badge ${categoriaClase}">
-              <i class="fas ${categoriaClase === 'alimento' ? 'fa-bone' : 'fa-dice'}"></i>
-              ${categoriaClase.charAt(0).toUpperCase() + categoriaClase.slice(1)}
-            </span>
-            <small class="text-muted">#${producto.codigo}</small>
-          </div>
-        </div>
-        <div class="producto-card-body">
-          <h6 class="card-title mb-2">${producto.nombre}</h6>
-          <p class="text-muted mb-2">
-            <i class="fas ${producto.tipo_mascota === 'perro' ? 'fa-dog' : 'fa-cat'} me-1"></i>
-            ${producto.tipo_mascota.charAt(0).toUpperCase() + producto.tipo_mascota.slice(1)}
-          </p>
-          <div class="d-flex justify-content-between align-items-center mb-2">
-            <span class="producto-precio">$${producto.precio.toLocaleString('es-AR')}</span>
-            <span class="producto-stock ${stockClase}">
-              <i class="fas fa-boxes me-1"></i>
-              Stock: ${producto.stock}
-            </span>
-          </div>
-          <small class="text-muted d-block mb-2">Marca: ${producto.marca}</small>
-          <div class="producto-acciones">
-            ${botonesAccion}
-          </div>
-        </div>
-      </div>
-    `
-  } else {
-    // HTML de la tarjeta (vista lista)
-    div.innerHTML = `
-      <div class="producto-card ${estadoClase}">
-        <div class="producto-card-body">
-          <div class="producto-info">
-            <div>
-              <h6 class="mb-1">${producto.nombre}</h6>
-              <small class="text-muted">#${producto.codigo} | ${producto.marca}</small>
-            </div>
-          </div>
+  div.innerHTML = `
+    <div class="producto-card position-relative ${estadoClase}">
+      <div class="producto-card-header">
+        <div class="d-flex justify-content-between align-items-center">
           <span class="producto-badge ${categoriaClase}">
             <i class="fas ${categoriaClase === 'alimento' ? 'fa-bone' : 'fa-dice'}"></i>
-            ${categoriaClase}
+            ${categoriaClase.charAt(0).toUpperCase() + categoriaClase.slice(1)}
           </span>
-          <span class="producto-mascota text-muted">
-            <i class="fas ${producto.tipo_mascota === 'perro' ? 'fa-dog' : 'fa-cat'} me-1"></i>
-            ${producto.tipo_mascota}
-          </span>
-          <span class="producto-precio">$${producto.precio.toLocaleString('es-AR')}</span>
-          <span class="producto-stock ${stockClase}">Stock: ${producto.stock}</span>
-          <div class="producto-acciones">
-            ${botonesAccion}
-          </div>
+          <small class="text-muted">#${producto.codigo}</small>
         </div>
       </div>
-    `
-  }
-
-  // Agregar funcionalidad a los botones
+      <div class="producto-card-body">
+        <h6 class="card-title mb-2">${producto.nombre}</h6>
+        <p class="text-muted mb-2">
+          <i class="fas ${producto.tipo_mascota === 'perro' ? 'fa-dog' : 'fa-cat'} me-1"></i>
+          ${producto.tipo_mascota.charAt(0).toUpperCase() + producto.tipo_mascota.slice(1)}
+        </p>
+        <div class="d-flex justify-content-between align-items-center mb-2">
+          <span class="producto-precio">$${producto.precio.toLocaleString('es-AR')}</span>
+          <span class="producto-stock ${stockClase}">
+            <i class="fas fa-boxes me-1"></i>
+            Stock: ${producto.stock}
+          </span>
+        </div>
+        <small class="text-muted d-block mb-2">Marca: ${producto.marca}</small>
+        <div class="producto-acciones">
+          ${botonesAccion}
+        </div>
+      </div>
+    </div>
+  `
   agregarEventListenersProducto(div, producto)
-
   return div
 }
 

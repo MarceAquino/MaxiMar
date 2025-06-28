@@ -1,52 +1,30 @@
 /* ===== ESTILOS PARA TICKET DE COMPRA ===== */
 
-/* Contenedor principal del ticket */
-.ticket-container {
-    max-width: 100%;
-    margin: 2rem auto;
-    background: var(--card-bg);
-    border-radius: 10px;
-    box-shadow: var(--shadow-medium);
-    overflow: hidden;
-    border: 1px solid var(--border-light);
-    transition: all 0.3s ease;
-}
 
 /* Header del ticket con tema naranja */
 .ticket-header {
-    background: linear-gradient(135deg, var(--primary-orange), #ff8c42);
-    color: white;
-    padding: 1.5rem;
+    background: var(--primary-orange);
+    color:var(--text-dark);
+    padding: 1rem;
     text-align: center;
 }
-
-.ticket-header h1 {
-    font-size: 2rem;
-    margin-bottom: 0.5rem;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.ticket-header p {
-    opacity: 0.9;
-}
-
-/* Cuerpo del ticket */
-.ticket-body {
-    padding: 2rem;
-    background: var(--card-bg);
-    color: var(--text-dark);
-}
-
 /* Datos del usuario */
 .datos-usuario {
     background: var(--orange-bg);
     border-radius: 8px;
     padding: 1.5rem;
     margin-bottom: 2rem;
-    border-left: 4px solid var(--primary-orange);
+    border-left: 3px solid var(--primary-orange);
     border: 1px solid var(--border-light);
 }
-
+h3{
+    color: var(--text-dark);
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+.fas{
+    color: var(--text-dark);
+}
 /* Caja de totales */
 .total-box {
     background: var(--orange-bg);
@@ -86,108 +64,17 @@
 
 /* Botones con tema consistente */
 .btn-warning {
-    background: linear-gradient(135deg, #fbbf24, #f59e0b);
+    background: var(--primary-orange);
     border: none;
-    color: #1f2937;
+    color: var(--text-dark);
     font-weight: 500;
     transition: all 0.3s ease;
     box-shadow: var(--shadow-soft);
 }
 
 .btn-warning:hover {
-    background: linear-gradient(135deg, #f59e0b, #d97706);
+    background: var(--primary-orange-hover);
     transform: translateY(-2px);
     box-shadow: var(--shadow-medium);
-    color: #1f2937;
-}
-
-.btn-danger {
-    background: linear-gradient(135deg, #dc3545, #c82333);
-    border: none;
-    color: white;
-    font-weight: 500;
-    transition: all 0.3s ease;
-    box-shadow: var(--shadow-soft);
-}
-
-.btn-danger:hover {
-    background: linear-gradient(135deg, #c82333, #bd2130);
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-medium);
-    color: white;
-}
-
-/* Títulos con iconos */
-h3 {
-    color: var(--primary-orange);
-    font-weight: 600;
-    margin-bottom: 1rem;
-}
-
-/* Líneas divisorias */
-hr {
-    border-color: var(--border-light);
-    opacity: 0.5;
-}
-
-/* Texto en negrita */
-strong {
     color: var(--text-dark);
-}
-
-/* Modo oscuro - Ajustes específicos */
-[data-bs-theme="dark"] .ticket-container {
-    background: var(--card-bg);
-    border-color: var(--border-light);
-}
-
-[data-bs-theme="dark"] .ticket-body {
-    background: var(--card-bg);
-}
-
-[data-bs-theme="dark"] .datos-usuario {
-    background: rgba(255, 152, 66, 0.1);
-    border-left-color: var(--primary-orange);
-}
-
-[data-bs-theme="dark"] .total-box {
-    background: rgba(255, 152, 66, 0.1);
-}
-
-[data-bs-theme="dark"] .table th {
-    background: rgba(255, 152, 66, 0.2);
-}
-
-/* Estilos para impresión */
-@media print {
-    body * {
-        visibility: hidden;
-    }
-    .ticket-container, .ticket-container * {
-        visibility: visible;
-    }
-    .ticket-container {
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 100%;
-        margin: 0;
-        box-shadow: none;
-        border: none;
-        background: white !important;
-    }
-    .ticket-header {
-        background: var(--primary-orange) !important;
-        color: white !important;
-    }
-    .ticket-body {
-        background: white !important;
-        color: black !important;
-    }
-    .no-print {
-        display: none !important;
-    }
-    .btn {
-        display: none !important;
-    }
 }

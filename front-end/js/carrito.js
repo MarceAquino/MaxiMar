@@ -4,7 +4,7 @@
 // Este archivo maneja todas las funciones del carrito de compras
 // Incluye: agregar productos, modificar cantidades, guardar en localStorage
 
-import { API_ROUTES } from '../config/api.js'
+import { API_ROUTES } from './config/api.js'
 
 // ======================================================================
 // CONFIGURACIÓN GLOBAL
@@ -662,16 +662,29 @@ document.addEventListener('DOMContentLoaded', async () => {
   if (obtenerPaginaActual() === 'carrito') {
     await inicializarPaginaCarrito()
   }
+
+
+  // === EXPORTAR FUNCIONES GLOBALES ===
+  window.agregarAlCarrito = agregarAlCarrito
+  window.eliminarItemCarrito = eliminarItemCarrito
+  window.cambiarCantidadCarrito = cambiarCantidadCarrito
+  window.vaciarCarrito = vaciarCarrito
+  window.finalizarCompra = finalizarCompra
 })
 
-// === EXPORTAR FUNCIONES GLOBALES ===
-window.agregarAlCarrito = agregarAlCarrito
-window.eliminarItemCarrito = eliminarItemCarrito
-window.cambiarCantidadCarrito = cambiarCantidadCarrito
-window.vaciarCarrito = vaciarCarrito
-window.finalizarCompra = finalizarCompra
-
-// === EXPORTAR FUNCIONES ===
+// ======================================================================
+// EXPORTACIONES ES6
+// ======================================================================
 export {
-  actualizarContadorCarrito, agregarAlCarrito, cambiarCantidadCarrito, cargarCarrito, carrito, eliminarItemCarrito, inicializarPaginaCarrito, obtenerCantidadTotalCarrito, obtenerCarritoActual, renderCarrito, vaciarCarrito
+  actualizarContadorCarrito,
+  agregarAlCarrito,
+  cambiarCantidadCarrito,
+  cargarCarrito,
+  carrito,
+  eliminarItemCarrito,
+  inicializarPaginaCarrito,
+  obtenerCantidadTotalCarrito,
+  obtenerCarritoActual,
+  renderCarrito,
+  vaciarCarrito
 }

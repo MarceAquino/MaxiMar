@@ -21,8 +21,7 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="/front-end/css/style.css" />
-    <link rel="stylesheet" href="/front-end/css/carrito.css" />
-    <link rel="stylesheet" href="/front-end/css/custom-alerts.css" />
+    <link rel="stylesheet" href="/front-end/css/carrito.css">
   </head>
 
   <body class="d-flex flex-column min-vh-100">
@@ -37,33 +36,19 @@
             MaxiMar Pet Shop
           </h1>
 
-          <!-- Botones a la derecha -->
-          <div class="ms-auto d-flex gap-2 align-items-center">
-            <!-- Mensaje de bienvenida -->
-            <span
-              id="welcomeMessage"
-              class="fw-bold welcome-text d-none d-sm-inline me-3"
-              style="color: var(--primary-orange)"
-            ></span>
 
+          <div class="ms-auto d-flex gap-2 align-items-center">
             <button class="btn btn-outline-light btn-sm" id="themeBtn">
               <i class="fas fa-sun" id="themeIcon"></i>
             </button>
+            <!-- Mensaje de bienvenida -->
+            <span id="welcomeMessage" class="fw-bold welcome-text ms-3"></span>
             <a
               href="/front-end/html/customer/productos.html"
-              class="btn me-2"
-              style="
-                background-color: var(--primary-orange);
-                border-color: var(--primary-orange);
-                color: white;
-              "
+              class="btn btn-outline-secondary me-2"
             >
-              <i class="fas fa-store me-1"></i>
-              <span class="d-none d-sm-inline">Seguir Comprando</span>
-            </a>
-            <a href="/front-end/index.html" class="btn btn-danger" id="exitBtn">
-              <i class="fas fa-sign-out-alt me-1"></i>
-              <span class="d-none d-sm-inline">Salir</span>
+              <i class="fas fa-arrow-left me-1"></i>
+              <span>Volver</span>
             </a>
           </div>
         </div>
@@ -75,12 +60,11 @@
         <!-- Título y contador -->
         <div class="row mb-4">
           <div class="col-12 text-center">
-            <h1
+            <h2
               class="display-5 fw-bold mb-2"
-              style="color: var(--primary-orange)"
             >
               <i class="fas fa-shopping-cart me-3"></i>Tu Carrito de Compras
-            </h1>
+            </h2>
             <p class="text-muted">
               <span id="items-count">0</span> productos en tu carrito
             </p>
@@ -97,13 +81,6 @@
                   <i class="fas fa-trash me-2"></i>Vaciar Carrito
                 </button>
               </div>
-              <div class="text-muted small">
-                <i
-                  class="fas fa-info-circle me-1"
-                  style="color: var(--primary-orange)"
-                ></i>
-                Puedes modificar las cantidades directamente
-              </div>
             </div>
           </div>
         </div>
@@ -111,34 +88,9 @@
         <div class="row">
           <!-- Productos del carrito -->
           <div class="col-lg-8">
-            <!-- Loading del carrito -->
-            <div id="carrito-loading" class="text-center py-5 d-none">
-              <div class="spinner-border text-primary" role="status">
-                <span class="visually-hidden">Cargando carrito...</span>
-              </div>
-              <p class="mt-2 text-muted">Cargando tu carrito...</p>
-            </div>
-
             <!-- Contenedor productos del carrito -->
             <div id="carrito-items" class="row g-3">
               <!-- Productos cargados dinámicamente -->
-            </div>
-
-            <!-- Carrito vacío -->
-            <div id="carrito-vacio" class="text-center py-5 d-none">
-              <div class="mb-4">
-                <i class="fas fa-shopping-cart fa-5x text-muted opacity-50"></i>
-              </div>
-              <h3 class="text-muted mb-3">Tu carrito está vacío</h3>
-              <p class="text-muted mb-4">
-                ¡Explora nuestros productos y encuentra lo mejor para tu
-                mascota!
-              </p>
-              <p class="text-info">
-                <i class="fas fa-info-circle me-2"></i>
-                Puedes usar el botón "Seguir Comprando" en la barra superior
-                para explorar nuestra tienda.
-              </p>
             </div>
           </div>
           <!-- Resumen del carrito -->
@@ -163,12 +115,6 @@
                     <span>Subtotal:</span>
                     <span id="carrito-subtotal">$0</span>
                   </div>
-                  <div class="d-flex justify-content-between mb-2">
-                    <span>Envío:</span>
-                    <span class="text-success">
-                      <i class="fas fa-truck me-1"></i>Gratis
-                    </span>
-                  </div>
                   <hr />
                   <div class="d-flex justify-content-between fw-bold fs-5">
                     <span>Total:</span>
@@ -190,22 +136,10 @@
                     <i class="fas fa-undo me-2 text-info"></i>
                     30 días para devoluciones
                   </div>
-                  <div class="d-flex align-items-center">
-                    <i class="fas fa-truck me-2 text-warning"></i>
-                    Envío gratis en compras
-                  </div>
                 </div>
                 <!-- Botón de comprar -->
                 <div class="d-grid">
-                  <button
-                    class="btn btn-lg"
-                    id="btn-finalizar-compra"
-                    style="
-                      background-color: var(--primary-orange);
-                      border-color: var(--primary-orange);
-                      color: white;
-                    "
-                  >
+                  <button class="btn btn-lg" id="btn-finalizar-compra">
                     <i class="fas fa-credit-card me-2"></i>Finalizar Compra
                   </button>
                 </div>
@@ -223,104 +157,19 @@
             </div>
           </div>
         </div>
-
-        <!-- Productos recomendados (cuando el carrito esté vacío) -->
-        <div class="row mt-5" id="productos-recomendados" style="display: none">
-          <div class="col-12">
-            <h4 class="text-center mb-4">
-              <i class="fas fa-star me-2"></i>Productos Recomendados
-            </h4>
-            <div id="recomendados-container" class="row g-3">
-              <!-- Productos recomendados se cargarán aquí -->
-            </div>
-          </div>
-        </div>
-        <!-- Total fijo en la parte inferior -->
-        <div
-          class="fixed-bottom bg-white border-top shadow-lg p-3"
-          id="total-fijo"
-          style="display: none"
-        >
-          <div class="container-fluid">
-            <div class="row align-items-center">
-              <div class="col-6">
-                <div class="d-flex align-items-center">
-                  <i
-                    class="fas fa-shopping-cart me-2"
-                    style="color: var(--primary-orange)"
-                  ></i>
-                  <span class="fw-bold">Total: </span>
-                  <span
-                    class="fw-bold fs-4 ms-2"
-                    id="total-fijo-cantidad"
-                    style="color: var(--primary-orange)"
-                    >$0</span
-                  >
-                </div>
-              </div>
-              <div class="col-6 text-end">
-                <span class="text-muted small">
-                  <span id="total-items">0</span> productos
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
     </main>
+    <a href="/front-end/index.html" class="btn btn-danger floating-exit-btn" id="exitBtn">
+      <i class="fas fa-sign-out-alt me-1"></i>Salir
+    </a>
+    <!-- Botón flotante para salir -->
 
-    <footer
-      class="mt-auto py-3 text-center bg-light"
-      style="margin-bottom: 80px"
-    >
-      <div class="container">
-        <small class="text-muted">
-          <i class="fas fa-code me-1"></i>
-          Desarrollado por Marcelo Aquino y Maximiliano Arcieri - UTN Avellaneda
-        </small>
-      </div>
+    <footer class="mt-auto py-3 text-center">
+      <small>
+        <i class="fas fa-code me-1"></i>
+        Dev por Marcelo Aquino y Maximiliano Arcieri
+      </small>
     </footer>
-
-    <!-- Modal de confirmación para vaciar carrito -->
-    <div
-      class="modal fade"
-      id="confirmarVaciarModal"
-      tabindex="-1"
-      style="display: none"
-    >
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">
-              <i class="fas fa-exclamation-triangle text-warning me-2"></i>
-              Confirmar Acción
-            </h5>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-            ></button>
-          </div>
-          <div class="modal-body">
-            ¿Estás seguro de que quieres vaciar completamente tu carrito? Esta
-            acción no se puede deshacer.
-          </div>
-          <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-bs-dismiss="modal"
-            >
-              Cancelar
-            </button>
-            <button type="button" class="btn btn-danger" id="confirmar-vaciar">
-              <i class="fas fa-trash me-2"></i>Sí, Vaciar Carrito
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>
     <script src="/front-end/js/theme.js"></script>

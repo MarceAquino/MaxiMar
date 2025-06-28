@@ -3,7 +3,7 @@
 // ======================================================================
 // Este módulo maneja todas las operaciones relacionadas con administradores
 
-import { API_ROUTES, tokenUtils } from '../../../config/api.js'
+import { API_ROUTES, tokenUtils } from '../../config/api.js'
 import { DashboardState } from './dashboard-state.js'
 
 // ======================================================================
@@ -76,9 +76,6 @@ export function renderizarAdministradores () {
     return
   }
 
-  // Verificar si es vista grid o lista
-  const esVistaGrid = document.getElementById('vistaAdminsGrid')?.checked ?? true
-
   contenedor.innerHTML = ''
 
   const administradores = DashboardState.getAdministradores()
@@ -93,60 +90,36 @@ export function renderizarAdministradores () {
     return
   }
 
-  // Configurar clases CSS según el tipo de vista
-  contenedor.className = esVistaGrid ? 'row g-4' : 'vista-lista'
+  contenedor.className = 'row g-4'
 
   administradores.forEach(admin => {
     const div = document.createElement('div')
-
-    // Configurar clases CSS
-    if (esVistaGrid) div.className = 'col-lg-4 col-md-6'
+    div.className = 'col-lg-2-4 col-md-4 col-12'
 
     const estadoClass = admin.activo ? 'activo' : 'inactivo'
     const estadoTexto = admin.activo ? 'Activo' : 'Inactivo'
     const botonTexto = admin.activo ? 'Desactivar' : 'Activar'
     const botonClass = admin.activo ? 'btn-warning' : 'btn-success'
 
-    if (esVistaGrid) {
-      // Vista de cuadrícula
-      div.innerHTML = `
-        <div class="admin-card">
-          <div class="d-flex justify-content-between align-items-start mb-3">
-            <h5 class="mb-0">${admin.nombre}</h5>
-            <span class="admin-status ${estadoClass}">${estadoTexto}</span>
-          </div>
-          <p class="text-muted mb-2">
-            <i class="fas fa-envelope me-2"></i>${admin.email}
-          </p>
-          <p class="text-muted mb-3">
-            <i class="fas fa-user-tag me-2"></i>Rol: ${admin.rol}
-          </p>
-          <div class="d-flex gap-2">
-            <button class="btn ${botonClass} btn-sm" onclick="toggleAdminStatus(${admin.admin_id}, ${admin.activo})">
-              <i class="fas ${admin.activo ? 'fa-ban' : 'fa-check'} me-1"></i>${botonTexto}
-            </button>
-          </div>
+    div.innerHTML = `
+      <div class="admin-card">
+        <div class="d-flex justify-content-between align-items-start mb-3">
+          <h5 class="mb-0">${admin.nombre}</h5>
+          <span class="admin-status ${estadoClass}">${estadoTexto}</span>
         </div>
-      `
-    } else {
-      // Vista de lista
-      div.innerHTML = `
-        <div class="admin-card">
-          <div class="card-body">
-            <div class="admin-info">
-              <h6 class="mb-1">${admin.nombre}</h6>
-              <small class="text-muted">${admin.email} | ${admin.rol}</small>
-            </div>
-            <span class="admin-status ${estadoClass}">${estadoTexto}</span>
-            <div class="admin-actions">
-              <button class="btn ${botonClass} btn-sm" onclick="toggleAdminStatus(${admin.admin_id}, ${admin.activo})">
-                <i class="fas ${admin.activo ? 'fa-ban' : 'fa-check'} me-1"></i>${botonTexto}
-              </button>
-            </div>
-          </div>
+        <p class="text-muted mb-2">
+          <i class="fas fa-envelope me-2"></i>${admin.email}
+        </p>
+        <p class="text-muted mb-3">
+          <i class="fas fa-user-tag me-2"></i>Rol: ${admin.rol}
+        </p>
+        <div class="d-flex gap-2">
+          <button class="btn ${botonClass} btn-sm" onclick="toggleAdminStatus(${admin.admin_id}, ${admin.activo})">
+            <i class="fas ${admin.activo ? 'fa-ban' : 'fa-check'} me-1"></i>${botonTexto}
+          </button>
         </div>
-      `
-    }
+      </div>
+    `
 
     contenedor.appendChild(div)
   })

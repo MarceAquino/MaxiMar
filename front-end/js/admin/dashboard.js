@@ -1,11 +1,5 @@
-// ======================================================================
-// DASHBOARD PRINCIPAL - COORDINADOR MODULAR
-// ======================================================================
-// Este archivo principal coordina todos los módulos del dashboard
-// Arquitectura modular para mejor mantenimiento y organización
-
-import { tokenUtils } from '../../config/api.js'
 import { requireAuth } from '../auth-guard.js'
+import { tokenUtils } from '../config/api.js'
 import { DashboardState } from './modules/dashboard-state.js'
 import { configurarEventListeners, configurarInterfazSegunRol } from './modules/interface-manager.js'
 import { cargarProductos } from './modules/products-manager.js'
@@ -57,17 +51,3 @@ document.addEventListener('DOMContentLoaded', async () => {
     `
   }
 })
-
-// ======================================================================
-// INFORMACIÓN DEL MÓDULO
-// ======================================================================
-console.log(`
-🏗️ Dashboard Modular v2.0
-📁 Estructura:
-  - dashboard.js (coordinador principal)
-  - modules/dashboard-state.js (estado global)
-  - modules/products-manager.js (gestión de productos)
-  - modules/admins-manager.js (gestión de administradores)
-  - modules/sales-manager.js (gestión de ventas)
-  - modules/interface-manager.js (interfaz y navegación)
-`)

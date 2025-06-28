@@ -1,10 +1,4 @@
-// ======================================================================
-// LOGIN DE ADMINISTRADORES - SIMPLE Y CLARO PARA ESTUDIANTES
-// ======================================================================
-// Este archivo maneja el formulario de login de administradores
-// Solo login - el registro se mudó a una página separada
-
-import { API_ROUTES, tokenUtils } from '../config/api.js'
+import { API_ROUTES, tokenUtils } from './config/api.js'
 import { VALIDAR_CLAVE, VALIDAR_EMAIL } from './validaciones/validaciones-login.js'
 
 document.addEventListener('DOMContentLoaded', () => {
