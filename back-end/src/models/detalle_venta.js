@@ -33,18 +33,9 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         min: 0
       }
-    },
-    fecha_creacion: {
-      type: DataTypes.DATE,
-      defaultValue: DataTypes.NOW
-    },
-    fecha_actualizacion: {
-      type: DataTypes.DATE,
-      defaultValue: DataTypes.NOW
     }
   }, {
-    tableName: 'detalle_venta',
-    timestamps: false
+    tableName: 'detalle_venta'
   })
 
   return DetalleVenta

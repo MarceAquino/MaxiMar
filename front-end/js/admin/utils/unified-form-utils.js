@@ -3,8 +3,8 @@
 // ======================================================================
 // Funciones esenciales para manejo de formularios de productos
 
-import { API_ROUTES, tokenUtils } from '../../../config/api.js'
-import { logout } from '../../auth-guard.js'
+import { API_ROUTES, tokenUtils } from '../../config/api.js'
+import { logout } from '../auth-guard.js'
 import { mostrarErrores } from './ui-utils.js'
 
 // ======================================================================

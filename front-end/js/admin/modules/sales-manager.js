@@ -75,7 +75,7 @@ export function renderizarVentas () {
     const div = document.createElement('div')
     div.className = 'col-lg-2-4 col-md-4 col-12'
 
-    const fecha = new Date(venta.fecha_venta).toLocaleDateString('es-AR')
+    const fecha = new Date(venta.createdAt).toLocaleDateString('es-AR')
     const total = parseFloat(venta.total || 0).toLocaleString('es-AR')
 
     div.innerHTML = `
@@ -124,10 +124,10 @@ export function ordenarVentas (criterio) {
 
   switch (criterio) {
     case 'fecha-desc':
-      ventas.sort((a, b) => new Date(b.fecha_venta) - new Date(a.fecha_venta))
+      ventas.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
       break
     case 'fecha-asc':
-      ventas.sort((a, b) => new Date(a.fecha_venta) - new Date(b.fecha_venta))
+      ventas.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt))
       break
     case 'importe-desc':
       ventas.sort((a, b) => parseFloat(b.total || 0) - parseFloat(a.total || 0))
@@ -208,7 +208,7 @@ export async function toggleDetalleVenta (ventaCard, ventaId) {
  * Renderizar el detalle de venta expandido
  */
 function renderizarDetalleVentaExpandido (contenedor, detalle) {
-  const fecha = new Date(detalle.fecha).toLocaleDateString('es-AR', {
+  const fecha = new Date(detalle.createdAt).toLocaleDateString('es-AR', {
     year: 'numeric',
     month: 'short',
     day: 'numeric',

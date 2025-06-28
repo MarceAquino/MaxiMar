@@ -52,11 +52,15 @@ const registrarAdmin = async (req, res) => {
         nombre: nuevoAdmin.nombre,
         rol: nuevoAdmin.rol,
         activo: nuevoAdmin.activo,
-        fecha_creacion: nuevoAdmin.fecha_creacion
+        fecha_creacion: nuevoAdmin.createdAt.toISOString().slice(0, 10) // Cambiado a createdAt y formateado a YYYY-MM-DD
       }
     })
   } catch (error) {
     console.error('Error en registro de admin:', error)
+    res.status(500).json({
+      message: 'Error interno del servidor',
+      error: error.message || 'INTERNAL_SERVER_ERROR'
+    })
   }
 }
 
@@ -114,6 +118,10 @@ const loginAdmin = async (req, res) => {
     })
   } catch (error) {
     console.error('Error en login de admin:', error)
+    res.status(500).json({
+      message: 'Error interno del servidor',
+      error: error.message || 'INTERNAL_SERVER_ERROR'
+    })
   }
 }
 

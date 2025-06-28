@@ -4,8 +4,8 @@ const { Admin } = require('../models')
 const listarAdmins = async (req, res) => {
   try {
     const admins = await Admin.findAll({
-      attributes: ['admin_id', 'email', 'nombre', 'rol', 'activo', 'fecha_creacion'],
-      order: [['fecha_creacion', 'DESC']]
+      attributes: ['admin_id', 'email', 'nombre', 'rol', 'activo', 'createdAt'],
+      order: [['createdAt', 'DESC']]
     })
 
     res.json({
@@ -14,6 +14,7 @@ const listarAdmins = async (req, res) => {
     })
   } catch (error) {
     console.error(error)
+    res.status(500).json({ message: 'Error al listar administradores' })
   }
 }
 
@@ -53,6 +54,7 @@ const toggleAdminStatus = async (req, res) => {
     })
   } catch (error) {
     console.error(error)
+    res.status(500).json({ message: 'Error al cambiar estado del administrador' })
   }
 }
 
@@ -82,6 +84,7 @@ const eliminarAdmin = async (req, res) => {
     })
   } catch (error) {
     console.error(error)
+    res.status(500).json({ message: 'Error al eliminar administrador' })
   }
 }
 

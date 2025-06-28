@@ -2,27 +2,13 @@ import { actualizarContadorCarrito, agregarAlCarrito } from '../customer/carrito
 import { API_ROUTES } from '../config/api.js'
 import { inicializarFiltros } from './filtros-tabs.js'
 
-// ======================================================================
-// VARIABLES GLOBALES SIMPLES
-// ======================================================================
 let productos = [] // Lista de todos los productos cargados desde el servidor
 
-// ======================================================================
-// ELEMENTOS DOM PRINCIPALES
-// ======================================================================
 const elementos = {
   divProductos: document.querySelector('.divProductos'), // Contenedor principal de productos
   cartCountElement: document.getElementById('cart-icon-count') // Contador del carrito
 }
 
-// ======================================================================
-// CARGA DE PRODUCTOS DESDE EL SERVIDOR
-// ======================================================================
-
-/**
- * Carga los productos desde la API del servidor
- * Si falla, intenta cargar desde localStorage como respaldo
- */
 async function cargarProductos () {
   console.log('📦 Cargando productos desde el servidor...')
 

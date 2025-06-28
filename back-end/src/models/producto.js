@@ -60,18 +60,9 @@ module.exports = (sequelize, DataTypes) => {
     activo: {
       type: DataTypes.BOOLEAN,
       defaultValue: true
-    },
-    fecha_creacion: {
-      type: DataTypes.DATE,
-      defaultValue: DataTypes.NOW
-    },
-    fecha_actualizacion: {
-      type: DataTypes.DATE,
-      defaultValue: DataTypes.NOW
     }
   }, {
-    tableName: 'producto',
-    timestamps: false
+    tableName: 'producto'
   })
 
   return Producto

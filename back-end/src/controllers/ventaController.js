@@ -5,7 +5,6 @@ const crearVenta = async (req, res) => {
   try {
     const { cliente, items } = req.body
 
-    // Validar que hay items
     if (!items || items.length === 0) {
       return res.status(400).json({
         message: 'No se pueden procesar ventas sin productos',
@@ -13,11 +12,9 @@ const crearVenta = async (req, res) => {
       })
     }
 
-    // Calcular totales
     let subtotal = 0
     const detallesVenta = []
 
-    // Validar productos y calcular totales
     for (const item of items) {
       const producto = await Producto.findByPk(item.producto_id)
 
@@ -60,20 +57,17 @@ const crearVenta = async (req, res) => {
       total
     })
 
-    // Crear los detalles de venta y actualizar stock
     for (const detalle of detallesVenta) {
       await DetalleVenta.create({
         venta_id: nuevaVenta.venta_id,
         ...detalle
       })
 
-      // Actualizar stock del producto
       await Producto.update(
         { stock: Producto.sequelize.literal(`stock - ${detalle.cantidad}`) },
         { where: { producto_id: detalle.producto_id } }
       )
 
-      // Verificar si el producto se quedó sin stock y desactivarlo
       const productoActualizado = await Producto.findByPk(detalle.producto_id)
       if (productoActualizado && productoActualizado.stock <= 0) {
         await Producto.update(
@@ -83,8 +77,8 @@ const crearVenta = async (req, res) => {
       }
     }
 
-    // Generar número de orden
-    const fechaFormateada = new Date().toISOString().slice(0, 10).replace(/-/g, '')
+    // Usar createdAt para la fecha
+    const fechaFormateada = nuevaVenta.createdAt.toISOString().slice(0, 10).replace(/-/g, '')
     const numeroOrden = `PS-${fechaFormateada}-${nuevaVenta.venta_id.toString().padStart(3, '0')}`
 
     res.json({
@@ -93,7 +87,7 @@ const crearVenta = async (req, res) => {
         venta_id: nuevaVenta.venta_id,
         numero_orden: numeroOrden,
         cliente: nuevaVenta.cliente,
-        fecha: nuevaVenta.fecha,
+        fecha: nuevaVenta.createdAt,
         subtotal: nuevaVenta.subtotal,
         total: nuevaVenta.total,
         items: detallesVenta.length
@@ -101,6 +95,7 @@ const crearVenta = async (req, res) => {
     })
   } catch (error) {
     console.error(error)
+    res.status(500).json({ message: 'Error procesando la venta' })
   }
 }
 
@@ -128,15 +123,14 @@ const obtenerVenta = async (req, res) => {
       })
     }
 
-    // Generar número de orden
-    const fechaFormateada = venta.fecha.toISOString().slice(0, 10).replace(/-/g, '')
+    const fechaFormateada = venta.createdAt.toISOString().slice(0, 10).replace(/-/g, '')
     const numeroOrden = `PS-${fechaFormateada}-${venta.venta_id.toString().padStart(3, '0')}`
 
     const response = {
       venta_id: venta.venta_id,
       numero_orden: numeroOrden,
       cliente: venta.cliente,
-      fecha: venta.fecha,
+      fecha: venta.createdAt,
       subtotal: venta.subtotal,
       total: venta.total,
       productos: venta.DetalleVentas.map(detalle => ({
@@ -152,6 +146,7 @@ const obtenerVenta = async (req, res) => {
     res.json(response)
   } catch (error) {
     console.error(error)
+    res.status(500).json({ message: 'Error al obtener la venta' })
   }
 }
 
@@ -168,22 +163,20 @@ const obtenerTodasLasVentas = async (req, res) => {
           attributes: ['nombre', 'categoria']
         }]
       }],
-      order: [['fecha', 'DESC']]
+      order: [['createdAt', 'DESC']] // Cambié fecha por createdAt
     })
 
     const ventasFormateadas = ventas.map(venta => {
-      const fechaFormateada = venta.fecha.toISOString().slice(0, 10).replace(/-/g, '')
+      const fechaFormateada = venta.createdAt.toISOString().slice(0, 10).replace(/-/g, '')
       const numeroOrden = `PS-${fechaFormateada}-${venta.venta_id.toString().padStart(3, '0')}`
 
-      const cantidadProductos = venta.DetalleVentas.reduce((total, detalle) => {
-        return total + detalle.cantidad
-      }, 0)
+      const cantidadProductos = venta.DetalleVentas.reduce((total, detalle) => total + detalle.cantidad, 0)
 
       return {
         venta_id: venta.venta_id,
         numero_orden: numeroOrden,
         nombre_cliente: venta.cliente,
-        fecha_venta: venta.fecha,
+        fecha_venta: venta.createdAt,
         total: venta.total,
         cantidad_productos: cantidadProductos
       }
@@ -192,6 +185,7 @@ const obtenerTodasLasVentas = async (req, res) => {
     res.json(ventasFormateadas)
   } catch (error) {
     console.error(error)
+    res.status(500).json({ message: 'Error al obtener las ventas' })
   }
 }
 

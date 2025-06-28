@@ -9,10 +9,6 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING(30),
       allowNull: true
     },
-    fecha: {
-      type: DataTypes.DATE,
-      defaultValue: DataTypes.NOW
-    },
     subtotal: {
       type: DataTypes.DECIMAL(10, 2),
       allowNull: false,
@@ -26,18 +22,10 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         min: 0
       }
-    },
-    fecha_creacion: {
-      type: DataTypes.DATE,
-      defaultValue: DataTypes.NOW
-    },
-    fecha_actualizacion: {
-      type: DataTypes.DATE,
-      defaultValue: DataTypes.NOW
     }
   }, {
     tableName: 'venta',
-    timestamps: false
+    timestamps: true
   })
 
   return Venta
