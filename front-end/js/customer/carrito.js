@@ -1,10 +1,4 @@
-// ======================================================================
-// CARRITO.JS - GESTIÓN DEL CARRITO DE COMPRAS PARA ESTUDIANTES
-// ======================================================================
-// Este archivo maneja todas las funciones del carrito de compras
-// Incluye: agregar productos, modificar cantidades, guardar en localStorage
-
-import { API_ROUTES } from './config/api.js'
+import { API_ROUTES } from '../config/api.js'
 
 // ======================================================================
 // CONFIGURACIÓN GLOBAL
@@ -662,7 +656,6 @@ document.addEventListener('DOMContentLoaded', async () => {
   if (obtenerPaginaActual() === 'carrito') {
     await inicializarPaginaCarrito()
   }
-
 
   // === EXPORTAR FUNCIONES GLOBALES ===
   window.agregarAlCarrito = agregarAlCarrito

@@ -1,15 +1,3 @@
-// ======================================================================
-// FILTROS Y TABS - SISTEMA DE FILTRADO DE PRODUCTOS PARA ESTUDIANTES
-// ======================================================================
-// Este archivo maneja:
-// - Filtros por tipo de mascota (perros, gatos)
-// - Filtros por categoría (alimentos, juguetes)
-// - Sistema de tabs para navegar entre filtros
-// - Comunicación con productos.js para mostrar resultados
-
-// ======================================================================
-// VARIABLES GLOBALES SIMPLES
-// ======================================================================
 let productosParaFiltrar = [] // Lista completa de productos disponibles
 let funcionRenderizado = null // Función que dibuja los productos en pantalla
 let mascotaActual = null // Filtro actual por mascota (null = todos)

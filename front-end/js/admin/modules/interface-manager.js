@@ -3,7 +3,7 @@
 // ======================================================================
 // Este módulo maneja la configuración de la interfaz y navegación entre secciones
 
-import { logout } from '../../auth-guard.js'
+import { logout } from '../auth-guard.js'
 import { cargarAdministradores, renderizarAdministradores } from './admins-manager.js'
 import { DashboardState } from './dashboard-state.js'
 import { aplicarFiltros } from './products-manager.js'

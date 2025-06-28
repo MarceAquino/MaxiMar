@@ -1,15 +1,3 @@
-// ======================================================================
-// PÁGINA PRINCIPAL - LÓGICA DE LA PÁGINA DE INICIO PARA ESTUDIANTES
-// ======================================================================
-// Este archivo maneja:
-// - Truco secreto del carrusel (Easter egg)
-// - Sistema de login de clientes
-// - Validaciones del formulario de nombre
-// - Redirecciones automáticas
-
-// ======================================================================
-// INICIALIZACIÓN CUANDO LA PÁGINA CARGA
-// ======================================================================
 document.addEventListener('DOMContentLoaded', function () {
   console.log('🏠 Iniciando página principal...')
 

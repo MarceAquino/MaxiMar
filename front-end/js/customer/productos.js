@@ -1,5 +1,5 @@
-import { actualizarContadorCarrito, agregarAlCarrito } from './carrito.js'
-import { API_ROUTES } from './config/api.js'
+import { actualizarContadorCarrito, agregarAlCarrito } from '../customer/carrito.js'
+import { API_ROUTES } from '../config/api.js'
 import { inicializarFiltros } from './filtros-tabs.js'
 
 // ======================================================================

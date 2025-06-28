@@ -1,5 +1,5 @@
-import { API_ROUTES, tokenUtils } from './config/api.js'
-import { VALIDAR_CLAVE, VALIDAR_EMAIL } from './validaciones/validaciones-login.js'
+import { API_ROUTES, tokenUtils } from '../config/api.js'
+import { VALIDAR_CLAVE, VALIDAR_EMAIL } from '../validaciones/validaciones-login.js'
 
 document.addEventListener('DOMContentLoaded', () => {
   // ELEMENTOS DEL DOM

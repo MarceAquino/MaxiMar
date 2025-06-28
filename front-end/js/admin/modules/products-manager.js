@@ -1,5 +1,5 @@
-import { logout } from '../../auth-guard.js'
 import { API_ROUTES, tokenUtils } from '../../config/api.js'
+import { logout } from '../auth-guard.js'
 import { DashboardState } from './dashboard-state.js'
 
 // ======================================================================

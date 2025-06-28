@@ -4,7 +4,7 @@
 // Este archivo maneja la autenticación de administradores
 // Funciones principales: verificar login, logout, redirigir
 
-import { API_ROUTES, tokenUtils } from '../config/api.js'
+import { API_ROUTES, tokenUtils } from '../../config/api.js'
 
 // FUNCIÓN PRINCIPAL: Verificar si el usuario está logueado
 export const requireAuth = async () => {
