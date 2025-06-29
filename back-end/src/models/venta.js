@@ -1,3 +1,11 @@
+// Modelo Venta para la tabla 'venta'.
+// Representa una venta realizada en la tienda.
+// Campos:
+// - venta_id: Identificador único de la venta, autoincremental y clave primaria.
+// - cliente: Nombre del cliente (opcional, hasta 30 caracteres).
+// - subtotal: Suma de los subtotales de los productos vendidos (mínimo 0, obligatorio).
+// - total: Total de la venta (mínimo 0, obligatorio).
+
 module.exports = (sequelize, DataTypes) => {
   const Venta = sequelize.define('Venta', {
     venta_id: {

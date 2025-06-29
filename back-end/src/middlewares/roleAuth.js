@@ -1,33 +1,14 @@
-// Middleware para verificar que sea SuperAdmin
-const requireSuperAdmin = async (req, res, next) => {
-  try {
-    // Este middleware se ejecuta después de authenticateToken
-    if (!req.admin) {
-      return res.status(401).json({
-        message: 'Acceso no autorizado',
-        error: 'NO_AUTH'
-      })
-    }
+// Middleware genérico para autorización de roles en rutas protegidas.
+// Permite restringir el acceso a rutas según el rol del usuario autenticado.
+// Uso:
+//   const { requireRole } = require('./roleAuth')
+//   router.post('/ruta', requireRole(['superadmin']), controlador)
+//   router.get('/otra', requireRole(['admin', 'superadmin']), controlador)
+//
+// rolesPermitidos: Array de roles válidos para acceder a la ruta.
+// El usuario debe estar autenticado y su rol debe estar incluido en rolesPermitidos.
 
-    if (req.admin.rol !== 'superadmin') {
-      return res.status(403).json({
-        message: 'Solo los Super Administradores pueden realizar esta acción',
-        error: 'INSUFFICIENT_PERMISSIONS'
-      })
-    }
-
-    next()
-  } catch (error) {
-    console.error('Error en middleware de SuperAdmin:', error)
-    return res.status(500).json({
-      message: 'Error interno del servidor',
-      error: 'INTERNAL_ERROR'
-    })
-  }
-}
-
-// Middleware para verificar que sea Admin o SuperAdmin
-const requireAdmin = async (req, res, next) => {
+const requireRole = (rolesPermitidos) => (req, res, next) => {
   try {
     if (!req.admin) {
       return res.status(401).json({
@@ -36,24 +17,21 @@ const requireAdmin = async (req, res, next) => {
       })
     }
 
-    if (!['admin', 'superadmin'].includes(req.admin.rol)) {
+    if (!rolesPermitidos.includes(req.admin.rol)) {
       return res.status(403).json({
-        message: 'Permisos insuficientes',
+        message: rolesPermitidos.length === 1
+          ? 'Solo los Super Administradores pueden realizar esta acción'
+          : 'Permisos insuficientes',
         error: 'INSUFFICIENT_PERMISSIONS'
       })
     }
 
     next()
   } catch (error) {
-    console.error('Error en middleware de Admin:', error)
-    return res.status(500).json({
-      message: 'Error interno del servidor',
-      error: 'INTERNAL_ERROR'
-    })
+    console.error('Error en middleware de autorización de roles:', error)
   }
 }
 
 module.exports = {
-  requireSuperAdmin,
-  requireAdmin
+  requireRole
 }

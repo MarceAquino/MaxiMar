@@ -22,7 +22,6 @@ const conectarDB = async () => {
   try {
     await sequelize.authenticate()
     console.log('✅ Conectado a la base de datos correctamente.')
-
     await sequelize.sync({ force: false }) // Sincronizar sin recrear tablas
     console.log('📦 Tablas sincronizadas correctamente.')
   } catch (error) {
