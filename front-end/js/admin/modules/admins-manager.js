@@ -1,14 +1,6 @@
-// ======================================================================
-// GESTOR DE ADMINISTRADORES DEL DASHBOARD
-// ======================================================================
-// Este módulo maneja todas las operaciones relacionadas con administradores
-
 import { API_ROUTES, tokenUtils } from '../../config/api.js'
 import { DashboardState } from './dashboard-state.js'
 
-// ======================================================================
-// CARGAR ADMINISTRADORES DESDE EL SERVIDOR
-// ======================================================================
 export async function cargarAdministradores () {
   console.log('📦 Cargando administradores...')
   console.log('🔗 URL:', API_ROUTES.admin.list)
@@ -65,9 +57,6 @@ export async function cargarAdministradores () {
   }
 }
 
-// ======================================================================
-// RENDERIZAR ADMINISTRADORES
-// ======================================================================
 export function renderizarAdministradores () {
   const contenedor = document.getElementById('contenedorAdministradores')
 
@@ -125,9 +114,6 @@ export function renderizarAdministradores () {
   })
 }
 
-// ======================================================================
-// ACCIÓN GLOBAL PARA TOGGLE DE ADMIN (Llamada desde HTML)
-// ======================================================================
 export async function toggleAdminStatus (adminId, estadoActual) {
   const accion = estadoActual ? 'desactivar' : 'activar'
 

@@ -1,17 +1,3 @@
-// ======================================================================
-// UTILIDADES DE UI Y FEEDBACK COMPARTIDAS
-// ======================================================================
-// Este módulo contiene funciones para mostrar mensajes, errores y feedback
-// de manera consistente en toda la aplicación
-
-/**
- * Muestra errores de validación al usuario de forma amigable
- * @param {Array} errores - Lista de errores a mostrar
- * @param {Object} options - Opciones de presentación
- * @param {string} options.titulo - Título personalizado para el mensaje
- * @param {boolean} options.numerado - Si numerar los errores (por defecto true)
- * @param {string} options.icono - Icono a mostrar (por defecto ❌)
- */
 export function mostrarErrores (errores, options = {}) {
   const {
     titulo = 'Se encontraron los siguientes errores',
@@ -41,45 +27,21 @@ export function mostrarErrores (errores, options = {}) {
   }, 100)
 }
 
-/**
- * Muestra mensaje de éxito
- * @param {string} mensaje - Mensaje a mostrar
- * @param {Object} options - Opciones adicionales
- * @param {string} options.icono - Icono a mostrar (por defecto ✅)
- */
 export function mostrarExito (mensaje, options = {}) {
   const { icono = '✅' } = options
   alert(`${icono} ${mensaje}`)
 }
 
-/**
- * Muestra mensaje de advertencia
- * @param {string} mensaje - Mensaje a mostrar
- * @param {Object} options - Opciones adicionales
- * @param {string} options.icono - Icono a mostrar (por defecto ⚠️)
- */
 export function mostrarAdvertencia (mensaje, options = {}) {
   const { icono = '⚠️' } = options
   alert(`${icono} ${mensaje}`)
 }
 
-/**
- * Muestra confirmación y retorna la respuesta del usuario
- * @param {string} mensaje - Mensaje de confirmación
- * @param {Object} options - Opciones adicionales
- * @param {string} options.icono - Icono a mostrar (por defecto ❓)
- * @returns {boolean} true si el usuario confirma, false si cancela
- */
 export function mostrarConfirmacion (mensaje, options = {}) {
   const { icono = '❓' } = options
   return confirm(`${icono} ${mensaje}`)
 }
 
-/**
- * Muestra tooltip de error para un campo
- * @param {HTMLElement} elemento - Elemento al que agregar el tooltip
- * @param {string} mensaje - Mensaje de error
- */
 export function mostrarTooltipError (elemento, mensaje) {
   if (!elemento) return
 
@@ -123,12 +85,6 @@ export function ocultarTooltipError (elemento) {
   }
 }
 
-/**
- * Establece estado visual de validación en un campo
- * @param {HTMLElement} elemento - Elemento a modificar
- * @param {boolean} esValido - Si el campo es válido
- * @param {string} mensajeError - Mensaje de error a mostrar (opcional)
- */
 export function establecerEstadoValidacion (elemento, esValido, mensajeError = '') {
   if (!elemento) return
 
@@ -158,13 +114,6 @@ export function limpiarEstadoValidacion (elemento) {
   ocultarTooltipError(elemento)
 }
 
-/**
- * Deshabilita un botón temporalmente y devuelve el estado original
- * @param {HTMLElement} boton - Botón a deshabilitar
- * @param {string} textoTemporal - Texto a mostrar mientras está deshabilitado
- * @param {number} duracion - Duración en milisegundos (por defecto 2000)
- * @returns {Object|null} Estado original del botón o null si no hay botón
- */
 export function deshabilitarBotonTemporal (boton, textoTemporal, duracion = 2000) {
   if (!boton) return null
 
@@ -186,15 +135,6 @@ export function deshabilitarBotonTemporal (boton, textoTemporal, duracion = 2000
   return estadoOriginal
 }
 
-/**
- * Muestra feedback de éxito con opción de redirección
- * @param {Object} data - Datos de respuesta del servidor
- * @param {Object} options - Opciones de configuración
- * @param {string} options.titulo - Título del mensaje
- * @param {string} options.urlRedireccion - URL para redirección opcional
- * @param {string} options.textoRedireccion - Texto para el botón de redirección
- * @param {Function} options.callbackLimpiar - Función a ejecutar si no redirige
- */
 export function mostrarFeedbackExito (data, options = {}) {
   const {
     titulo = 'Operación completada exitosamente',

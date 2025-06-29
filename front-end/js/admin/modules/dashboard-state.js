@@ -1,8 +1,3 @@
-// ======================================================================
-// ESTADO GLOBAL DEL DASHBOARD
-// ======================================================================
-// Este módulo centraliza todas las variables globales del dashboard
-
 export const DashboardState = {
   // Variables de productos
   todosLosProductos: [],

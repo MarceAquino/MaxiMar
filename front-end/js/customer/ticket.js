@@ -1,8 +1,5 @@
-const API_URL = 'http://localhost:3030/api' // URL base del servidor
+import { API_URL } from '../config/api.js'
 
-// ======================================================================
-// INICIALIZACIÓN CUANDO LA PÁGINA CARGA
-// ======================================================================
 document.addEventListener('DOMContentLoaded', async () => {
   console.log('🎫 Iniciando página de ticket...')
 
@@ -31,9 +28,6 @@ document.addEventListener('DOMContentLoaded', async () => {
   configurarBotones()
 })
 
-// ======================================================================
-// CARGAR DATOS DE LA VENTA
-// ======================================================================
 async function cargarDatosVenta (ventaId) {
   console.log('📋 Cargando datos de venta ID:', ventaId)
   try {
@@ -56,9 +50,6 @@ async function cargarDatosVenta (ventaId) {
   }
 }
 
-// ======================================================================
-// MOSTRAR DATOS DEL CLIENTE
-// ======================================================================
 function mostrarDatosCliente (venta) {
   // Nombre del cliente
   const nombreElement = document.getElementById('usuario-nombre')
@@ -87,9 +78,6 @@ function mostrarDatosCliente (venta) {
   }
 }
 
-// ======================================================================
-// MOSTRAR PRODUCTOS Escritorio
-// ======================================================================
 function mostrarProductos (productos) {
   const tbody = document.getElementById('productos-ticket')
   if (!tbody) return
@@ -109,9 +97,6 @@ function mostrarProductos (productos) {
   })
 }
 
-// ======================================================================
-// MOSTRAR TOTALES
-// ======================================================================
 function mostrarTotales (venta) {
   // Subtotal
   const subtotalElement = document.getElementById('subtotal')
@@ -126,9 +111,6 @@ function mostrarTotales (venta) {
   }
 }
 
-// ======================================================================
-// CONFIGURAR BOTONES
-// ======================================================================
 function configurarBotones () {
   // Botón descargar PDF
   const btnDescargar = document.getElementById('btn-descargar-pdf')
@@ -146,18 +128,9 @@ function configurarBotones () {
   }
 }
 
-// ======================================================================
-// DESCARGAR PDF
-// ======================================================================
 function descargarPDF () {
-  // Usar la funcionalidad de imprimir del navegador
-  // El usuario puede elegir "Guardar como PDF" en las opciones de impresión
   window.print()
 }
-
-// ======================================================================
-// UTILIDADES
-// ======================================================================
 function formatearPrecio (precio) {
   return new Intl.NumberFormat('es-AR', {
     style: 'currency',

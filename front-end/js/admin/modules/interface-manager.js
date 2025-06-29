@@ -1,17 +1,9 @@
-// ======================================================================
-// GESTOR DE INTERFAZ Y NAVEGACIÓN DEL DASHBOARD
-// ======================================================================
-// Este módulo maneja la configuración de la interfaz y navegación entre secciones
-
 import { logout } from '../auth-guard.js'
 import { cargarAdministradores, renderizarAdministradores } from './admins-manager.js'
 import { DashboardState } from './dashboard-state.js'
 import { aplicarFiltros } from './products-manager.js'
 import { cargarVentas, renderizarVentas } from './sales-manager.js'
 
-// ======================================================================
-// CONFIGURACIÓN DE INTERFAZ SEGUN ROL
-// ======================================================================
 export function configurarInterfazSegunRol () {
   const usuarioActual = DashboardState.getUsuarioActual()
   console.log('👤 Configurando interfaz para:', usuarioActual?.nombre)
@@ -65,10 +57,6 @@ export function configurarInterfazSegunRol () {
   }
 }
 
-// ======================================================================
-// FUNCIONES AUXILIARES DE SIDEBAR
-// ======================================================================
-
 // Función para habilitar un enlace del sidebar
 function enableSidebarLink (linkElement) {
   if (linkElement) {
@@ -89,9 +77,6 @@ function disableSidebarLink (linkElement) {
   }
 }
 
-// ======================================================================
-// CONFIGURAR EVENTOS DE BOTONES Y FILTROS
-// ======================================================================
 export function configurarEventListeners () {
   // Filtros de búsqueda
   document.getElementById('buscarProducto').addEventListener('input', aplicarFiltros)
@@ -110,10 +95,6 @@ export function configurarEventListeners () {
     })
   }
 }
-
-// ======================================================================
-// NAVEGACIÓN ENTRE SECCIONES
-// ======================================================================
 
 function configurarNavegacionSidebar () {
   const sidebarLinks = document.querySelectorAll('.sidebar-link')

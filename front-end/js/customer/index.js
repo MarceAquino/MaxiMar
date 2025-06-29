@@ -8,13 +8,6 @@ document.addEventListener('DOMContentLoaded', function () {
   configurarLoginCliente()
 })
 
-// ======================================================================
-// TRUCO SECRETO DEL CARRUSEL (EASTER EGG)
-// ======================================================================
-/**
- * Configura un truco secreto en el carrusel
- * Si el usuario hace clic en la secuencia correcta, aparece un botón especial
- */
 function configurarTrucoSecreto () {
   console.log('🎮 Configurando truco secreto del carrusel...')
 
@@ -74,13 +67,7 @@ function configurarTrucoSecreto () {
     }
   })
 }
-// ======================================================================
-// SISTEMA DE LOGIN DE CLIENTES
-// ======================================================================
-/**
- * Configura el formulario de login para que los clientes ingresen su nombre
- * Incluye validaciones y redirecciones automáticas
- */
+
 function configurarLoginCliente () {
   console.log('👤 Configurando sistema de login de clientes...')
 

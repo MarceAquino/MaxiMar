@@ -4,39 +4,15 @@ const { Venta, DetalleVenta, Producto } = require('../models')
 const crearVenta = async (req, res) => {
   try {
     const { cliente, items } = req.body
-
-    if (!items || items.length === 0) {
-      return res.status(400).json({
-        message: 'No se pueden procesar ventas sin productos',
-        error: 'NO_ITEMS'
-      })
-    }
+    if (!items || items.length === 0) return res.status(400).json({ message: 'No hay productos' })
 
     let subtotal = 0
     const detallesVenta = []
 
     for (const item of items) {
       const producto = await Producto.findByPk(item.producto_id)
-
-      if (!producto) {
-        return res.status(400).json({
-          message: `Producto con ID ${item.producto_id} no encontrado`,
-          error: 'PRODUCT_NOT_FOUND'
-        })
-      }
-
-      if (!producto.activo) {
-        return res.status(400).json({
-          message: `El producto "${producto.nombre}" no está disponible`,
-          error: 'PRODUCT_INACTIVE'
-        })
-      }
-
-      if (producto.stock < item.cantidad) {
-        return res.status(400).json({
-          message: `Stock insuficiente para "${producto.nombre}". Stock disponible: ${producto.stock}`,
-          error: 'INSUFFICIENT_STOCK'
-        })
+      if (!producto || !producto.activo || producto.stock < item.cantidad) {
+        return res.status(400).json({ message: 'Producto no disponible o stock insuficiente' })
       }
 
       const subtotalItem = producto.precio * item.cantidad
@@ -50,11 +26,10 @@ const crearVenta = async (req, res) => {
       })
     }
 
-    const total = subtotal
     const nuevaVenta = await Venta.create({
       cliente: cliente || 'Cliente Anónimo',
       subtotal,
-      total
+      total: subtotal
     })
 
     for (const detalle of detallesVenta) {
@@ -77,24 +52,21 @@ const crearVenta = async (req, res) => {
       }
     }
 
-    // Usar createdAt para la fecha
-    const fechaFormateada = nuevaVenta.createdAt.toISOString().slice(0, 10).replace(/-/g, '')
-    const numeroOrden = `PS-${fechaFormateada}-${nuevaVenta.venta_id.toString().padStart(3, '0')}`
+    const fecha = nuevaVenta.createdAt.toISOString().slice(0, 10).replace(/-/g, '')
+    const numeroOrden = `PS-${fecha}-${nuevaVenta.venta_id.toString().padStart(3, '0')}`
 
     res.json({
-      message: 'Venta procesada exitosamente',
+      message: 'Venta exitosa',
       venta: {
         venta_id: nuevaVenta.venta_id,
         numero_orden: numeroOrden,
         cliente: nuevaVenta.cliente,
         fecha: nuevaVenta.createdAt,
-        subtotal: nuevaVenta.subtotal,
         total: nuevaVenta.total,
         items: detallesVenta.length
       }
     })
-  } catch (error) {
-    console.error(error)
+  } catch {
     res.status(500).json({ message: 'Error procesando la venta' })
   }
 }
@@ -102,9 +74,7 @@ const crearVenta = async (req, res) => {
 // Obtener detalles de una venta
 const obtenerVenta = async (req, res) => {
   try {
-    const { id } = req.params
-
-    const venta = await Venta.findByPk(id, {
+    const venta = await Venta.findByPk(req.params.id, {
       include: [{
         model: DetalleVenta,
         as: 'DetalleVentas',
@@ -116,22 +86,16 @@ const obtenerVenta = async (req, res) => {
       }]
     })
 
-    if (!venta) {
-      return res.status(404).json({
-        message: 'Venta no encontrada',
-        error: 'SALE_NOT_FOUND'
-      })
-    }
+    if (!venta) return res.status(404).json({ message: 'Venta no encontrada' })
 
-    const fechaFormateada = venta.createdAt.toISOString().slice(0, 10).replace(/-/g, '')
-    const numeroOrden = `PS-${fechaFormateada}-${venta.venta_id.toString().padStart(3, '0')}`
+    const fecha = venta.createdAt.toISOString().slice(0, 10).replace(/-/g, '')
+    const numeroOrden = `PS-${fecha}-${venta.venta_id.toString().padStart(3, '0')}`
 
-    const response = {
+    res.json({
       venta_id: venta.venta_id,
       numero_orden: numeroOrden,
       cliente: venta.cliente,
       fecha: venta.createdAt,
-      subtotal: venta.subtotal,
       total: venta.total,
       productos: venta.DetalleVentas.map(detalle => ({
         nombre: detalle.Producto.nombre,
@@ -142,15 +106,13 @@ const obtenerVenta = async (req, res) => {
         precio_unitario: detalle.precio_unitario,
         subtotal: detalle.subtotal
       }))
-    }
-    res.json(response)
-  } catch (error) {
-    console.error(error)
+    })
+  } catch {
     res.status(500).json({ message: 'Error al obtener la venta' })
   }
 }
 
-// Obtener todas las ventas.
+// Obtener todas las ventas
 const obtenerTodasLasVentas = async (req, res) => {
   try {
     const ventas = await Venta.findAll({
@@ -163,14 +125,13 @@ const obtenerTodasLasVentas = async (req, res) => {
           attributes: ['nombre', 'categoria']
         }]
       }],
-      order: [['createdAt', 'DESC']] // Cambié fecha por createdAt
+      order: [['createdAt', 'DESC']]
     })
 
     const ventasFormateadas = ventas.map(venta => {
-      const fechaFormateada = venta.createdAt.toISOString().slice(0, 10).replace(/-/g, '')
-      const numeroOrden = `PS-${fechaFormateada}-${venta.venta_id.toString().padStart(3, '0')}`
-
-      const cantidadProductos = venta.DetalleVentas.reduce((total, detalle) => total + detalle.cantidad, 0)
+      const fecha = venta.createdAt.toISOString().slice(0, 10).replace(/-/g, '')
+      const numeroOrden = `PS-${fecha}-${venta.venta_id.toString().padStart(3, '0')}`
+      const cantidadProductos = venta.DetalleVentas.reduce((total, d) => total + d.cantidad, 0)
 
       return {
         venta_id: venta.venta_id,
@@ -183,8 +144,7 @@ const obtenerTodasLasVentas = async (req, res) => {
     })
 
     res.json(ventasFormateadas)
-  } catch (error) {
-    console.error(error)
+  } catch {
     res.status(500).json({ message: 'Error al obtener las ventas' })
   }
 }

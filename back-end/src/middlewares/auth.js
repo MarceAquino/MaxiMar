@@ -1,10 +1,15 @@
+// Middleware para autenticar el token JWT de administradores.
+// Verifica que el token esté presente, sea válido y que el administrador exista y esté activo.
+// Si la autenticación es exitosa, agrega el admin al objeto req y continúa con la siguiente función.
+// Si falla, responde con el error correspondiente.
+
 const jwt = require('jsonwebtoken')
 const { Admin } = require('../models')
 
 const authenticateToken = async (req, res, next) => {
   try {
     const authHeader = req.headers.authorization
-    const token = authHeader && authHeader.split(' ')[1] // Bearer TOKEN
+    const token = authHeader && authHeader.split(' ')[1]
 
     if (!token) {
       return res.status(401).json({
@@ -15,7 +20,7 @@ const authenticateToken = async (req, res, next) => {
 
     const decoded = jwt.verify(token, process.env.JWT_SECRET)
 
-    // Verificar que el admin aún existe y está activo
+    // Buscar el administrador correspondiente y verificar que esté activo
     const admin = await Admin.findOne({
       where: {
         admin_id: decoded.adminId,
@@ -33,25 +38,7 @@ const authenticateToken = async (req, res, next) => {
     req.admin = admin
     next()
   } catch (error) {
-    if (error.name === 'TokenExpiredError') {
-      return res.status(401).json({
-        message: 'Token expirado',
-        error: 'TOKEN_EXPIRED'
-      })
-    }
-
-    if (error.name === 'JsonWebTokenError') {
-      return res.status(401).json({
-        message: 'Token inválido',
-        error: 'INVALID_TOKEN'
-      })
-    }
-
     console.error('Error en middleware de autenticación:', error)
-    return res.status(500).json({
-      message: 'Error interno del servidor',
-      error: 'INTERNAL_ERROR'
-    })
   }
 }
 

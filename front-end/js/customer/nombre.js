@@ -1,16 +1,3 @@
-// ======================================================================
-// GESTIÓN DE NOMBRE DE USUARIO - SIMPLE PARA ESTUDIANTES
-// ======================================================================
-// Este archivo maneja el nombre del usuario en diferentes páginas
-// Funciona tanto para mostrar bienvenidas como para login
-
-// ======================================================================
-// FUNCIÓN PRINCIPAL: CONFIGURAR SISTEMA DE NOMBRES
-// ======================================================================
-/**
- * Configura el sistema de nombres de usuario en cualquier página
- * Maneja tanto el login como mostrar mensajes de bienvenida
- */
 function configurarSistemaNombres () {
   console.log('👤 Iniciando sistema de nombres de usuario...')
 
@@ -23,17 +10,11 @@ function configurarSistemaNombres () {
   const usuarioGuardado = localStorage.getItem('nombreUsuario')
   console.log(`👤 Usuario guardado: ${usuarioGuardado || 'ninguno'}`)
 
-  // ======================================================================
-  // MOSTRAR MENSAJE DE BIENVENIDA
-  // ======================================================================
   if (mensajeBienvenida && usuarioGuardado) {
     mensajeBienvenida.textContent = `¡Hola, ${usuarioGuardado}!`
     console.log('👋 Mensaje de bienvenida mostrado')
   }
 
-  // ======================================================================
-  // CONFIGURAR FORMULARIO DE LOGIN (si existe)
-  // ======================================================================
   if (!formularioLogin || !campoNombreUsuario) {
     console.log('ℹ️ No hay formulario de login en esta página')
     return // No es una página de login, salir
@@ -46,9 +27,6 @@ function configurarSistemaNombres () {
     return
   }
 
-  // ======================================================================
-  // EVENTO: PROCESAR FORMULARIO DE LOGIN
-  // ======================================================================
   formularioLogin.addEventListener('submit', (evento) => {
     evento.preventDefault() // Evitar que la página se recargue
 
@@ -87,16 +65,10 @@ function configurarSistemaNombres () {
     }
   })
 
-  // ======================================================================
-  // EVENTO: LIMPIAR VALIDACIÓN AL ESCRIBIR
-  // ======================================================================
   campoNombreUsuario.addEventListener('input', function () {
     // Quitar clases de validación para estado limpio
     this.classList.remove('is-valid', 'is-invalid')
   })
 }
 
-// ======================================================================
-// INICIALIZAR CUANDO LA PÁGINA CARGA
-// ======================================================================
 configurarSistemaNombres()

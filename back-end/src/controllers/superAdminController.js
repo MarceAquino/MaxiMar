@@ -1,95 +1,35 @@
 const { Admin } = require('../models')
 
-// Listar todos los administradores.
+// Listar administradores
 const listarAdmins = async (req, res) => {
   try {
     const admins = await Admin.findAll({
-      attributes: ['admin_id', 'email', 'nombre', 'rol', 'activo', 'createdAt'],
+      attributes: ['admin_id', 'email', 'nombre', 'rol', 'activo'],
       order: [['createdAt', 'DESC']]
     })
-
-    res.json({
-      message: 'Lista de administradores',
-      admins
-    })
-  } catch (error) {
-    console.error(error)
+    res.json({ admins })
+  } catch {
     res.status(500).json({ message: 'Error al listar administradores' })
   }
 }
 
-// Desactivar/Activar administrador.
+// Activar/desactivar admin (no superadmin)
 const toggleAdminStatus = async (req, res) => {
   try {
-    const { id } = req.params
-    const admin = await Admin.findByPk(id)
+    const admin = await Admin.findByPk(req.params.id)
 
     if (!admin) {
-      return res.status(404).json({
-        message: 'Administrador no encontrado'
-      })
+      return res.status(404).json({ message: 'No encontrado' })
     }
-
     if (admin.rol === 'superadmin') {
-      return res.status(400).json({
-        message: 'No se puede desactivar al Super Administrador',
-        error: 'CANNOT_DEACTIVATE_SUPERADMIN'
-      })
+      return res.status(400).json({ message: 'No se puede modificar el SuperAdmin' })
     }
-
-    const nuevoEstado = !admin.activo
-    await Admin.update(
-      { activo: nuevoEstado },
-      { where: { admin_id: id } }
-    )
-
-    res.json({
-      message: `Administrador ${nuevoEstado ? 'activado' : 'desactivado'} correctamente`,
-      admin: {
-        id: admin.admin_id,
-        email: admin.email,
-        nombre: admin.nombre,
-        activo: nuevoEstado
-      }
-    })
-  } catch (error) {
-    console.error(error)
-    res.status(500).json({ message: 'Error al cambiar estado del administrador' })
+    const activo = !admin.activo
+    await Admin.update({ activo }, { where: { admin_id: admin.admin_id } })
+    res.json({ message: activo ? 'Activado' : 'Desactivado', admin: { id: admin.admin_id, email: admin.email, nombre: admin.nombre, activo } })
+  } catch {
+    res.status(500).json({ message: 'Error al cambiar estado' })
   }
 }
 
-// Eliminar administrador.
-const eliminarAdmin = async (req, res) => {
-  try {
-    const { id } = req.params
-    const admin = await Admin.findByPk(id)
-
-    if (!admin) {
-      return res.status(404).json({
-        message: 'Administrador no encontrado'
-      })
-    }
-
-    if (admin.rol === 'superadmin') {
-      return res.status(400).json({
-        message: 'No se puede eliminar al Super Administrador',
-        error: 'CANNOT_DELETE_SUPERADMIN'
-      })
-    }
-
-    await Admin.destroy({ where: { admin_id: id } })
-
-    res.json({
-      message: 'Administrador eliminado correctamente'
-    })
-  } catch (error) {
-    console.error(error)
-    res.status(500).json({ message: 'Error al eliminar administrador' })
-  }
-}
-
-module.exports = {
-  listarAdmins,
-  toggleAdminStatus,
-  eliminarAdmin
-}
+module.exports = { listarAdmins, toggleAdminStatus }

@@ -1,14 +1,6 @@
-// ======================================================================
-// GESTOR DE VENTAS DEL DASHBOARD
-// ======================================================================
-// Este módulo maneja todas las operaciones relacionadas con ventas
-
 import { API_ROUTES, tokenUtils } from '../../config/api.js'
 import { DashboardState } from './dashboard-state.js'
 
-// ======================================================================
-// CARGAR VENTAS DESDE EL SERVIDOR
-// ======================================================================
 export async function cargarVentas () {
   console.log('📦 Cargando ventas...')
 
@@ -38,9 +30,6 @@ export async function cargarVentas () {
   }
 }
 
-// ======================================================================
-// RENDERIZAR VENTAS
-// ======================================================================
 export function renderizarVentas () {
   const contenedor = document.getElementById('contenedorVentas')
 
@@ -124,10 +113,6 @@ export function renderizarVentas () {
   })
 }
 
-// ======================================================================
-// FUNCIONES AUXILIARES
-// ======================================================================
-
 export function ordenarVentas (criterio) {
   const ventas = DashboardState.getVentas()
 
@@ -149,13 +134,6 @@ export function ordenarVentas (criterio) {
   DashboardState.setVentas(ventas)
 }
 
-// ======================================================================
-// DETALLE DE VENTA EXPANDIBLE
-// ======================================================================
-
-/**
- * Toggle del detalle de venta expandido
- */
 export async function toggleDetalleVenta (ventaCard, ventaId) {
   const detalleExpandido = ventaCard.querySelector('.venta-detalle-expandido')
   const chevron = ventaCard.querySelector('.fa-chevron-down, .fa-chevron-up')
