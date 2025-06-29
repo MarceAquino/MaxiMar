@@ -1,25 +1,8 @@
-import { API_ROUTES } from '../config/api.js'
+import { API_ROUTES, API_URL } from '../config/api.js'
 
-// ======================================================================
-// CONFIGURACIÓN GLOBAL
-// ======================================================================
-const API_URL = 'http://localhost:3030/api' // URL base de la API
+let carrito = []
+let productosDisponibles = []
 
-// ======================================================================
-// VARIABLES GLOBALES SIMPLES
-// ======================================================================
-let carrito = [] // Array que contiene todos los productos del carrito
-let productosDisponibles = [] // Array con todos los productos disponibles
-
-// ======================================================================
-// FUNCIONES DE PRODUCTOS
-// ======================================================================
-
-/**
- * Procesa las URLs de un producto para manejar casos con URLs separadas por comas
- * @param {Array|string} urls - URLs del producto
- * @returns {Array} Array de URLs procesadas
- */
 function procesarURLsProducto (urls) {
   if (!urls) return ['/front-end/img/notFount.png']
 

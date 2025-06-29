@@ -4,9 +4,6 @@ import { DashboardState } from './modules/dashboard-state.js'
 import { configurarEventListeners, configurarInterfazSegunRol } from './modules/interface-manager.js'
 import { cargarProductos } from './modules/products-manager.js'
 
-// ======================================================================
-// INICIALIZACIÓN PRINCIPAL DEL DASHBOARD
-// ======================================================================
 document.addEventListener('DOMContentLoaded', async () => {
   console.log('🚀 Iniciando dashboard modular...')
 

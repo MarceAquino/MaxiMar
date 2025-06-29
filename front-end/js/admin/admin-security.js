@@ -1,16 +1,5 @@
-// ======================================================================
-// SEGURIDAD ADICIONAL PARA PÁGINAS DE ADMIN - SIMPLE PARA ESTUDIANTES
-// ======================================================================
-// Este archivo agrega protecciones extras para las páginas de administración
-// Evita problemas cuando el usuario usa el botón "atrás" del navegador
-
 import { logout, requireAuth } from './auth-guard.js'
 
-// ======================================================================
-// CONFIGURAR PROTECCIONES DE SEGURIDAD
-// ======================================================================
-
-// Variable global para controlar cuando no interferir
 window.procesoSubmitActivo = false
 
 // Función para evitar problemas con el caché del navegador
@@ -69,9 +58,6 @@ function configurarHeadersNoCache () {
   document.head.appendChild(metaExpires)
 }
 
-// ======================================================================
-// INICIALIZACIÓN AUTOMÁTICA
-// ======================================================================
 document.addEventListener('DOMContentLoaded', () => {
   console.log('🛡️ Configurando protecciones de seguridad...')
 

@@ -2,9 +2,6 @@ import { API_ROUTES, tokenUtils } from '../../config/api.js'
 import { logout } from '../auth-guard.js'
 import { DashboardState } from './dashboard-state.js'
 
-// ======================================================================
-// CARGAR PRODUCTOS DESDE EL SERVIDOR
-// ======================================================================
 export async function cargarProductos () {
   console.log('📦 Cargando productos...')
 
@@ -26,9 +23,6 @@ export async function cargarProductos () {
   }
 }
 
-// ======================================================================
-// APLICAR FILTROS A LOS PRODUCTOS
-// ======================================================================
 export function aplicarFiltros () {
   // Obtener valores de los filtros
   const textoBusqueda = document.getElementById('buscarProducto').value.toLowerCase()
@@ -74,9 +68,6 @@ export function aplicarFiltros () {
   }
 }
 
-// ======================================================================
-// MOSTRAR PRODUCTOS EN PANTALLA
-// ======================================================================
 export function renderizarProductos () {
   const contenedor = document.getElementById('contenedorProductos')
   const mensajeSinProductos = document.getElementById('mensajeSinProductos')
@@ -103,9 +94,6 @@ export function renderizarProductos () {
   })
 }
 
-// ======================================================================
-// CREAR TARJETA HTML PARA UN PRODUCTO
-// ======================================================================
 export function crearTarjetaProducto (producto) {
   const div = document.createElement('div')
   div.className = 'col-lg-2-4 col-md-4 col-12'
@@ -175,22 +163,12 @@ export function crearTarjetaProducto (producto) {
   return div
 }
 
-// ======================================================================
-// FUNCIONES AUXILIARES
-// ======================================================================
-
-/**
- * Determinar color del stock según cantidad
- */
 function obtenerClaseStock (stock) {
   if (stock <= 5) return 'bajo' // Stock crítico (rojo)
   if (stock <= 20) return 'medio' // Stock medio (amarillo)
   return 'alto' // Stock alto (verde)
 }
 
-/**
- * Agregar eventos a los botones de cada producto
- */
 function agregarEventListenersProducto (div, producto) {
   const btnModificar = div.querySelector('.btn-modificar')
   const btnEliminar = div.querySelector('.btn-eliminar')
@@ -242,13 +220,6 @@ function mostrarError (mensaje) {
   `
 }
 
-// ======================================================================
-// ACCIONES DE PRODUCTOS (SOLO PARA SUPER ADMIN)
-// ======================================================================
-
-/**
- * Alternar estado del producto (activar/desactivar)
- */
 async function toggleEstadoProducto (productoId, estadoActual, nombreProducto) {
   const accionEspanol = estadoActual ? 'desactivar' : 'activar'
   const accionIngles = estadoActual ? 'deactivate' : 'activate'

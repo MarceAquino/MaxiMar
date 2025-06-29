@@ -1,8 +1,5 @@
-const API_URL = 'http://localhost:3030/api' // URL base del servidor
+import { API_URL } from '../config/api.js'
 
-// ======================================================================
-// INICIALIZACIÓN CUANDO LA PÁGINA CARGA
-// ======================================================================
 document.addEventListener('DOMContentLoaded', async () => {
   console.log('🎫 Iniciando página de ticket...')
 

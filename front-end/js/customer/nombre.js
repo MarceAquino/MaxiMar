@@ -1,16 +1,3 @@
-// ======================================================================
-// GESTIÓN DE NOMBRE DE USUARIO - SIMPLE PARA ESTUDIANTES
-// ======================================================================
-// Este archivo maneja el nombre del usuario en diferentes páginas
-// Funciona tanto para mostrar bienvenidas como para login
-
-// ======================================================================
-// FUNCIÓN PRINCIPAL: CONFIGURAR SISTEMA DE NOMBRES
-// ======================================================================
-/**
- * Configura el sistema de nombres de usuario en cualquier página
- * Maneja tanto el login como mostrar mensajes de bienvenida
- */
 function configurarSistemaNombres () {
   console.log('👤 Iniciando sistema de nombres de usuario...')
 

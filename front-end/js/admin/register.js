@@ -1,15 +1,6 @@
-// ======================================================================
-// REGISTRO DE ADMINISTRADORES - VERSIÓN MODULAR
-// ======================================================================
-// Este archivo maneja el registro de nuevos administradores
-// Solo el SuperAdmin puede acceder a esta funcionalidad
-//
-// MODULAR: Utiliza módulos utilitarios compartidos para evitar duplicación
-
 import { API_ROUTES, tokenUtils } from '../../config/api.js'
 import { logout, requireAuth } from '../auth-guard.js'
 
-// import { showAlert, showErrorList } from './utils/ui-utils.js'
 import {
   reactivarFormulario,
   recopilarDatosAdmin
@@ -23,20 +14,8 @@ import {
   validarNombre
 } from './utils/validation-utils.js'
 
-// ======================================================================
-// VARIABLES GLOBALES SIMPLES
-// ======================================================================
 let usuarioActual = null
 
-// ======================================================================
-// FUNCIONES DE VALIDACIÓN ESPECÍFICAS
-// ======================================================================
-
-/**
- * Valida los datos del nuevo administrador usando módulos utilitarios
- * @param {Object} datos - Datos del admin a validar
- * @returns {Object} {esValido: boolean, errores: array}
- */
 function validarAdministrador (datos) {
   const errores = []
 
@@ -84,9 +63,6 @@ function validarAdministrador (datos) {
   }
 }
 
-// ======================================================================
-// INICIALIZACIÓN
-// ======================================================================
 document.addEventListener('DOMContentLoaded', async () => {
   try {
     // 1. Verificar autenticación
@@ -107,9 +83,6 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 })
 
-// ======================================================================
-// CONFIGURAR EVENTOS
-// ======================================================================
 function configurarEventListeners () {
   try {
     // Formulario de registro
@@ -124,22 +97,12 @@ function configurarEventListeners () {
       logoutBtn.addEventListener('click', logout)
     }
 
-    // // Configurar validación en tiempo real para contraseñas usando form-utils
-    // setupRealtimePasswordValidation('passwordAdmin', 'confirmPasswordAdmin')
-
-    // // Configurar toggles de visibilidad de contraseñas usando form-utils
-    // setupPasswordToggle('togglePassword', 'passwordAdmin', 'passwordIcon')
-    // setupPasswordToggle('toggleConfirmPassword', 'confirmPasswordAdmin', 'confirmPasswordIcon')
-
     console.log('✅ Event listeners configurados correctamente')
   } catch (error) {
     console.error('❌ Error configurando event listeners:', error)
   }
 }
 
-// ======================================================================
-// PROCESAR REGISTRO DE NUEVO ADMIN
-// ======================================================================
 async function procesarRegistro (e) {
   e.preventDefault()
 
@@ -199,9 +162,6 @@ async function procesarRegistro (e) {
   }
 }
 
-// ======================================================================
-// MANEJO DE ERRORES DEL SERVIDOR
-// ======================================================================
 function manejarErrorRegistro (status, data) {
   if (status === 403) {
     alert('❌ No tiene permisos para registrar administradores', 'error')

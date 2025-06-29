@@ -1,9 +1,3 @@
-// ======================================================================
-// ACTUALIZACIÓN DE PRODUCTOS - REFACTORIZADO CON MÓDULO COMPARTIDO
-// ======================================================================
-// Este archivo maneja la actualización de productos existentes
-// Utiliza módulos compartidos para eliminar duplicación de código
-
 import { API_ROUTES } from '../../config/api.js'
 import { requireAuth } from '../auth-guard.js'
 
@@ -15,28 +9,13 @@ import {
   manejarEnvioFormulario
 } from './utils/unified-form-utils.js'
 
-// ======================================================================
-// VARIABLES GLOBALES
-// ======================================================================
 const form = document.getElementById('formModificarProducto')
 
-// ======================================================================
-// FUNCIONES DE UTILIDAD
-// ======================================================================
-
-/**
- * Obtiene el ID del producto desde la URL
- * @returns {string|null} ID del producto o null si no se encuentra
- */
 function getIdFromURL () {
   const params = new URLSearchParams(window.location.search)
   return params.get('id')
 }
 
-/**
- * Carga los datos del producto desde el servidor
- * @param {string} id - ID del producto a cargar
- */
 async function cargarProducto (id) {
   try {
     console.log(`🌐 Cargando producto con ID: ${id}`)
@@ -61,14 +40,6 @@ async function cargarProducto (id) {
   }
 }
 
-// ======================================================================
-// MANEJO DEL FORMULARIO
-// ======================================================================
-
-/**
- * Maneja el envío del formulario de actualización
- * @param {Event} e - Evento de submit
- */
 async function handleSubmitActualizacion (e) {
   // Establecer bandera para evitar interferencias de admin-security
   window.procesoSubmitActivo = true
@@ -91,13 +62,6 @@ async function handleSubmitActualizacion (e) {
   }
 }
 
-// ======================================================================
-// INICIALIZACIÓN
-// ======================================================================
-
-/**
- * Inicializa la página de actualización
- */
 document.addEventListener('DOMContentLoaded', async () => {
   const admin = await requireAuth()
   if (!admin) return
