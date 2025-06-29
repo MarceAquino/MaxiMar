@@ -3,14 +3,6 @@ let funcionRenderizado = null // Función que dibuja los productos en pantalla
 let mascotaActual = null // Filtro actual por mascota (null = todos)
 let categoriaActual = null // Filtro actual por categoría (null = todas)
 
-// ======================================================================
-// FUNCIÓN PRINCIPAL: INICIALIZAR SISTEMA DE FILTROS
-// ======================================================================
-/**
- * Configura todo el sistema de filtros de productos
- * @param {Array} productos - Lista de todos los productos disponibles
- * @param {Function} renderizarProductos - Función que dibuja productos en pantalla
- */
 function inicializarFiltros (productos, renderizarProductos) {
   console.log('🔍 Inicializando sistema de filtros...')
 
@@ -29,13 +21,6 @@ function inicializarFiltros (productos, renderizarProductos) {
   }
 }
 
-// ======================================================================
-// CONFIGURAR EVENTOS DE TARJETAS DE CATEGORÍA
-// ======================================================================
-/**
- * Configura los clicks en las tarjetas de categorías
- * Cuando el usuario hace click en una categoría, se activa el filtro
- */
 function configurarEventosCategorias () {
   console.log('🎯 Configurando eventos de categorías...')
 
@@ -66,12 +51,6 @@ function configurarEventosCategorias () {
   })
 }
 
-// ======================================================================
-// CONFIGURAR EVENTOS DE BOTONES ESPECIALES
-// ======================================================================
-/**
- * Configura botones especiales como "Ver Todos" o filtros rápidos
- */
 function configurarEventosBotones () {
   console.log('🔘 Configurando eventos de botones especiales...')
 
@@ -101,13 +80,6 @@ function configurarEventosBotones () {
   })
 }
 
-// ======================================================================
-// FUNCIÓN PRINCIPAL DE FILTRADO
-// ======================================================================
-/**
- * Filtra los productos según los criterios seleccionados y los muestra
- * Esta es la función más importante del archivo
- */
 function filtrarYMostrarProductos () {
   // Verificar que tenemos datos para trabajar
   if (!productosParaFiltrar.length || !funcionRenderizado) {
@@ -141,13 +113,6 @@ function filtrarYMostrarProductos () {
   console.log(`✅ Mostrados ${productosFiltrados.length} productos filtrados`)
 }
 
-// ======================================================================
-// CONFIGURAR EVENTOS DE NAVEGACIÓN ENTRE TABS
-// ======================================================================
-/**
- * Configura el comportamiento cuando el usuario cambia entre tabs
- * (Perros, Gatos, Ver Todos)
- */
 document.addEventListener('DOMContentLoaded', function () {
   console.log('🔄 Configurando eventos de tabs...')
 
@@ -179,7 +144,4 @@ document.addEventListener('DOMContentLoaded', function () {
   })
 })
 
-// ======================================================================
-// EXPORTAR FUNCIONES PARA USAR EN OTROS ARCHIVOS
-// ======================================================================
 export { inicializarFiltros }

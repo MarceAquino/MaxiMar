@@ -1,15 +1,7 @@
-// ======================================================================
-// UTILIDADES UNIFICADAS DE FORMULARIOS - VERSIÓN SIMPLIFICADA
-// ======================================================================
-// Funciones esenciales para manejo de formularios de productos
-
 import { API_ROUTES, tokenUtils } from '../../config/api.js'
 import { logout } from '../auth-guard.js'
 import { mostrarErrores } from './ui-utils.js'
 
-// ======================================================================
-// CONFIGURACIÓN DE CAMPOS DINÁMICOS
-// ======================================================================
 export function configurarCamposDinamicosProducto (selectTipoId, contenedores) {
   const selectTipo = document.getElementById(selectTipoId)
 
@@ -39,9 +31,6 @@ export function configurarCamposDinamicosProducto (selectTipoId, contenedores) {
   console.log('⚙️ Campos dinámicos configurados')
 }
 
-// ------------------------------------------------------------------
-//  RECOPILAR DATOS DEL FORMULARIO "Registrar Admin"
-// ------------------------------------------------------------------
 export function recopilarDatosAdmin () {
   // IDs fijos de los inputs
   const nombreInput = document.getElementById('nombreAdmin')
@@ -102,9 +91,6 @@ export function recopilarDatosProducto (formId) {
   return datos
 }
 
-// ======================================================================
-// VALIDACIÓN DE DATOS
-// ======================================================================
 export function validarDatosProducto (datos) {
   const errores = []
 
@@ -140,9 +126,6 @@ export function validarDatosProducto (datos) {
   return errores
 }
 
-// ======================================================================
-// LLENAR FORMULARIO CON DATOS EXISTENTES
-// ======================================================================
 export function llenarFormularioProducto (formId, producto) {
   const form = document.getElementById(formId)
   if (!form) {

@@ -1,5 +1,5 @@
-import { actualizarContadorCarrito, agregarAlCarrito } from '../customer/carrito.js'
 import { API_ROUTES } from '../config/api.js'
+import { actualizarContadorCarrito, agregarAlCarrito } from '../customer/carrito.js'
 import { inicializarFiltros } from './filtros-tabs.js'
 
 let productos = [] // Lista de todos los productos cargados desde el servidor
@@ -46,13 +46,6 @@ async function cargarProductos () {
   productos = productos.filter(producto => producto.activo)
 }
 
-// ======================================================================
-// INICIALIZACIÓN DE LA PÁGINA
-// ======================================================================
-
-/**
- * Inicializa la página de productos con todas sus funcionalidades
- */
 function inicializarPaginaProductos () {
   console.log('🚀 Inicializando página de productos...')
 
@@ -68,14 +61,6 @@ function inicializarPaginaProductos () {
   console.log('✅ Página de productos inicializada')
 }
 
-// ======================================================================
-// RENDERIZADO DE PRODUCTOS
-// ======================================================================
-
-/**
- * Renderiza una lista de productos en la página
- * @param {Array} lista - Lista de productos a mostrar
- */
 function renderizarProductos (lista) {
   console.log(`🎨 Renderizando ${lista.length} productos...`)
 
@@ -115,11 +100,6 @@ function renderizarProductos (lista) {
   console.log(`✅ ${lista.length} productos renderizados exitosamente`)
 }
 
-/**
- * Crea una tarjeta HTML para un producto individual
- * @param {Object} producto - Datos del producto
- * @returns {HTMLElement} Elemento div con la tarjeta del producto
- */
 function crearTarjetaProducto (producto) {
   // Calcular estado del stock
   const stock = producto.stock || 0
@@ -168,11 +148,6 @@ function crearTarjetaProducto (producto) {
   return col
 }
 
-/**
- * Obtiene las imágenes de un producto, con imagen por defecto si no tiene
- * @param {Object} producto - Datos del producto
- * @returns {Array} Array de URLs de imágenes
- */
 function obtenerImagenesProducto (producto) {
   // Si no hay URLs, usar imagen por defecto
   if (!producto.urls) {
@@ -229,14 +204,6 @@ function obtenerImagenesProducto (producto) {
   })
 }
 
-/**
- * Crea el HTML para el contenedor de imágenes con navegación
- * @param {Array} imagenes - Array de URLs de imágenes
- * @param {string} containerId - ID único del contenedor
- * @param {string} nombreProducto - Nombre del producto para alt text
- * @param {boolean} tieneMultiplesImagenes - Si tiene más de una imagen
- * @returns {string} HTML del contenedor de imágenes
- */
 function crearHTMLImagenes (imagenes, containerId, nombreProducto, tieneMultiplesImagenes) {
   const primeraImagen = imagenes[0]
 
@@ -262,13 +229,6 @@ function crearHTMLImagenes (imagenes, containerId, nombreProducto, tieneMultiple
     </div>`
 }
 
-// ======================================================================
-// CONFIGURACIÓN DE EVENTOS
-// ======================================================================
-
-/**
- * Configura todos los eventos de la página de productos
- */
 function configurarEventosProductos () {
   console.log('🎯 Configurando eventos de productos...')
 
@@ -290,10 +250,6 @@ function configurarEventosProductos () {
   console.log('✅ Eventos configurados correctamente')
 }
 
-/**
- * Maneja el evento de agregar producto al carrito
- * @param {HTMLElement} boton - Botón que fue clickeado
- */
 function manejarAgregarAlCarrito (boton) {
   // Obtener ID del producto
   const id = parseInt(boton.dataset.id)

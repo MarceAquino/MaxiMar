@@ -51,9 +51,6 @@ function procesarURLsProducto (urls) {
   })
 }
 
-/**
- * Carga los productos desde la API
- */
 async function cargarProductos () {
   try {
     const response = await fetch(API_ROUTES.productos)
@@ -68,21 +65,10 @@ async function cargarProductos () {
   }
 }
 
-/**
- * Obtiene un producto por ID desde los productos cargados
- * @param {number} id - ID del producto
- * @returns {Object|null} Producto encontrado o null
- */
 function obtenerProductoPorId (id) {
   return productosDisponibles.find(p => p.producto_id === id) || null
 }
 
-/**
- * Verifica si hay stock suficiente para un producto
- * @param {number} productoId - ID del producto
- * @param {number} cantidadDeseada - Cantidad que se quiere agregar
- * @returns {Object} { disponible: boolean, stockActual: number, mensaje: string }
- */
 function verificarStock (productoId, cantidadDeseada) {
   const producto = obtenerProductoPorId(productoId)
 
@@ -124,9 +110,6 @@ function verificarStock (productoId, cantidadDeseada) {
   }
 }
 
-// ======================================================================
-// ELEMENTOS DOM PRINCIPALES
-// ======================================================================
 const elementos = {
   // Elementos del contador del carrito
   cartCountElement: document.getElementById('cart-icon-count'),
@@ -144,13 +127,6 @@ const elementos = {
   totalFijo: document.getElementById('total-fijo')
 }
 
-// ======================================================================
-// GESTIÓN DEL CARRITO EN LOCALSTORAGE
-// ======================================================================
-
-/**
- * Carga el carrito desde localStorage
- */
 function cargarCarrito () {
   console.log('📦 Cargando carrito desde localStorage...')
 
@@ -160,23 +136,11 @@ function cargarCarrito () {
   console.log(`✅ Carrito cargado: ${carrito.length} productos`)
 }
 
-/**
- * Guarda el carrito en localStorage
- */
 function guardarCarrito () {
   localStorage.setItem('carrito', JSON.stringify(carrito))
   console.log('💾 Carrito guardado en localStorage')
 }
 
-// ======================================================================
-// FUNCIONES PRINCIPALES DEL CARRITO
-// ======================================================================
-
-/**
- * Agrega un producto al carrito o incrementa su cantidad
- * @param {Object} producto - Producto a agregar
- * @returns {boolean} true si se agregó exitosamente, false si no
- */
 function agregarAlCarrito (producto) {
   console.log('🛒 Intentando agregar producto al carrito:', producto.nombre)
 
@@ -220,10 +184,6 @@ function agregarAlCarrito (producto) {
   return true
 }
 
-/**
- * Elimina un producto completamente del carrito
- * @param {number} id - ID del producto a eliminar
- */
 function eliminarItemCarrito (id) {
   console.log('🗑️ Eliminando producto del carrito:', id)
 
@@ -242,11 +202,6 @@ function eliminarItemCarrito (id) {
   }
 }
 
-/**
- * Cambia la cantidad de un producto en el carrito
- * @param {number} id - ID del producto
- * @param {number} cambio - Cambio en la cantidad (+1, -1, etc.)
- */
 function cambiarCantidadCarrito (id, cambio) {
   console.log(`🔢 Cambiando cantidad del producto ${id} en ${cambio}`)
 
@@ -283,9 +238,6 @@ function cambiarCantidadCarrito (id, cambio) {
   }
 }
 
-/**
- * Vacía completamente el carrito
- */
 function vaciarCarrito () {
   console.log('🧹 Vaciando carrito completo...')
 
@@ -301,9 +253,6 @@ function vaciarCarrito () {
   console.log('✅ Carrito vaciado')
 }
 
-/**
- * Actualiza el contador visual del carrito en la interfaz
- */
 function actualizarContadorCarrito () {
   // Asegurar que el carrito esté cargado
   if (!carrito || carrito.length === 0) {
@@ -324,10 +273,6 @@ function actualizarContadorCarrito () {
   console.log(`🔢 Contador actualizado: ${totalItems} items`)
 }
 
-/**
- * Determina en qué página estamos actualmente
- * @returns {string} Nombre de la página actual
- */
 function obtenerPaginaActual () {
   const path = window.location.pathname
   if (path.includes('carrito.html')) return 'carrito'
@@ -583,11 +528,6 @@ function mostrarMensaje (msg, tipo = 'info') {
   }, 3000)
 }
 
-/**
- * Muestra un mensaje específico para operaciones del carrito
- * @param {string} mensaje - Mensaje a mostrar
- * @param {string} tipo - Tipo de mensaje (success, warning, danger, info)
- */
 function mostrarMensajeCarrito (mensaje, tipo = 'info') {
   console.log(`💬 Mensaje carrito: ${mensaje} (${tipo})`)
 
@@ -600,31 +540,16 @@ function mostrarMensajeCarrito (mensaje, tipo = 'info') {
   mostrarMensaje(mensaje, tipo)
 }
 
-// ======================================================================
-// FUNCIONES AUXILIARES PÚBLICAS
-// ======================================================================
-
-/**
- * Obtiene el carrito actual desde localStorage
- * @returns {Array} Array con los items del carrito
- */
 function obtenerCarritoActual () {
   const carritoGuardado = localStorage.getItem('carrito')
   return carritoGuardado ? JSON.parse(carritoGuardado) : []
 }
 
-/**
- * Calcula la cantidad total de items en el carrito
- * @returns {number} Cantidad total de items
- */
 function obtenerCantidadTotalCarrito () {
   const carritoActual = obtenerCarritoActual()
   return carritoActual.reduce((suma, item) => suma + item.cantidad, 0)
 }
 
-// ======================================================================
-
-// === INICIALIZACIÓN PARA PÁGINA CARRITO ===
 document.addEventListener('DOMContentLoaded', async () => {
   // Cargar carrito desde localStorage
   cargarCarrito()
@@ -648,9 +573,6 @@ document.addEventListener('DOMContentLoaded', async () => {
   window.finalizarCompra = finalizarCompra
 })
 
-// ======================================================================
-// EXPORTACIONES ES6
-// ======================================================================
 export {
   actualizarContadorCarrito,
   agregarAlCarrito,

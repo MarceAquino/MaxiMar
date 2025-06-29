@@ -9,13 +9,20 @@
 }
 
 [data-bs-theme="dark"] {
-    --primary-orange: #a56a1b;
-    --primary-orange-hover: #d18b2c;
-    --primary-orange-light: #5a3d05;
-    --bg-light: #3b2e0f;
-    --card-bg: #5c4413;
+    --primary-orange: #7a4a00;
+    /* Marrón pastel oscuro */
+    --primary-orange-hover: #a56a1b;
+    /* Marrón pastel medio */
+    --primary-orange-light: #c99842;
+    /* Marrón pastel claro */
+    --bg-light: #1a1407;
+    /* Fondo muy oscuro, casi negro marrón */
+    --card-bg: #2f230a;
+    /* Fondo tarjeta oscuro marrón */
     --text-dark: #f1dba7;
-    --border-light: #7a5c15;
+    /* Texto claro pastel */
+    --border-light: #5c4413;
+    /* Borde marrón oscuro */
 }
 
 /* ===== BODY ===== */
