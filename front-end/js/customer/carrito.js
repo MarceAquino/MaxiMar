@@ -1,9 +1,4 @@
-import { API_ROUTES } from '../config/api.js'
-
-// ======================================================================
-// CONFIGURACIÓN GLOBAL
-// ======================================================================
-const API_URL = 'http://localhost:3030/api' // URL base de la API
+import { API_URL, API_ROUTES } from '../config/api.js'
 
 // ======================================================================
 // VARIABLES GLOBALES SIMPLES

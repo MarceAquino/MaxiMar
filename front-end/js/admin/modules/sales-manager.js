@@ -75,7 +75,16 @@ export function renderizarVentas () {
     const div = document.createElement('div')
     div.className = 'col-lg-2-4 col-md-4 col-12'
 
-    const fecha = new Date(venta.createdAt).toLocaleDateString('es-AR')
+    // const fecha = new Date(venta.createdAt).toLocaleDateString('es-AR')
+    ventas.forEach(venta => {
+      if (!venta.createdAt) {
+        console.warn(`Venta sin fecha (venta_id: ${venta.venta_id})`, venta)
+      }
+    })
+    const fecha = venta.createdAt
+      ? new Date(venta.createdAt.replace(' ', 'T') + 'Z').toLocaleDateString('es-AR')
+      : 'Fecha no disponible'
+
     const total = parseFloat(venta.total || 0).toLocaleString('es-AR')
 
     div.innerHTML = `
