@@ -6,9 +6,8 @@
 const { Producto } = require('../../models')
 
 /**
- * Desactiva un producto (simple)
- * @param {Request} req - Solicitud HTTP
- * @param {Response} res - Respuesta HTTP
+ * Desactiva un producto (no se muestra ni se puede vender).
+ * Respuesta: { ok, mensaje }
  */
 const desactivarProducto = async (req, res) => {
   try {

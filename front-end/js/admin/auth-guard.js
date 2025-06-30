@@ -1,6 +1,8 @@
 import { API_ROUTES, tokenUtils } from '../config/api.js'
+import { clearAllData } from './utils/clearAllData.js'
+import { redirectToLogin } from './utils/redirectToLogin.js'
 
-// FUNCIÓN PRINCIPAL: Verificar si el usuario está logueado
+// Verifica si el usuario está autenticado y el token es válido
 export const requireAuth = async () => {
   console.log('🔐 Verificando autenticación...')
 
@@ -43,7 +45,7 @@ export const requireAuth = async () => {
   }
 }
 
-// FUNCIÓN: Cerrar sesión
+// Cierra sesión limpiando datos y redirigiendo
 export const logout = async () => {
   // 1. Confirmar que el usuario quiere salir
   if (!confirm('¿Estás seguro de que quieres cerrar sesión?')) {
@@ -68,30 +70,4 @@ export const logout = async () => {
   // 3. Limpiar todo y redirigir
   clearAllData()
   window.location.replace('/front-end/html/admin/login.html')
-}
-
-// FUNCIÓN AUXILIAR: Limpiar todos los datos guardados
-function clearAllData () {
-  tokenUtils.removeToken()
-  localStorage.clear()
-  sessionStorage.clear()
-}
-
-// FUNCIÓN AUXILIAR: Redirigir al login
-function redirectToLogin () {
-  const loginUrl = '/front-end/html/admin/login.html'
-
-  // Solo redirigir si no estamos ya en el login
-  // Y si no hay un proceso de submit activo
-  if (window.location.pathname !== loginUrl && !window.procesoSubmitActivo) {
-    window.location.replace(loginUrl)
-  } else if (window.procesoSubmitActivo) {
-    console.log('🛑 Redirección a login omitida - Proceso de submit activo')
-    // Marcar para redirigir después
-    setTimeout(() => {
-      if (!window.procesoSubmitActivo) {
-        window.location.replace(loginUrl)
-      }
-    }, 6000)
-  }
 }

@@ -6,9 +6,8 @@
 const { Producto } = require('../../models')
 
 /**
- * Elimina un producto (simple)
- * @param {Request} req - Solicitud HTTP
- * @param {Response} res - Respuesta HTTP
+ * Borra un producto de la base de datos.
+ * Respuesta: { ok, mensaje }
  */
 const borrarProducto = async (req, res) => {
   try {
