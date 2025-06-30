@@ -1,4 +1,4 @@
-import { API_URL } from '../config/api.js'
+import { API_ROUTES } from '../config/api.js'
 
 document.addEventListener('DOMContentLoaded', async () => {
   console.log('🎫 Iniciando página de ticket...')
@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 async function cargarDatosVenta (ventaId) {
   console.log('📋 Cargando datos de venta ID:', ventaId)
   try {
-    const response = await fetch(`${API_URL}/sales/${ventaId}`)
+    const response = await fetch(API_ROUTES.ventas.obtener(ventaId))
 
     if (!response.ok) {
       throw new Error('Error al obtener datos de la venta')

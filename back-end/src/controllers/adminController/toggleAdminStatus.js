@@ -1,23 +1,12 @@
-const { Admin } = require('../models')
+/**
+ * Activa o desactiva un administrador (no superadmin).
+ * Cambia el estado de activo y responde con el admin actualizado.
+ */
+const { Admin } = require('../../models')
 
-// Listar administradores
-const listarAdmins = async (req, res) => {
-  try {
-    const admins = await Admin.findAll({
-      attributes: ['admin_id', 'email', 'nombre', 'rol', 'activo'],
-      order: [['createdAt', 'DESC']]
-    })
-    res.json({ admins })
-  } catch {
-    res.status(500).json({ message: 'Error al listar administradores' })
-  }
-}
-
-// Activar/desactivar admin (no superadmin)
-const toggleAdminStatus = async (req, res) => {
+module.exports = async function toggleAdminStatus (req, res) {
   try {
     const admin = await Admin.findByPk(req.params.id)
-
     if (!admin) {
       return res.status(404).json({ message: 'No encontrado' })
     }
@@ -31,5 +20,3 @@ const toggleAdminStatus = async (req, res) => {
     res.status(500).json({ message: 'Error al cambiar estado' })
   }
 }
-
-module.exports = { listarAdmins, toggleAdminStatus }

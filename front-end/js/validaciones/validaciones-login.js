@@ -3,7 +3,6 @@ export function VALIDAR_EMAIL (email) {
     return false
   }
 
-  // Expresión regular para validar email
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
   return emailRegex.test(email.trim())
 }
@@ -13,6 +12,5 @@ export function VALIDAR_CLAVE (password) {
     return false
   }
 
-  // Requisitos mínimos: al menos 6 caracteres
   return password.length >= 6
 }

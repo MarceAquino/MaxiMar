@@ -1,8 +1,7 @@
-import { API_ROUTES, API_URL } from '../config/api.js'
+import { API_ROUTES } from '../config/api.js'
 
 let carrito = []
 let productosDisponibles = []
-
 function procesarURLsProducto (urls) {
   if (!urls) return ['/front-end/img/notFount.png']
 
@@ -469,7 +468,7 @@ Esta acción no se puede deshacer.`
     mostrarMensaje('Procesando compra...', 'info')
 
     // Enviar venta al backend
-    const response = await fetch(`${API_URL}/sales`, {
+    const response = await fetch(API_ROUTES.ventas.crear, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -481,7 +480,7 @@ Esta acción no se puede deshacer.`
 
     if (response.ok) {
       // Guardar ID de venta en localStorage para mostrar en ticket
-      localStorage.setItem('ultima_venta_id', data.venta.venta_id)
+      localStorage.setItem('ultima_venta_id', data.venta_id)
 
       // Limpiar carrito
       carrito = []

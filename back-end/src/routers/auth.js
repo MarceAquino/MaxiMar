@@ -1,0 +1,27 @@
+// Rutas de autenticación y gestión de administradores para MaxiMar Pet Store
+// Incluye login, logout, verificación de token, registro y gestión de admins (solo superadmin)
+
+const express = require('express')
+const router = express.Router()
+const { authenticateToken } = require('../middlewares/auth')
+const { requireRole } = require('../middlewares/roleAuth')
+const {
+  registrarAdmin,
+  loginAdmin,
+  verificarToken,
+  logoutAdmin,
+  listarAdmins,
+  toggleAdminStatus
+} = require('../controllers/adminController')
+
+// Rutas de autenticación
+router.post('/auth/login', loginAdmin) // Login de admin
+router.get('/auth/verify', authenticateToken, verificarToken) // Verifica token JWT
+router.post('/auth/logout', authenticateToken, logoutAdmin) // Logout de admin
+
+// Registro y gestión de administradores (solo superadmin)
+router.post('/auth/register', authenticateToken, requireRole(['superadmin']), registrarAdmin) // Registrar admin
+router.get('/admin/list', authenticateToken, requireRole(['superadmin']), listarAdmins) // Listar admins
+router.patch('/admin/:id/toggle', authenticateToken, requireRole(['superadmin']), toggleAdminStatus) // Activar/desactivar admin
+
+module.exports = router

@@ -39,23 +39,18 @@ function configurarVerificacionPeriodica () {
   }, 5 * 60 * 1000) // 5 minutos
 }
 
-// Función para configurar headers que eviten el caché
-function configurarHeadersNoCache () {
-  // Agregar meta tags para evitar caché
-  const metaCache = document.createElement('meta')
-  metaCache.httpEquiv = 'Cache-Control'
-  metaCache.content = 'no-cache, no-store, must-revalidate'
-  document.head.appendChild(metaCache)
-
-  const metaPragma = document.createElement('meta')
-  metaPragma.httpEquiv = 'Pragma'
-  metaPragma.content = 'no-cache'
-  document.head.appendChild(metaPragma)
-
-  const metaExpires = document.createElement('meta')
-  metaExpires.httpEquiv = 'Expires'
-  metaExpires.content = '0'
-  document.head.appendChild(metaExpires)
+// Evita que el navegador guarde caché de la página de admin/superadmin
+function evitarCacheAdmin () {
+  [
+    { httpEquiv: 'Cache-Control', content: 'no-cache, no-store, must-revalidate' },
+    { httpEquiv: 'Pragma', content: 'no-cache' },
+    { httpEquiv: 'Expires', content: '0' }
+  ].forEach(metaInfo => {
+    const meta = document.createElement('meta')
+    meta.httpEquiv = metaInfo.httpEquiv
+    meta.content = metaInfo.content
+    document.head.appendChild(meta)
+  })
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -64,7 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Configurar todas las protecciones
   configurarProteccionCache()
   configurarVerificacionPeriodica()
-  configurarHeadersNoCache()
+  evitarCacheAdmin()
 
   console.log('✅ Protecciones de seguridad configuradas')
 })

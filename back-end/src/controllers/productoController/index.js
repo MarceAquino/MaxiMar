@@ -1,7 +1,11 @@
+/**
+ * Índice de controlador de producto.
+ * Exporta todas las funciones de gestión de productos de forma modular.
+ */
+
 // ======================================================================
 // Índice de Controlador de Producto
 // ======================================================================
-// Exporta todas las funciones del controlador de producto de forma modular.
 
 const crearProducto = require('./crearProducto')
 const actualizarProducto = require('./actualizarProducto')

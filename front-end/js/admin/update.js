@@ -1,5 +1,5 @@
-import { API_ROUTES } from '../../config/api.js'
-import { requireAuth } from '../auth-guard.js'
+import { API_ROUTES } from '../config/api.js'
+import { requireAuth } from './auth-guard.js'
 
 // Importar módulo unificado de formularios
 import { mostrarErrores } from './utils/ui-utils.js'
