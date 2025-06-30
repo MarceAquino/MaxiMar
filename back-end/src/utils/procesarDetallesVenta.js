@@ -6,10 +6,10 @@
  */
 const { DetalleVenta, Producto } = require('../models')
 
-async function procesarDetallesVenta (ventaId, detallesVenta) {
+async function procesarDetallesVenta (venta_id, detallesVenta) {
   for (const detalle of detallesVenta) {
     // Crear detalle de venta
-    await DetalleVenta.create({ ventaId, ...detalle })
+    await DetalleVenta.create({ venta_id, ...detalle })
     // Descontar stock
     await Producto.update(
       { stock: Producto.sequelize.literal(`stock - ${detalle.cantidad}`) },

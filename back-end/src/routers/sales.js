@@ -14,6 +14,6 @@ const {
 // Rutas de ventas
 router.post('/sales', crearVenta) // Crear venta (pública)
 router.get('/sales/:id', obtenerVenta) // Obtener venta por ID (pública)
-router.get('/sales', authenticateToken, requireRole(['admin', 'superadmin']), obtenerTodasLasVentas) // Listar todas las ventas (protegido)
+router.get('/sales', authenticateToken, requireRole(['superadmin']), obtenerTodasLasVentas) // Listar todas las ventas (protegido)
 
 module.exports = router
