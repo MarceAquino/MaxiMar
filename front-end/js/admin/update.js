@@ -4,9 +4,8 @@ import { requireAuth } from './auth-guard.js'
 // Importar módulo unificado de formularios
 import { mostrarErrores } from './utils/ui-utils.js'
 import {
-  configurarCamposDinamicosProducto,
-  llenarFormularioProducto,
-  manejarEnvioFormulario
+    configurarCamposDinamicosProducto,
+    llenarFormularioProducto
 } from './utils/unified-form-utils.js'
 
 const form = document.getElementById('formModificarProducto')
@@ -41,24 +40,23 @@ async function cargarProducto (id) {
 }
 
 async function handleSubmitActualizacion (e) {
-  // Establecer bandera para evitar interferencias de admin-security
-  window.procesoSubmitActivo = true
-  console.log('🔒 Proceso de actualización activado - Admin security pausado')
-
+  e.preventDefault()
   const id = getIdFromURL()
+  const formData = new FormData(form)
 
   try {
-    await manejarEnvioFormulario(e, {
-      esCreacion: false,
-      productId: id,
-      formId: 'formModificarProducto'
+    const response = await fetch(API_ROUTES.productoPorId(id), {
+      method: 'PUT',
+      headers: {
+        // No se debe poner Content-Type para FormData, el navegador lo maneja
+        Authorization: localStorage.getItem('token') ? `Bearer ${localStorage.getItem('token')}` : ''
+      },
+      body: formData
     })
-  } finally {
-    // Limpiar bandera después de un tiempo prudencial
-    setTimeout(() => {
-      window.procesoSubmitActivo = false
-      console.log('🔓 Proceso de actualización completado - Admin security reactivado')
-    }, 5000) // 5 segundos para asegurar que el usuario vea el feedback
+    if (!response.ok) throw new Error('Error al actualizar producto')
+    window.location.href = '/front-end/html/admin/dashboard.html'
+  } catch (error) {
+    mostrarErrores(['Error al actualizar el producto: ' + error.message])
   }
 }
 

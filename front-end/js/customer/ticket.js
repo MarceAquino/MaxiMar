@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   // Verificar que tengamos un ID de venta
   if (!idVenta) {
     console.error('❌ No se encontró ID de venta en localStorage')
-    mostrarError('No se pudo cargar la información de la compra')
+    alert('No se pudo cargar la información de la compra')
     return
   }
 
@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     console.log('✅ Ticket cargado exitosamente')
   } catch (error) {
     console.error('❌ Error al cargar ticket:', error)
-    mostrarError('Error al cargar los datos de la compra')
+    alert('Error al cargar los datos de la compra')
   }
 
   // Configurar los botones de la página
@@ -98,12 +98,6 @@ function mostrarProductos (productos) {
 }
 
 function mostrarTotales (venta) {
-  // Subtotal
-  const subtotalElement = document.getElementById('subtotal')
-  if (subtotalElement) {
-    subtotalElement.textContent = formatearPrecio(venta.subtotal)
-  }
-
   // Total
   const totalElement = document.getElementById('total')
   if (totalElement) {
@@ -132,33 +126,5 @@ function descargarPDF () {
   window.print()
 }
 function formatearPrecio (precio) {
-  return new Intl.NumberFormat('es-AR', {
-    style: 'currency',
-    currency: 'ARS'
-  }).format(precio)
-}
-
-function mostrarError (mensaje) {
-  // Usar alertas personalizadas si están disponibles
-  if (window.customAlert) {
-    window.customAlert.error(mensaje, {
-      duration: 0, // No auto-cerrar
-      action: '<button onclick="window.location.href=\'/front-end/index.html\'">Volver al Inicio</button>'
-    })
-    return
-  }
-
-  // Fallback a mostrar error en la página
-  const container = document.querySelector('.container')
-  if (container) {
-    container.innerHTML = `
-      <div class="alert alert-danger text-center">
-        <h4><i class="fas fa-exclamation-triangle me-2"></i>Error</h4>
-        <p>${mensaje}</p>
-        <a href="/front-end/index.html" class="btn btn-warning">
-          <i class="fas fa-home me-2"></i>Volver al Inicio
-        </a>
-      </div>
-    `
-  }
+  return '$' + Number(precio).toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
 }

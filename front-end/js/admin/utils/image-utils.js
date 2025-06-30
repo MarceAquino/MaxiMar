@@ -108,6 +108,7 @@ export function crearPreviewsImagenes (files, container, options = {}) {
     const reader = new FileReader()
 
     reader.onload = function (e) {
+      console.log('Renderizando preview', file.name)
       const col = document.createElement('div')
       col.className = 'col-6 col-md-4 col-lg-3'
       col.setAttribute('data-file-index', index)

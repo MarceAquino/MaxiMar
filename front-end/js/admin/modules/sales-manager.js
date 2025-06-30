@@ -5,7 +5,6 @@ export async function cargarVentas () {
   console.log('📦 Cargando ventas...')
 
   try {
-    // Usar la ruta correcta para obtener todas las ventas
     const response = await fetch(API_ROUTES.ventas.todas, {
       headers: tokenUtils.getAuthHeaders()
     })
@@ -15,34 +14,39 @@ export async function cargarVentas () {
     }
 
     const ventas = await response.json()
-    console.log(`✅ ${ventas.length} ventas cargadas`)
-
     DashboardState.setVentas(ventas)
 
-    // Actualizar contador
     const contador = document.getElementById('contadorVentas')
     if (contador) {
       contador.textContent = `${ventas.length} ventas`
     }
+
+    renderizarVentas()
   } catch (error) {
     console.error('❌ Error cargando ventas:', error)
     DashboardState.setVentas([])
+
+    const contenedor = document.getElementById('contenedorVentas')
+    if (contenedor) {
+      contenedor.innerHTML = `
+        <div class="col-12 text-center py-5">
+          <i class="fas fa-exclamation-triangle fa-3x text-danger mb-3"></i>
+          <h5 class="text-danger">Error al cargar ventas</h5>
+          <p class="text-muted">${error.message}</p>
+        </div>
+      `
+    }
   }
 }
 
 export function renderizarVentas () {
   const contenedor = document.getElementById('contenedorVentas')
-
-  if (!contenedor) {
-    console.warn('⚠️ Contenedor de ventas no encontrado')
-    return
-  }
+  if (!contenedor) return
 
   contenedor.innerHTML = ''
 
   const ventas = DashboardState.getVentas()
-
-  if (ventas.length === 0) {
+  if (!ventas || ventas.length === 0) {
     contenedor.innerHTML = `
       <div class="col-12 text-center py-5">
         <i class="fas fa-chart-line fa-3x text-muted mb-3"></i>
@@ -52,10 +56,9 @@ export function renderizarVentas () {
     return
   }
 
-  // Ordenar ventas según el filtro seleccionado
   const ordenSelect = document.getElementById('ordenarVentas')
   if (ordenSelect) {
-    ordenarVentas(ordenSelect.value)
+    ordenarVentas(ordenSelect.value, false)
   }
 
   contenedor.className = 'row g-4'
@@ -64,15 +67,21 @@ export function renderizarVentas () {
     const div = document.createElement('div')
     div.className = 'col-lg-2-4 col-md-4 col-12'
 
-    // const fecha = new Date(venta.createdAt).toLocaleDateString('es-AR')
-    ventas.forEach(venta => {
-      if (!venta.createdAt) {
-        console.warn(`Venta sin fecha (venta_id: ${venta.venta_id})`, venta)
+    let fecha = 'Fecha no disponible'
+    const rawFecha = venta.fecha_venta || venta.createdAt
+    if (rawFecha) {
+      try {
+        fecha = new Date(rawFecha.replace(' ', 'T')).toLocaleString('es-AR', {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric',
+          hour: '2-digit',
+          minute: '2-digit'
+        })
+      } catch (e) {
+        console.warn('Fecha inválida:', rawFecha)
       }
-    })
-    const fecha = venta.createdAt
-      ? new Date(venta.createdAt.replace(' ', 'T') + 'Z').toLocaleDateString('es-AR')
-      : 'Fecha no disponible'
+    }
 
     const total = parseFloat(venta.total || 0).toLocaleString('es-AR')
 
@@ -87,7 +96,7 @@ export function renderizarVentas () {
             <i class="fas fa-calendar me-2"></i>${fecha}
           </p>
           <p class="text-muted mb-2">
-            <i class="fas fa-user me-2"></i>${venta.nombre_cliente}
+            <i class="fas fa-user me-2"></i>${venta.nombre_cliente || 'Cliente Anónimo'}
           </p>
           <p class="text-muted mb-0">
             <i class="fas fa-boxes me-2"></i>${venta.cantidad_productos || 'N/A'} productos
@@ -97,13 +106,10 @@ export function renderizarVentas () {
           <i class="fas fa-eye"></i>
           <span>Ver detalle</span>
         </div>
-        <div class="venta-detalle-expandido" style="display: none;">
-          <!-- El detalle se cargará aquí -->
-        </div>
+        <div class="venta-detalle-expandido" style="display: none;"></div>
       </div>
     `
 
-    // Agregar event listener para el click
     const ventaCard = div.querySelector('.venta-card')
     ventaCard.addEventListener('click', () => {
       toggleDetalleVenta(ventaCard, venta.venta_id)
@@ -113,15 +119,18 @@ export function renderizarVentas () {
   })
 }
 
-export function ordenarVentas (criterio) {
+export function ordenarVentas (criterio, render = true) {
   const ventas = DashboardState.getVentas()
+  if (!ventas) return
+
+  const obtenerFecha = v => new Date(v.createdAt || v.fecha_venta || 0)
 
   switch (criterio) {
     case 'fecha-desc':
-      ventas.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+      ventas.sort((a, b) => obtenerFecha(b) - obtenerFecha(a))
       break
     case 'fecha-asc':
-      ventas.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt))
+      ventas.sort((a, b) => obtenerFecha(a) - obtenerFecha(b))
       break
     case 'importe-desc':
       ventas.sort((a, b) => parseFloat(b.total || 0) - parseFloat(a.total || 0))
@@ -132,32 +141,20 @@ export function ordenarVentas (criterio) {
   }
 
   DashboardState.setVentas(ventas)
+  if (render) renderizarVentas()
 }
 
 export async function toggleDetalleVenta (ventaCard, ventaId) {
   const detalleExpandido = ventaCard.querySelector('.venta-detalle-expandido')
-  const chevron = ventaCard.querySelector('.fa-chevron-down, .fa-chevron-up')
 
-  // Si ya está expandido, colapsarlo
   if (detalleExpandido.style.display !== 'none') {
     detalleExpandido.style.display = 'none'
     ventaCard.classList.remove('expandida')
-    if (chevron) {
-      chevron.className = 'fas fa-chevron-down'
-    }
     return
   }
 
-  // Si no está expandido, expandirlo
-  console.log('🔍 Mostrando detalle de venta:', ventaId)
-
-  // Cambiar icono y estado
   ventaCard.classList.add('expandida')
-  if (chevron) {
-    chevron.className = 'fas fa-chevron-up'
-  }
 
-  // Mostrar spinner mientras carga
   detalleExpandido.innerHTML = `
     <div class="detalle-loading">
       <div class="spinner-border spinner-border-sm text-primary me-2" role="status">
@@ -169,7 +166,6 @@ export async function toggleDetalleVenta (ventaCard, ventaId) {
   detalleExpandido.style.display = 'block'
 
   try {
-    // Llamar a la API para obtener el detalle
     const response = await fetch(API_ROUTES.ventas.detalle(ventaId), {
       headers: tokenUtils.getAuthHeaders()
     })
@@ -191,35 +187,26 @@ export async function toggleDetalleVenta (ventaCard, ventaId) {
   }
 }
 
-/**
- * Renderizar el detalle de venta expandido
- */
 function renderizarDetalleVentaExpandido (contenedor, detalle) {
-  const fecha = new Date(detalle.createdAt).toLocaleDateString('es-AR', {
-    year: 'numeric',
-    month: 'short',
-    day: 'numeric',
-    hour: '2-digit',
-    minute: '2-digit'
-  })
-
   const total = parseFloat(detalle.total || 0).toLocaleString('es-AR')
+  const numeroOrden = detalle.numero_orden || `#${detalle.venta_id}`
+  const productos = detalle.productos || []
 
-  // Generar HTML para los productos (versión compacta)
-  const productosHTML = detalle.productos.map(producto => {
-    const subtotalProducto = parseFloat(producto.subtotal).toLocaleString('es-AR')
+  const productosHTML = productos.map(producto => {
+    const subtotal = parseFloat(producto.subtotal || 0).toLocaleString('es-AR')
+    const precioUnitario = parseFloat(producto.precio_unitario || 0).toLocaleString('es-AR')
+
     return `
       <div class="producto-detalle">
         <div class="producto-info">
-          <strong>${producto.nombre}</strong>
-          <small class="text-muted d-block">${producto.marca} | ${producto.categoria}</small>
+          <strong>${producto.nombre || 'Producto sin nombre'}</strong>
+          <small class="text-muted d-block">
+            ${producto.marca || 'Sin marca'} | ${producto.categoria || 'Sin categoría'}
+          </small>
+          <small class="text-muted">Precio unitario: $${precioUnitario}</small>
         </div>
-        <div class="producto-cantidad">
-          ${producto.cantidad}x
-        </div>
-        <div class="producto-subtotal">
-          $${subtotalProducto}
-        </div>
+        <div class="producto-cantidad">${producto.cantidad}x</div>
+        <div class="producto-subtotal">$${subtotal}</div>
       </div>
     `
   }).join('')
@@ -230,26 +217,26 @@ function renderizarDetalleVentaExpandido (contenedor, detalle) {
         <div class="row">
           <div class="col-md-6">
             <small class="text-muted">Orden:</small>
-            <code class="d-block">${detalle.numero_orden}</code>
+            <code class="d-block">${numeroOrden}</code>
           </div>
           <div class="col-md-6">
-            <small class="text-muted">Fecha:</small>
-            <span class="d-block">${fecha}</span>
+            <small class="text-muted">Cliente:</small>
+            <span class="d-block">${detalle.cliente || 'Cliente Anónimo'}</span>
           </div>
         </div>
       </div>
 
-      <div class="detalle-productos">
+      <div class="detalle-productos mt-3">
         <h6 class="mb-2">
           <i class="fas fa-shopping-cart me-2"></i>
-          Productos (${detalle.productos.length})
+          Productos (${productos.length})
         </h6>
         <div class="productos-lista">
           ${productosHTML}
         </div>
       </div>
 
-      <div class="detalle-total">
+      <div class="detalle-total mt-3">
         <div class="d-flex justify-content-between align-items-center">
           <strong>Total:</strong>
           <strong class="text-success">$${total}</strong>
