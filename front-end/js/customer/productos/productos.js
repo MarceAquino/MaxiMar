@@ -1,11 +1,12 @@
 // productos.js - Archivo principal optimizado
 import { API_ROUTES } from '../../config/api.js'
-import { actualizarContadorCarrito, agregarAlCarrito } from '../carrito.js'
 import { inicializarFiltros } from '../filtros-tabs.js'
 import { cambiarImagen, establecerImagen } from './modules/imagen-manager.js'
 import { mostrarFeedbackAgregar, mostrarMensaje } from './modules/notificaciones.js'
 import { renderizarListaProductos } from './modules/producto-render.js'
 import { validarProducto, validarStock } from './modules/validadores.js'
+
+import { actualizarContadorCarrito, agregarAlCarrito } from '../carrito/carrito.js'
 
 // Variables globales
 let productos = []

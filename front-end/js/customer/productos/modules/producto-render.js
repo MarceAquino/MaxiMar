@@ -1,4 +1,3 @@
-// modules/producto-renderer.js
 import { crearHTMLImagenes, obtenerImagenesProducto } from './imagen-manager.js'
 
 // Función principal para renderizar lista de productos
