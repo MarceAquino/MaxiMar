@@ -26,7 +26,7 @@ const actualizarProducto = async (req, res) => {
       datos.urls = JSON.stringify(req.files.map(f => f.filename))
     }
 
-    console.log('📦 Datos recibidos para actualizar:', datos)
+    console.log('Datos recibidos para actualizar:', datos)
 
     // Validar datos antes de actualizar
     const validacion = validarProducto(datos, 'actualizar')

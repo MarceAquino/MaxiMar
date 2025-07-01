@@ -1,50 +1,47 @@
+/**
+ * Dashboard principal del sistema de administración
+ * Inicializa y coordina todos los módulos del dashboard
+ */
+
 import { requireAuth } from '../admin/auth-guard.js'
 import { tokenUtils } from '../config/api.js'
 import { DashboardState } from './modules/dashboard-state.js'
 import { configurarEventListeners, configurarInterfazSegunRol } from './modules/interface-manager.js'
 import { cargarProductos } from './modules/products-manager.js'
 
+/**
+ * Muestra error de inicialización en la interfaz
+ */
+function mostrarErrorInicializacion (error) {
+  const contenedor = document.getElementById('contenedorProductos') || document.body
+  const botonRecargar = document.createElement('button')
+  botonRecargar.className = 'btn btn-outline-danger btn-sm mt-2'
+  botonRecargar.innerHTML = '<i class="fas fa-redo me-1"></i> Recargar página'
+  botonRecargar.addEventListener('click', () => location.reload())
+
+  contenedor.innerHTML = `
+    <div class="alert alert-danger text-center">
+      <i class="fas fa-exclamation-triangle me-2"></i>
+      Error al cargar el dashboard: ${error.message}
+    </div>
+  `
+  contenedor.querySelector('.alert').appendChild(botonRecargar)
+}
+
+/**
+ * Inicialización del dashboard
+ */
 document.addEventListener('DOMContentLoaded', async () => {
-  console.log('🚀 Iniciando dashboard modular...')
-
   try {
-    // 1. Verificar que el usuario esté autenticado
     await requireAuth()
-    console.log('✅ Autenticación verificada')
 
-    // 2. Obtener datos del usuario desde el token
     const usuarioActual = tokenUtils.getDecodedToken()
     DashboardState.setUsuarioActual(usuarioActual)
-    console.log('✅ Usuario cargado:', usuarioActual?.nombre)
 
-    // 3. Configurar la interfaz según el rol (admin vs superadmin)
     configurarInterfazSegunRol()
-    console.log('✅ Interfaz configurada según rol')
-
-    // 4. Cargar productos desde el servidor
     await cargarProductos()
-    console.log('✅ Productos cargados')
-
-    // 5. Configurar botones y eventos
     configurarEventListeners()
-    console.log('✅ Event listeners configurados')
-
-    console.log('🎉 Dashboard inicializado correctamente')
   } catch (error) {
-    console.error('❌ Error inicializando dashboard:', error)
-
-    // Mostrar error en la interfaz si es posible
-    const contenedor = document.getElementById('contenedorProductos') || document.body
-    contenedor.innerHTML = `
-      <div class="alert alert-danger text-center">
-        <i class="fas fa-exclamation-triangle me-2"></i>
-        Error al cargar el dashboard: ${error.message}
-        <br>
-        <button class="btn btn-outline-danger btn-sm mt-2" onclick="location.reload()">
-          <i class="fas fa-redo me-1"></i>
-          Recargar página
-        </button>
-      </div>
-    `
+    mostrarErrorInicializacion(error)
   }
 })

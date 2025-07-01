@@ -6,7 +6,6 @@ export function configurarCamposDinamicosProducto (selectTipoId, contenedores) {
   const selectTipo = document.getElementById(selectTipoId)
 
   if (!selectTipo) {
-    console.warn(`❌ Select '${selectTipoId}' no encontrado`)
     return
   }
 
@@ -28,7 +27,6 @@ export function configurarCamposDinamicosProducto (selectTipoId, contenedores) {
 
   selectTipo.addEventListener('change', actualizarCampos)
   actualizarCampos()
-  console.log('⚙️ Campos dinámicos configurados')
 }
 
 export function recopilarDatosAdmin () {
@@ -129,7 +127,6 @@ export function validarDatosProducto (datos) {
 export function llenarFormularioProducto (formId, producto) {
   const form = document.getElementById(formId)
   if (!form) {
-    console.error(`❌ Formulario '${formId}' no encontrado`)
     return
   }
 
@@ -202,7 +199,6 @@ export function llenarFormularioProducto (formId, producto) {
         try {
           atributos = JSON.parse(atributos)
         } catch (error) {
-          console.error('Error parsing atributos:', error)
           atributos = {}
         }
       }
@@ -214,10 +210,8 @@ export function llenarFormularioProducto (formId, producto) {
         }
       })
     }
-
-    console.log('✅ Formulario llenado correctamente')
   } catch (error) {
-    console.error('❌ Error llenando formulario:', error)
+    // Error silencioso
   }
 }
 
@@ -233,8 +227,6 @@ export async function manejarEnvioFormulario (e, options = {}) {
     formId = 'formCrearProducto',
     obtenerImagenes = null
   } = options
-
-  console.log(`🚀 ${esCreacion ? 'Creando' : 'Actualizando'} producto...`)
 
   try {
     // 1. Recopilar y validar datos
@@ -264,7 +256,6 @@ export async function manejarEnvioFormulario (e, options = {}) {
     )
 
     if (!confirmacion) {
-      console.log('❌ Operación cancelada')
       return
     }
 
@@ -309,8 +300,6 @@ export async function manejarEnvioFormulario (e, options = {}) {
     const url = esCreacion ? API_ROUTES.crearProducto : API_ROUTES.actualizarProducto(productId)
     const method = esCreacion ? 'POST' : 'PUT'
 
-    console.log(`📤 Enviando ${method} a: ${url}`)
-
     const response = await fetch(url, { method, headers, body: bodyData })
 
     if (response.status === 401) {
@@ -327,7 +316,7 @@ export async function manejarEnvioFormulario (e, options = {}) {
         mensaje = 'Ya existe un producto con ese código. Use un código diferente.'
       }
 
-      alert(`❌ ERROR\n\n${mensaje}`)
+      alert(`Error: ${mensaje}`)
       return
     }
 
@@ -336,7 +325,7 @@ export async function manejarEnvioFormulario (e, options = {}) {
 
     if (esCreacion) {
       // Flujo para creación - Solo éxito y limpieza automática
-      alert(`🎉 ¡ÉXITO!\n\nEl producto "${nombreProducto}" ha sido creado correctamente.`)
+      alert(`El producto "${nombreProducto}" ha sido creado correctamente.`)
 
       // Limpiar formulario automáticamente
       const form = document.getElementById(formId)
@@ -348,18 +337,15 @@ export async function manejarEnvioFormulario (e, options = {}) {
           preview.style.display = 'none'
         }
       }
-
-      console.log('✅ Formulario limpio y listo para el siguiente producto')
     } else {
       // Flujo para actualización
-      alert(`🎉 ¡ÉXITO!\n\nEl producto "${nombreProducto}" ha sido actualizado correctamente.`)
+      alert(`El producto "${nombreProducto}" ha sido actualizado correctamente.`)
       setTimeout(() => {
         window.location.replace('dashboard.html')
       }, 500)
     }
   } catch (error) {
-    console.error('❌ Error:', error)
-    alert('❌ ERROR DE CONEXIÓN\n\nVerifique su conexión e intente nuevamente.')
+    alert('Error de conexión. Verifique su conexión e intente nuevamente.')
   }
 }
 
@@ -376,6 +362,4 @@ export function reactivarFormulario () {
   if (window.procesoSubmitActivo !== undefined) {
     window.procesoSubmitActivo = false
   }
-
-  console.log('✅ Formulario reactivado')
 }
