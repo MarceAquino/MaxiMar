@@ -8,76 +8,6 @@ const form = document.getElementById('formCrearProducto')
 const imageInput = document.getElementById('imagenesCrear')
 const previewContainer = document.getElementById('previewImagenes')
 
-function configurarValidacionTiempoReal () {
-  const campos = [
-    {
-      id: 'codigoCrear',
-      validaciones: [
-        { condicion: v => v.length < 3, mensaje: 'Código mínimo 3 caracteres' },
-        { condicion: v => v.length > 20, mensaje: 'Máximo 20 caracteres' }
-      ]
-    },
-    {
-      id: 'nombreCrear',
-      validaciones: [
-        { condicion: v => v.length < 3, mensaje: 'Nombre mínimo 3 caracteres' },
-        { condicion: v => v.length > 100, mensaje: 'Máximo 100 caracteres' }
-      ]
-    },
-    {
-      id: 'marcaCrear',
-      validaciones: [
-        { condicion: v => v.length < 2, mensaje: 'Marca mínima 2 caracteres' },
-        { condicion: v => v.length > 50, mensaje: 'Máximo 50 caracteres' }
-      ]
-    },
-    {
-      id: 'precioCrear',
-      validaciones: [
-        { condicion: v => isNaN(v) || parseFloat(v) <= 0, mensaje: 'Precio inválido' }
-      ]
-    },
-    {
-      id: 'stockCrear',
-      validaciones: [
-        { condicion: v => isNaN(v) || parseInt(v) < 0, mensaje: 'Stock inválido' },
-        { condicion: v => !Number.isInteger(parseFloat(v)), mensaje: 'Debe ser entero' }
-      ]
-    }
-  ]
-
-  campos.forEach(({ id, validaciones }) => {
-    const el = document.getElementById(id)
-    if (!el) return
-
-    el.addEventListener('input', () => validarCampoTiempoReal(el, validaciones))
-    el.addEventListener('blur', () => validarCampoTiempoReal(el, validaciones))
-  })
-}
-
-function validarCampoTiempoReal (el, validaciones) {
-  const valor = el.value.trim()
-  let error = ''
-  for (const v of validaciones) {
-    if (v.condicion(valor)) {
-      error = v.mensaje
-      break
-    }
-  }
-
-  if (error) {
-    el.classList.add('is-invalid')
-    el.classList.remove('is-valid')
-    const feedback = el.nextElementSibling
-    if (feedback) feedback.textContent = error
-  } else if (valor) {
-    el.classList.add('is-valid')
-    el.classList.remove('is-invalid')
-  } else {
-    el.classList.remove('is-valid', 'is-invalid')
-  }
-}
-
 // =====================
 // LÓGICA COMPLETA DE IMÁGENES PARA CREATE
 // =====================
@@ -187,7 +117,6 @@ async function handleSubmitCreacion (e) {
 // 5. Reemplazar el event listener del submit
 if (form) {
   form.addEventListener('submit', handleSubmitCreacion)
-  configurarValidacionTiempoReal()
 }
 
 document.addEventListener('DOMContentLoaded', async () => {
@@ -201,7 +130,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   if (form) {
     form.addEventListener('submit', handleSubmitCreacion)
-    configurarValidacionTiempoReal()
   }
 
   const logoutBtn = document.getElementById('logoutBtn')

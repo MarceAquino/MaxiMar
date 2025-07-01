@@ -9,6 +9,7 @@ const {
   registrarAdmin,
   loginAdmin,
   verificarToken,
+  verificarEmail,
   logoutAdmin,
   listarAdmins,
   toggleAdminStatus
@@ -17,6 +18,7 @@ const {
 // Rutas de autenticación
 router.post('/auth/login', loginAdmin) // Login de admin
 router.get('/auth/verify', authenticateToken, verificarToken) // Verifica token JWT
+router.post('/auth/verificar-email', verificarEmail) // Verificar disponibilidad de email
 router.post('/auth/logout', authenticateToken, logoutAdmin) // Logout de admin
 
 // Registro y gestión de administradores (solo superadmin)
