@@ -1,72 +1,63 @@
-// Variable global para tokenUtils
-let tokenUtils = null
+// Función para limpiar datos de sesión
+function limpiarDatos () {
+  console.log('🧹 Limpiando datos de sesión...')
 
-// Función para cargar tokenUtils de forma asíncrona
-async function cargarTokenUtils () {
+  // Limpiar todo el almacenamiento
+  sessionStorage.clear()
+  localStorage.clear()
+
+  // Si hay tokenUtils disponible (páginas de admin), limpiar token
   try {
-    // Esto solo funcionará si estamos en contexto de módulo
-    const apiModule = await import('../config/api.js')
-    tokenUtils = apiModule.tokenUtils
-    console.log('✅ TokenUtils cargado para páginas de admin')
-    return true
+    if (window.tokenUtils) {
+      window.tokenUtils.removeToken()
+    }
   } catch (error) {
-    // Si falla el import, estamos en páginas de cliente (sin módulos)
-    console.log('ℹ️ Funcionando sin tokenUtils (página de cliente)')
-    return false
+    console.log('ℹ️ TokenUtils no disponible')
   }
 }
 
-document.addEventListener('DOMContentLoaded', async () => {
+// Función para determinar si estamos en página de admin
+function esPageinaAdmin () {
+  return window.location.pathname.includes('/admin/')
+}
+
+// Configurar sistema de logout
+document.addEventListener('DOMContentLoaded', () => {
   console.log('🚪 Configurando sistema de logout...')
 
-  // Intentar cargar tokenUtils si estamos en una página de admin
-  const esPageinaAdmin = window.location.pathname.includes('/admin/')
-  if (esPageinaAdmin) {
-    await cargarTokenUtils()
-  }
-
-  // Buscar el botón de logout
+  // Configurar botón de logout manual
   const botonSalir = document.getElementById('logoutBtn')
-
-  // Si existe el botón, configurar su evento
   if (botonSalir) {
-    botonSalir.addEventListener('click', manejarSalida)
-    console.log('✅ Botón de logout encontrado')
-  } else {
-    console.warn('⚠️ No se encontró botón de logout')
+    botonSalir.addEventListener('click', manejarSalidaManual)
+    console.log('✅ Botón de logout configurado')
   }
+
+  // Configurar limpieza automática al cerrar navegador/pestaña
+  window.addEventListener('beforeunload', manejarCierreNavegador)
+  console.log('✅ Limpieza automática configurada')
 })
 
-function manejarSalida (evento) {
+// Manejar salida manual (botón de logout)
+function manejarSalidaManual (evento) {
   evento.preventDefault()
 
   const confirmar = confirm('¿Estás seguro que quieres salir?')
 
   if (confirmar) {
-    // Verificar si estamos en una página de admin
-    const esPageinaAdmin = window.location.pathname.includes('/admin/')
+    limpiarDatos()
 
-    if (esPageinaAdmin && tokenUtils) {
-      // Para admin: limpiar token JWT usando tokenUtils y sessionStorage
-      console.log('🔐 Cerrando sesión de administrador...')
-      tokenUtils.removeToken()
-      sessionStorage.clear() // Limpiar todo el sessionStorage
-      window.location.href = '/front-end/html/admin/login.html'
-    } else if (esPageinaAdmin) {
-      // Fallback para admin sin tokenUtils
-      console.log('🔐 Cerrando sesión de administrador (fallback)...')
-      sessionStorage.clear()
-      localStorage.clear() // Por si acaso había datos antiguos
+    // Redirigir según el tipo de usuario
+    if (esPageinaAdmin()) {
       window.location.href = '/front-end/html/admin/login.html'
     } else {
-      // Para cliente: limpiar sessionStorage del carrito y datos de cliente
-      console.log('🛒 Limpiando datos de cliente...')
-      sessionStorage.clear() // El carrito ahora se guarda en sessionStorage
-      localStorage.clear() // Limpiar localStorage por si había datos antiguos
-
-      // Si es cliente, usar el href del botón o ir al inicio
       const destino = evento.currentTarget.href || '/front-end/index.html'
       window.location.href = destino
     }
   }
+}
+
+// Manejar cierre de navegador/pestaña (limpieza automática)
+function manejarCierreNavegador () {
+  console.log('🔄 Navegador cerrándose - limpiando datos...')
+  limpiarDatos()
 }
