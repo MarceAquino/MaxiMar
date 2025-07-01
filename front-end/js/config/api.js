@@ -34,24 +34,24 @@ const API_ROUTES = {
 const TOKEN_KEY = 'maximar_admin_token'
 
 const tokenUtils = {
-  // Guardar token en localStorage
+  // Guardar token en sessionStorage (se borra al cerrar navegador)
   saveToken: (token) => {
-    localStorage.setItem(TOKEN_KEY, token)
+    sessionStorage.setItem(TOKEN_KEY, token)
   },
 
-  // Obtener token de localStorage
+  // Obtener token de sessionStorage
   getToken: () => {
-    return localStorage.getItem(TOKEN_KEY)
+    return sessionStorage.getItem(TOKEN_KEY)
   },
 
-  // Eliminar token de localStorage
+  // Eliminar token de sessionStorage
   removeToken: () => {
-    localStorage.removeItem(TOKEN_KEY)
+    sessionStorage.removeItem(TOKEN_KEY)
   },
 
   // Verificar si hay token
   hasToken: () => {
-    return !!localStorage.getItem(TOKEN_KEY)
+    return !!sessionStorage.getItem(TOKEN_KEY)
   },
   // Obtener headers con autorización
   getAuthHeaders: () => {
