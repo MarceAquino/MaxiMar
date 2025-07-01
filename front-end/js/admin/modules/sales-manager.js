@@ -1,16 +1,22 @@
+/**
+ * Gestor de ventas del dashboard
+ * Maneja la carga, renderizado y ordenamiento de ventas
+ */
+
 import { API_ROUTES, tokenUtils } from '../../config/api.js'
 import { DashboardState } from './dashboard-state.js'
 
+/**
+ * Carga todas las ventas desde el servidor
+ */
 export async function cargarVentas () {
-  console.log('📦 Cargando ventas...')
-
   try {
     const response = await fetch(API_ROUTES.ventas.todas, {
       headers: tokenUtils.getAuthHeaders()
     })
 
     if (!response.ok) {
-      throw new Error('Error al obtener ventas del servidor')
+      throw new Error('Error al obtener ventas')
     }
 
     const ventas = await response.json()
@@ -23,22 +29,29 @@ export async function cargarVentas () {
 
     renderizarVentas()
   } catch (error) {
-    console.error('❌ Error cargando ventas:', error)
     DashboardState.setVentas([])
-
-    const contenedor = document.getElementById('contenedorVentas')
-    if (contenedor) {
-      contenedor.innerHTML = `
-        <div class="col-12 text-center py-5">
-          <i class="fas fa-exclamation-triangle fa-3x text-danger mb-3"></i>
-          <h5 class="text-danger">Error al cargar ventas</h5>
-          <p class="text-muted">${error.message}</p>
-        </div>
-      `
-    }
+    mostrarErrorVentas()
   }
 }
 
+/**
+ * Muestra mensaje de error al cargar ventas
+ */
+function mostrarErrorVentas () {
+  const contenedor = document.getElementById('contenedorVentas')
+  if (contenedor) {
+    contenedor.innerHTML = `
+      <div class="col-12 text-center py-5">
+        <i class="fas fa-exclamation-triangle fa-3x text-danger mb-3"></i>
+        <h5 class="text-danger">Error al cargar ventas</h5>
+      </div>
+    `
+  }
+}
+
+/**
+ * Renderiza la lista de ventas en el contenedor
+ */
 export function renderizarVentas () {
   const contenedor = document.getElementById('contenedorVentas')
   if (!contenedor) return
@@ -64,61 +77,78 @@ export function renderizarVentas () {
   contenedor.className = 'row g-4'
 
   ventas.forEach(venta => {
-    const div = document.createElement('div')
-    div.className = 'col-lg-2-4 col-md-4 col-12'
-
-    let fecha = 'Fecha no disponible'
-    const rawFecha = venta.fecha_venta || venta.createdAt
-    if (rawFecha) {
-      try {
-        fecha = new Date(rawFecha.replace(' ', 'T')).toLocaleString('es-AR', {
-          year: 'numeric',
-          month: 'long',
-          day: 'numeric',
-          hour: '2-digit',
-          minute: '2-digit'
-        })
-      } catch (e) {
-        console.warn('Fecha inválida:', rawFecha)
-      }
-    }
-
-    const total = parseFloat(venta.total || 0).toLocaleString('es-AR')
-
-    div.innerHTML = `
-      <div class="venta-card clickable" data-venta-id="${venta.venta_id}">
-        <div class="venta-card-content">
-          <div class="d-flex justify-content-between align-items-start mb-3">
-            <h6 class="mb-0">Venta #${venta.venta_id}</h6>
-            <span class="venta-total">$${total}</span>
-          </div>
-          <p class="venta-fecha mb-2">
-            <i class="fas fa-calendar me-2"></i>${fecha}
-          </p>
-          <p class="text-muted mb-2">
-            <i class="fas fa-user me-2"></i>${venta.nombre_cliente || 'Cliente Anónimo'}
-          </p>
-          <p class="text-muted mb-0">
-            <i class="fas fa-boxes me-2"></i>${venta.cantidad_productos || 'N/A'} productos
-          </p>
-        </div>
-        <div class="venta-card-overlay">
-          <i class="fas fa-eye"></i>
-          <span>Ver detalle</span>
-        </div>
-        <div class="venta-detalle-expandido" style="display: none;"></div>
-      </div>
-    `
-
-    const ventaCard = div.querySelector('.venta-card')
-    ventaCard.addEventListener('click', () => {
-      toggleDetalleVenta(ventaCard, venta.venta_id)
-    })
-
-    contenedor.appendChild(div)
+    const tarjeta = crearTarjetaVenta(venta)
+    contenedor.appendChild(tarjeta)
   })
 }
 
+/**
+ * Crea una tarjeta HTML para mostrar una venta
+ * @param {Object} venta - Datos de la venta
+ * @returns {HTMLElement} Elemento div con la tarjeta de la venta
+ */
+function crearTarjetaVenta (venta) {
+  const div = document.createElement('div')
+  div.className = 'col-lg-2-4 col-md-4 col-12'
+
+  const fecha = formatearFecha(venta.fecha_venta || venta.createdAt)
+  const total = parseFloat(venta.total || 0).toLocaleString('es-AR')
+
+  div.innerHTML = `
+    <div class="venta-card clickable" data-venta-id="${venta.venta_id}">
+      <div class="venta-card-content">
+        <div class="d-flex justify-content-between align-items-start mb-3">
+          <h6 class="mb-0">Venta #${venta.venta_id}</h6>
+          <span class="venta-total">$${total}</span>
+        </div>
+        <p class="venta-fecha mb-2">
+          <i class="fas fa-calendar me-2"></i>${fecha}
+        </p>
+        <p class="text-muted mb-2">
+          <i class="fas fa-user me-2"></i>${venta.nombre_cliente || 'Cliente Anónimo'}
+        </p>
+        <p class="text-muted mb-0">
+          <i class="fas fa-boxes me-2"></i>${venta.cantidad_productos || 'N/A'} productos
+        </p>
+      </div>
+      <div class="venta-card-overlay">
+        <i class="fas fa-eye"></i>
+        <span>Ver detalle</span>
+      </div>
+      <div class="venta-detalle-expandido" style="display: none;"></div>
+    </div>
+  `
+
+  const ventaCard = div.querySelector('.venta-card')
+  ventaCard.addEventListener('click', () => {
+    toggleDetalleVenta(ventaCard, venta.venta_id)
+  })
+
+  return div
+}
+
+/**
+ * Formatea una fecha para mostrar de manera legible
+ */
+function formatearFecha (rawFecha) {
+  if (!rawFecha) return 'Fecha no disponible'
+
+  try {
+    return new Date(rawFecha.replace(' ', 'T')).toLocaleString('es-AR', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+    })
+  } catch (e) {
+    return 'Fecha no disponible'
+  }
+}
+
+/**
+ * Ordena las ventas según el criterio seleccionado
+ */
 export function ordenarVentas (criterio, render = true) {
   const ventas = DashboardState.getVentas()
   if (!ventas) return
@@ -144,6 +174,9 @@ export function ordenarVentas (criterio, render = true) {
   if (render) renderizarVentas()
 }
 
+/**
+ * Muestra/oculta el detalle expandido de una venta
+ */
 export async function toggleDetalleVenta (ventaCard, ventaId) {
   const detalleExpandido = ventaCard.querySelector('.venta-detalle-expandido')
 
@@ -154,16 +187,7 @@ export async function toggleDetalleVenta (ventaCard, ventaId) {
   }
 
   ventaCard.classList.add('expandida')
-
-  detalleExpandido.innerHTML = `
-    <div class="detalle-loading">
-      <div class="spinner-border spinner-border-sm text-primary me-2" role="status">
-        <span class="visually-hidden">Cargando...</span>
-      </div>
-      Cargando detalle...
-    </div>
-  `
-  detalleExpandido.style.display = 'block'
+  mostrarCargandoDetalle(detalleExpandido)
 
   try {
     const response = await fetch(API_ROUTES.ventas.detalle(ventaId), {
@@ -177,39 +201,46 @@ export async function toggleDetalleVenta (ventaCard, ventaId) {
     const detalleVenta = await response.json()
     renderizarDetalleVentaExpandido(detalleExpandido, detalleVenta)
   } catch (error) {
-    console.error('❌ Error al cargar detalle de venta:', error)
-    detalleExpandido.innerHTML = `
-      <div class="alert alert-danger alert-sm">
-        <i class="fas fa-exclamation-triangle me-2"></i>
-        Error al cargar el detalle. Inténtalo de nuevo.
-      </div>
-    `
+    mostrarErrorDetalle(detalleExpandido)
   }
 }
 
+/**
+ * Muestra el indicador de carga en el detalle
+ */
+function mostrarCargandoDetalle (detalleExpandido) {
+  detalleExpandido.innerHTML = `
+    <div class="detalle-loading">
+      <div class="spinner-border spinner-border-sm text-primary me-2" role="status">
+        <span class="visually-hidden">Cargando...</span>
+      </div>
+      Cargando detalle...
+    </div>
+  `
+  detalleExpandido.style.display = 'block'
+}
+
+/**
+ * Muestra error al cargar el detalle
+ */
+function mostrarErrorDetalle (detalleExpandido) {
+  detalleExpandido.innerHTML = `
+    <div class="alert alert-danger alert-sm">
+      <i class="fas fa-exclamation-triangle me-2"></i>
+      Error al cargar el detalle. Inténtalo de nuevo.
+    </div>
+  `
+}
+
+/**
+ * Renderiza el detalle completo de una venta
+ */
 function renderizarDetalleVentaExpandido (contenedor, detalle) {
   const total = parseFloat(detalle.total || 0).toLocaleString('es-AR')
   const numeroOrden = detalle.numero_orden || `#${detalle.venta_id}`
   const productos = detalle.productos || []
 
-  const productosHTML = productos.map(producto => {
-    const subtotal = parseFloat(producto.subtotal || 0).toLocaleString('es-AR')
-    const precioUnitario = parseFloat(producto.precio_unitario || 0).toLocaleString('es-AR')
-
-    return `
-      <div class="producto-detalle">
-        <div class="producto-info">
-          <strong>${producto.nombre || 'Producto sin nombre'}</strong>
-          <small class="text-muted d-block">
-            ${producto.marca || 'Sin marca'} | ${producto.categoria || 'Sin categoría'}
-          </small>
-          <small class="text-muted">Precio unitario: $${precioUnitario}</small>
-        </div>
-        <div class="producto-cantidad">${producto.cantidad}x</div>
-        <div class="producto-subtotal">$${subtotal}</div>
-      </div>
-    `
-  }).join('')
+  const productosHTML = crearListaProductos(productos)
 
   contenedor.innerHTML = `
     <div class="detalle-venta-content">
@@ -244,4 +275,28 @@ function renderizarDetalleVentaExpandido (contenedor, detalle) {
       </div>
     </div>
   `
+}
+
+/**
+ * Crea el HTML para la lista de productos en el detalle
+ */
+function crearListaProductos (productos) {
+  return productos.map(producto => {
+    const subtotal = parseFloat(producto.subtotal || 0).toLocaleString('es-AR')
+    const precioUnitario = parseFloat(producto.precio_unitario || 0).toLocaleString('es-AR')
+
+    return `
+      <div class="producto-detalle">
+        <div class="producto-info">
+          <strong>${producto.nombre || 'Producto sin nombre'}</strong>
+          <small class="text-muted d-block">
+            ${producto.marca || 'Sin marca'} | ${producto.categoria || 'Sin categoría'}
+          </small>
+          <small class="text-muted">Precio unitario: $${precioUnitario}</small>
+        </div>
+        <div class="producto-cantidad">${producto.cantidad}x</div>
+        <div class="producto-subtotal">$${subtotal}</div>
+      </div>
+    `
+  }).join('')
 }

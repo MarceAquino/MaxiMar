@@ -27,7 +27,6 @@ export function configurarPreviewImagenes (inputId, containerId, options = {}) {
   const container = document.getElementById(containerId)
 
   if (!input || !container) {
-    console.warn(`❌ No se encontraron elementos para preview: ${inputId}, ${containerId}`)
     return
   }
 
@@ -50,7 +49,6 @@ export function manejarCambioImagen (e, container, options = {}) {
   } = options
 
   const files = e.target.files
-  console.log(`📸 Archivos seleccionados: ${files.length}`)
 
   // Limpiar contenedor
   container.innerHTML = ''

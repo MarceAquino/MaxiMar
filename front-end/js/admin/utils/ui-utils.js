@@ -1,15 +1,14 @@
 export function mostrarErrores (errores, options = {}) {
   const {
     titulo = 'Se encontraron los siguientes errores',
-    numerado = true,
-    icono = '❌'
+    numerado = true
   } = options
 
   if (!errores || errores.length === 0) {
     return
   }
 
-  let mensaje = `${icono} ${titulo}:\n\n`
+  let mensaje = `${titulo}:\n\n`
 
   errores.forEach((error, index) => {
     if (numerado) {
@@ -19,7 +18,7 @@ export function mostrarErrores (errores, options = {}) {
     }
   })
 
-  mensaje += '\n💡 Corrija estos errores e intente nuevamente.'
+  mensaje += '\nCorrija estos errores e intente nuevamente.'
 
   // Mostrar alert con pausa
   setTimeout(() => {
@@ -28,18 +27,15 @@ export function mostrarErrores (errores, options = {}) {
 }
 
 export function mostrarExito (mensaje, options = {}) {
-  const { icono = '✅' } = options
-  alert(`${icono} ${mensaje}`)
+  alert(mensaje)
 }
 
 export function mostrarAdvertencia (mensaje, options = {}) {
-  const { icono = '⚠️' } = options
-  alert(`${icono} ${mensaje}`)
+  alert(mensaje)
 }
 
 export function mostrarConfirmacion (mensaje, options = {}) {
-  const { icono = '❓' } = options
-  return confirm(`${icono} ${mensaje}`)
+  return confirm(mensaje)
 }
 
 export function mostrarTooltipError (elemento, mensaje) {
@@ -172,7 +168,6 @@ export function mostrarFeedbackExito (data, options = {}) {
           callbackLimpiar()
         }
       } catch (error) {
-        console.error('❌ Error en confirm:', error)
         alert('Operación completada exitosamente!')
       }
     }, 500)

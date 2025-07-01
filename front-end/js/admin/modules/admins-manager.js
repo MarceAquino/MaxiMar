@@ -1,55 +1,52 @@
+/**
+ * Módulo para gestionar administradores en el dashboard
+ * Contiene funciones para cargar, mostrar y cambiar estado de administradores
+ */
+
 import { API_ROUTES, tokenUtils } from '../../config/api.js'
 import { DashboardState } from './dashboard-state.js'
 
+/**
+ * Carga la lista de administradores desde el servidor
+ * Filtra los superadmins para no mostrarlos en la interfaz
+ */
 export async function cargarAdministradores () {
-  console.log('📦 Cargando administradores...')
-  console.log('🔗 URL:', API_ROUTES.admin.list)
-  console.log('🔑 Headers:', tokenUtils.getAuthHeaders())
-
   try {
+    // Hacer petición al servidor para obtener administradores
     const response = await fetch(API_ROUTES.admin.list, {
       headers: tokenUtils.getAuthHeaders()
     })
 
-    console.log('📡 Response status:', response.status)
-    console.log('📡 Response ok:', response.ok)
-
+    // Verificar si la respuesta es exitosa
     if (!response.ok) {
-      const errorText = await response.text()
-      console.error('❌ Error response:', errorText)
-      throw new Error(`Error al obtener administradores del servidor: ${response.status} - ${errorText}`)
+      throw new Error('Error al obtener administradores')
     }
 
+    // Convertir respuesta a JSON
     const data = await response.json()
-    console.log('📡 Raw response data:', data)
-
-    // El backend devuelve { message, admins }, extraemos el array de admins
     const todosLosAdmins = data.admins || data || []
 
-    // Filtrar para no mostrar superadmins en la lista
+    // Filtrar superadmins (no se muestran en la lista)
     const administradores = todosLosAdmins.filter(admin => admin.rol !== 'superadmin')
 
-    console.log(`✅ ${administradores.length} administradores cargados (${todosLosAdmins.length - administradores.length} superadmins filtrados):`, administradores)
-
+    // Guardar en el estado global
     DashboardState.setAdministradores(administradores)
 
-    // Actualizar contador
+    // Actualizar contador en la interfaz
     const contador = document.getElementById('contadorAdministradores')
     if (contador) {
       contador.textContent = `${administradores.length} administradores`
     }
   } catch (error) {
-    console.error('❌ Error cargando administradores:', error)
+    // En caso de error, limpiar datos y mostrar mensaje
     DashboardState.setAdministradores([])
 
-    // Mostrar error en la interfaz
     const contenedor = document.getElementById('contenedorAdministradores')
     if (contenedor) {
       contenedor.innerHTML = `
         <div class="col-12">
           <div class="alert alert-danger">
-            <i class="fas fa-exclamation-triangle me-2"></i>
-            Error al cargar administradores: ${error.message}
+            Error al cargar administradores
           </div>
         </div>
       `
@@ -57,18 +54,25 @@ export async function cargarAdministradores () {
   }
 }
 
+/**
+ * Renderiza la lista de administradores en el HTML
+ * Crea las tarjetas con información de cada administrador
+ */
 export function renderizarAdministradores () {
+  // Buscar el contenedor donde mostrar los administradores
   const contenedor = document.getElementById('contenedorAdministradores')
 
   if (!contenedor) {
-    console.warn('⚠️ Contenedor de administradores no encontrado')
     return
   }
 
+  // Limpiar contenido anterior
   contenedor.innerHTML = ''
 
+  // Obtener lista de administradores del estado global
   const administradores = DashboardState.getAdministradores()
 
+  // Si no hay administradores, mostrar mensaje
   if (administradores.length === 0) {
     contenedor.innerHTML = `
       <div class="col-12 text-center py-5">
@@ -79,22 +83,28 @@ export function renderizarAdministradores () {
     return
   }
 
+  // Configurar diseño en cuadrícula
   contenedor.className = 'row g-4'
 
+  // Crear una tarjeta para cada administrador
   administradores.forEach(admin => {
+    // Crear elemento div para cada administrador
     const div = document.createElement('div')
     div.className = 'col-lg-2-4 col-md-4 col-12'
 
-    const estadoClass = admin.activo ? 'activo' : 'inactivo'
-    const estadoTexto = admin.activo ? 'Activo' : 'Inactivo'
-    const botonTexto = admin.activo ? 'Desactivar' : 'Activar'
-    const botonClass = admin.activo ? 'btn-warning' : 'btn-success'
+    // Determinar el estado y estilos del administrador
+    const estaActivo = admin.activo
+    const estadoTexto = estaActivo ? 'Activo' : 'Inactivo'
+    const botonTexto = estaActivo ? 'Desactivar' : 'Activar'
+    const colorBoton = estaActivo ? 'btn-warning' : 'btn-success'
+    const iconoBoton = estaActivo ? 'fa-ban' : 'fa-check'
 
+    // Crear HTML de la tarjeta del administrador
     div.innerHTML = `
       <div class="admin-card">
         <div class="d-flex justify-content-between align-items-start mb-3">
           <h5 class="mb-0">${admin.nombre}</h5>
-          <span class="admin-status ${estadoClass}">${estadoTexto}</span>
+          <span class="admin-status ${estaActivo ? 'activo' : 'inactivo'}">${estadoTexto}</span>
         </div>
         <p class="text-muted mb-2">
           <i class="fas fa-envelope me-2"></i>${admin.email}
@@ -103,25 +113,60 @@ export function renderizarAdministradores () {
           <i class="fas fa-user-tag me-2"></i>Rol: ${admin.rol}
         </p>
         <div class="d-flex gap-2">
-          <button class="btn ${botonClass} btn-sm" onclick="toggleAdminStatus(${admin.admin_id}, ${admin.activo})">
-            <i class="fas ${admin.activo ? 'fa-ban' : 'fa-check'} me-1"></i>${botonTexto}
+          <button class="btn ${colorBoton} btn-sm toggle-admin-btn"
+                  data-admin-id="${admin.admin_id}"
+                  data-admin-activo="${estaActivo}">
+            <i class="fas ${iconoBoton} me-1"></i>${botonTexto}
           </button>
         </div>
       </div>
     `
 
+    // Agregar la tarjeta al contenedor
     contenedor.appendChild(div)
+  })
+
+  // Configurar eventos de los botones después de crearlos
+  agregarEventosABotones()
+}
+
+/**
+ * Agrega event listeners a todos los botones de cambiar estado
+ * Usa delegación de eventos moderna en lugar de onclick en HTML
+ */
+function agregarEventosABotones () {
+  // Buscar todos los botones con la clase específica
+  const botones = document.querySelectorAll('.toggle-admin-btn')
+
+  // Agregar evento click a cada botón
+  botones.forEach(boton => {
+    boton.addEventListener('click', function () {
+      // Obtener datos del administrador desde los atributos data-*
+      const adminId = this.getAttribute('data-admin-id')
+      const estaActivo = this.getAttribute('data-admin-activo') === 'true'
+
+      // Llamar función para cambiar estado
+      toggleAdminStatus(adminId, estaActivo)
+    })
   })
 }
 
+/**
+ * Cambia el estado (activo/inactivo) de un administrador
+ * @param {string} adminId - ID del administrador
+ * @param {boolean} estadoActual - Estado actual del administrador
+ */
 export async function toggleAdminStatus (adminId, estadoActual) {
+  // Determinar la acción a realizar
   const accion = estadoActual ? 'desactivar' : 'activar'
 
+  // Pedir confirmación al usuario
   if (!confirm(`¿Está seguro que desea ${accion} este administrador?`)) {
     return
   }
 
   try {
+    // Enviar petición al servidor para cambiar estado
     const response = await fetch(API_ROUTES.admin.toggle(adminId), {
       method: 'PATCH',
       headers: {
@@ -130,18 +175,20 @@ export async function toggleAdminStatus (adminId, estadoActual) {
       }
     })
 
+    // Verificar si la operación fue exitosa
     if (!response.ok) {
       throw new Error('Error al cambiar estado del administrador')
     }
 
-    alert(`✅ Administrador ${accion === 'activar' ? 'activado' : 'desactivado'} exitosamente`)
+    // Mostrar mensaje de éxito
+    const mensaje = accion === 'activar' ? 'activado' : 'desactivado'
+    alert(`Administrador ${mensaje} exitosamente`)
+
+    // Recargar la lista para mostrar cambios
     await cargarAdministradores()
     renderizarAdministradores()
   } catch (error) {
-    console.error('❌ Error al cambiar estado del administrador:', error)
-    alert(`❌ Error al ${accion} el administrador`)
+    // Mostrar mensaje de error
+    alert(`Error al ${accion} el administrador`)
   }
 }
-
-// Exponer función globalmente para que funcione desde HTML
-window.toggleAdminStatus = toggleAdminStatus

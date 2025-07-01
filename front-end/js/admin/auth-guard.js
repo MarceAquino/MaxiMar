@@ -1,61 +1,57 @@
+/**
+ * Guardia de autenticación para proteger rutas del dashboard
+ * Verifica tokens y maneja el logout de usuarios
+ */
+
 import { API_ROUTES, tokenUtils } from '../config/api.js'
-import { clearAllData } from './utils/clearAllData.js'
 import { redirectToLogin } from './utils/redirectToLogin.js'
 
-// Verifica si el usuario está autenticado y el token es válido
+/**
+ * Verifica si el usuario está autenticado y el token es válido
+ * @returns {Object|boolean} Datos del admin si está autenticado, false si no
+ */
 export const requireAuth = async () => {
-  console.log('🔐 Verificando autenticación...')
-
-  // 1. ¿Hay token guardado?
   if (!tokenUtils.hasToken()) {
-    console.log('❌ No hay token - Redirigiendo al login')
     redirectToLogin()
     return false
   }
 
   try {
-    // 2. Verificar si el token es válido en el servidor
     const response = await fetch(API_ROUTES.auth.verify, {
       headers: tokenUtils.getAuthHeaders()
     })
 
     if (!response.ok) {
-      console.log('❌ Token inválido - Limpiando y redirigiendo')
-      clearAllData()
+      tokenUtils.removeToken()
       redirectToLogin()
       return false
     }
 
-    // 3. Si todo está bien, devolver datos del admin
     const data = await response.json()
     if (data.admin && data.admin.id) {
-      console.log('✅ Usuario autenticado:', data.admin.nombre)
       return data.admin
     } else {
-      console.log('❌ Respuesta inválida del servidor')
-      clearAllData()
+      tokenUtils.removeToken()
       redirectToLogin()
       return false
     }
   } catch (error) {
-    console.error('❌ Error de conexión:', error)
-    clearAllData()
+    tokenUtils.removeToken()
     redirectToLogin()
     return false
   }
 }
 
-// Cierra sesión limpiando datos y redirigiendo
+/**
+ * Cierra la sesión del usuario
+ * Limpia el token y redirige al login
+ */
 export const logout = async () => {
-  // 1. Confirmar que el usuario quiere salir
   if (!confirm('¿Estás seguro de que quieres cerrar sesión?')) {
     return
   }
 
-  console.log('🚪 Cerrando sesión...')
-
   try {
-    // 2. Avisar al servidor que cerramos sesión (opcional)
     if (tokenUtils.hasToken()) {
       await fetch(API_ROUTES.auth.logout, {
         method: 'POST',
@@ -63,11 +59,9 @@ export const logout = async () => {
       })
     }
   } catch (error) {
-    console.log('⚠️ Error al comunicar logout al servidor:', error)
-    // No importa si falla, seguimos con el logout local
+    // Error en logout del servidor, continuamos con logout local
   }
 
-  // 3. Limpiar todo y redirigir
-  clearAllData()
+  tokenUtils.removeToken()
   window.location.replace('/front-end/html/admin/login.html')
 }

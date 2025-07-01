@@ -1,16 +1,16 @@
 // carrito.js - Archivo principal del carrito
 import {
-    agregarAlCarrito,
-    cambiarCantidadCarrito,
-    eliminarItemCarrito,
-    vaciarCarrito
+  agregarAlCarrito,
+  cambiarCantidadCarrito,
+  eliminarItemCarrito,
+  vaciarCarrito
 } from './modules/carrito-actions.js'
 import { finalizarCompra } from './modules/carrito-checkout.js'
 import { cargarCarrito, cargarProductos } from './modules/carrito-data.js'
 import {
-    actualizarContadorCarrito,
-    configurarEventosCarrito,
-    renderCarrito
+  actualizarContadorCarrito,
+  configurarEventosCarrito,
+  renderCarrito
 } from './modules/carrito-ui.js'
 import { mostrarMensaje, obtenerPaginaActual } from './modules/carrito-utils.js'
 
@@ -109,10 +109,10 @@ function exportarFuncionesGlobales () {
 // === EXPORTACIONES DEL MÓDULO ===
 export {
 
-    // Funciones de UI
-    actualizarContadorCarrito,
-    // Funciones principales
-    agregarAlCarrito, cambiarCantidadCarrito, eliminarItemCarrito, finalizarCompra,
-    // Función de inicialización
-    renderCarrito, vaciarCarrito
+  // Funciones de UI
+  actualizarContadorCarrito,
+  // Funciones principales
+  agregarAlCarrito, cambiarCantidadCarrito, eliminarItemCarrito, finalizarCompra,
+  // Función de inicialización
+  renderCarrito, vaciarCarrito
 }

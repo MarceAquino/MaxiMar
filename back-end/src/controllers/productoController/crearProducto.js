@@ -27,7 +27,7 @@ const crearProducto = async (req, res) => {
       datos.urls = req.files.map(f => f.filename)
     }
 
-    console.log('📦 Datos recibidos para crear:', datos)
+    console.log('Datos recibidos para crear:', datos)
 
     // Validar datos antes de crear
     const validacion = validarProducto(datos, 'crear')
@@ -37,10 +37,10 @@ const crearProducto = async (req, res) => {
     }
 
     const producto = await Producto.create(datos)
-    console.log('✅ Producto creado correctamente:', producto.producto_id)
+    console.log('Producto creado correctamente:', producto.producto_id)
     res.json({ ok: true, mensaje: 'Producto creado', producto })
   } catch (error) {
-    console.error('❌ Error al crear producto:', error)
+    console.error('Error al crear producto:', error)
     res.status(500).json({ ok: false, error: 'Error al crear producto' })
   }
 }
