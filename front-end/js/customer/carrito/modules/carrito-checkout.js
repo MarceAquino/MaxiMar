@@ -1,4 +1,4 @@
-// modules/carrito-checkout.js - Proceso de finalización de compra
+// Proceso de finalización de compra
 import { API_ROUTES } from '../../../config/api.js'
 import { guardarCarrito, obtenerCarrito, setCarrito } from './carrito-data.js'
 import { mostrarMensaje } from './carrito-utils.js'
@@ -52,7 +52,7 @@ function confirmarCompra (carrito, cliente) {
 
   const confirmMessage = `¿Estás seguro de realizar esta compra?
 
-📋 Resumen:
+Resumen:
 • ${cantidadItems} producto${cantidadItems !== 1 ? 's' : ''}
 • Total: $${totalCompra.toLocaleString('es-AR')}
 • Cliente: ${cliente}

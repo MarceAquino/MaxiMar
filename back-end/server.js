@@ -27,16 +27,16 @@ app.use('/api', apiRoutes)
 const conectarDB = async () => {
   try {
     await sequelize.authenticate()
-    console.log('✅ Conectado a la base de datos correctamente.')
+    console.log('Conectado a la base de datos correctamente.')
     await sequelize.sync({ force: false }) // Sincronizar sin recrear tablas
-    console.log('📦 Tablas sincronizadas correctamente.')
+    console.log('Tablas sincronizadas correctamente.')
   } catch (error) {
-    console.error('❌ Error al conectar con la base de datos:', error.message)
+    console.error('Error al conectar con la base de datos:', error.message)
   }
 }
 
 // Iniciar servidor
 app.listen(PORT, async () => {
   await conectarDB()
-  console.log(`🚀 Servidor corriendo en http://localhost:${PORT}`)
+  console.log(`Servidor corriendo en http://localhost:${PORT}`)
 })

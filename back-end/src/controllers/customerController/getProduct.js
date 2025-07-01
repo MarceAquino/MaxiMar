@@ -1,6 +1,5 @@
-/**
- * Obtiene un producto por ID.
- */
+// Obtiene un producto por ID.
+
 const { Producto } = require('../../models')
 
 module.exports = async function getProduct (req, res) {

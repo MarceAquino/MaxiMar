@@ -5,11 +5,7 @@
 
 const { Admin } = require('../../models')
 
-/**
- * Controlador para verificar disponibilidad de email
- * @param {Object} req - Request object
- * @param {Object} res - Response object
- */
+// Controlador para verificar disponibilidad de email
 async function verificarEmail (req, res) {
   try {
     const { email } = req.body

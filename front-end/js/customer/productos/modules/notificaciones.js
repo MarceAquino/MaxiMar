@@ -1,8 +1,6 @@
-// modules/notificaciones.js
-
 // Función principal para mostrar mensajes
 export function mostrarMensaje (mensaje, tipo = 'info') {
-  console.log(`💬 Mostrando mensaje: ${mensaje} (${tipo})`)
+  console.log(`Mostrando mensaje: ${mensaje} (${tipo})`)
 
   // Usar las nuevas alertas personalizadas si están disponibles
   if (window.customAlert) {

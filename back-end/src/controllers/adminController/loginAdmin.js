@@ -10,9 +10,7 @@ const { Admin } = require('../../models')
 const { verificarPassword, generarTokenAdmin } = require('../../utils/authHelpers')
 const { formatearRespuestaLoginAdmin, respuestaError } = require('../../utils/loginHelpers')
 
-/**
- * Login de administrador. Devuelve token y datos si es válido.
- */
+// Login de administrador. Devuelve token y datos si es válido.
 module.exports = async function loginAdmin (req, res) {
   try {
     const { email, password } = req.body

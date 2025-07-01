@@ -1,4 +1,4 @@
-// modules/carrito-ui.js - Interfaz y renderizado del carrito
+// Interfaz y renderizado del carrito
 import { cambiarCantidadCarrito, eliminarItemCarrito } from './carrito-actions.js'
 import { calcularTotales, obtenerCarrito, obtenerProductoPorId } from './carrito-data.js'
 import { formatearPrecio, procesarURLsProducto } from './carrito-utils.js'
@@ -26,8 +26,6 @@ export function actualizarContadorCarrito () {
   if (elementos.cartCountElement) {
     elementos.cartCountElement.textContent = totalItems
   }
-
-  console.log(`🔢 Contador actualizado: ${totalItems} items`)
 }
 
 // === RENDERIZADO DEL CARRITO ===

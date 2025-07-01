@@ -1,7 +1,5 @@
-/**
- * Lista todos los administradores (solo para superadmin).
- * Responde con un array de admins.
- */
+// Lista todos los administradores (solo para superadmin).
+// Responde con un array de admins.
 const { Admin } = require('../../models')
 
 module.exports = async function listarAdmins (req, res) {

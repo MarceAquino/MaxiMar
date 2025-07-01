@@ -1,4 +1,4 @@
-// modules/carrito-data.js - Gestión de datos y almacenamiento del carrito
+// Gestión de datos y almacenamiento del carrito
 import { API_ROUTES } from '../../../config/api.js'
 
 let carrito = []
@@ -6,16 +6,13 @@ let productosDisponibles = []
 
 // === GESTIÓN DE LOCALSTORAGE ===
 export function cargarCarrito () {
-  console.log('📦 Cargando carrito desde localStorage...')
   const carritoGuardado = localStorage.getItem('carrito')
   carrito = carritoGuardado ? JSON.parse(carritoGuardado) : []
-  console.log(`✅ Carrito cargado: ${carrito.length} productos`)
   return carrito
 }
 
 export function guardarCarrito () {
   localStorage.setItem('carrito', JSON.stringify(carrito))
-  console.log('💾 Carrito guardado en localStorage')
 }
 
 // === GESTIÓN DE PRODUCTOS ===
@@ -26,10 +23,9 @@ export async function cargarProductos () {
       throw new Error('Error al obtener productos')
     }
     productosDisponibles = await response.json()
-    console.log(`✅ ${productosDisponibles.length} productos cargados para validación de stock`)
     return productosDisponibles
   } catch (error) {
-    console.error('❌ Error cargando productos:', error)
+    console.error('Error cargando productos:', error)
     productosDisponibles = []
     return []
   }

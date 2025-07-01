@@ -1,23 +1,21 @@
-// carrito.js - Archivo principal del carrito
+// Archivo principal del carrito
 import {
-    agregarAlCarrito,
-    cambiarCantidadCarrito,
-    eliminarItemCarrito,
-    vaciarCarrito
+  agregarAlCarrito,
+  cambiarCantidadCarrito,
+  eliminarItemCarrito,
+  vaciarCarrito
 } from './modules/carrito-actions.js'
 import { finalizarCompra } from './modules/carrito-checkout.js'
 import { cargarCarrito, cargarProductos } from './modules/carrito-data.js'
 import {
-    actualizarContadorCarrito,
-    configurarEventosCarrito,
-    renderCarrito
+  actualizarContadorCarrito,
+  configurarEventosCarrito,
+  renderCarrito
 } from './modules/carrito-ui.js'
 import { mostrarMensaje, obtenerPaginaActual } from './modules/carrito-utils.js'
 
 // === INICIALIZACIÓN DE LA PÁGINA DEL CARRITO ===
 export async function inicializarPaginaCarrito () {
-  console.log('🚀 Inicializando página del carrito...')
-
   try {
     // Cargar productos para validación de stock
     await cargarProductos()
@@ -28,10 +26,8 @@ export async function inicializarPaginaCarrito () {
     // Configurar eventos
     configurarEventosCarrito()
     configurarEventosEspeciales()
-
-    console.log('✅ Página del carrito inicializada correctamente')
   } catch (error) {
-    console.error('❌ Error inicializando página del carrito:', error)
+    console.error('Error inicializando página del carrito:', error)
     mostrarMensaje('Error al cargar la página del carrito', 'danger')
   }
 }
@@ -60,17 +56,14 @@ function manejarVaciarCarrito () {
   }
 
   const confirmar = confirm('¿Estás seguro de que quieres vaciar todo el carrito? Esta acción no se puede deshacer.')
-
   if (confirmar) {
     vaciarCarrito()
     mostrarMensaje('Carrito vaciado correctamente', 'success')
   }
 }
 
-// === INICIALIZACIÓN GENERAL ===
+// === INICIALIZACIÓN ===
 document.addEventListener('DOMContentLoaded', async () => {
-  console.log('🌟 Iniciando aplicación del carrito...')
-
   try {
     // Cargar carrito desde localStorage
     cargarCarrito()
@@ -88,10 +81,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // Exportar funciones globales para compatibilidad
     exportarFuncionesGlobales()
-
-    console.log('🎉 Aplicación del carrito iniciada correctamente')
   } catch (error) {
-    console.error('💥 Error crítico al inicializar carrito:', error)
+    console.error('Error crítico al inicializar carrito:', error)
   }
 })
 
@@ -109,10 +100,10 @@ function exportarFuncionesGlobales () {
 // === EXPORTACIONES DEL MÓDULO ===
 export {
 
-    // Funciones de UI
-    actualizarContadorCarrito,
-    // Funciones principales
-    agregarAlCarrito, cambiarCantidadCarrito, eliminarItemCarrito, finalizarCompra,
-    // Función de inicialización
-    renderCarrito, vaciarCarrito
+  // Funciones de UI
+  actualizarContadorCarrito,
+  // Funciones principales
+  agregarAlCarrito, cambiarCantidadCarrito, eliminarItemCarrito, finalizarCompra,
+  // Función de inicialización
+  renderCarrito, vaciarCarrito
 }

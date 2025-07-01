@@ -1,6 +1,5 @@
-/**
- * Obtiene todos los productos.
- */
+// Obtiene todos los productos.
+
 const { Producto } = require('../../models')
 
 module.exports = async function getAllProducts (req, res) {

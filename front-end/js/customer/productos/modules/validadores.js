@@ -1,5 +1,3 @@
-// modules/validadores.js
-
 // Objeto con funciones de validación
 export const validarProducto = {
   validarId (id) {
@@ -8,9 +6,9 @@ export const validarProducto = {
 
   validarDatosCompletos (producto) {
     return producto.producto_id &&
-             producto.nombre &&
-             producto.precio !== undefined &&
-             producto.precio !== null
+            producto.nombre &&
+            producto.precio !== undefined &&
+            producto.precio !== null
   }
 }
 

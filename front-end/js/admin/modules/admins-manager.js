@@ -11,12 +11,8 @@ export async function cargarAdministradores () {
       headers: tokenUtils.getAuthHeaders()
     })
 
-    console.log('📡 Response status:', response.status)
-    console.log('📡 Response ok:', response.ok)
-
     if (!response.ok) {
       const errorText = await response.text()
-      console.error('❌ Error response:', errorText)
       throw new Error(`Error al obtener administradores del servidor: ${response.status} - ${errorText}`)
     }
 
@@ -29,8 +25,6 @@ export async function cargarAdministradores () {
     // Filtrar para no mostrar superadmins en la lista
     const administradores = todosLosAdmins.filter(admin => admin.rol !== 'superadmin')
 
-    console.log(`✅ ${administradores.length} administradores cargados (${todosLosAdmins.length - administradores.length} superadmins filtrados):`, administradores)
-
     DashboardState.setAdministradores(administradores)
 
     // Actualizar contador
@@ -39,7 +33,6 @@ export async function cargarAdministradores () {
       contador.textContent = `${administradores.length} administradores`
     }
   } catch (error) {
-    console.error('❌ Error cargando administradores:', error)
     DashboardState.setAdministradores([])
 
     // Mostrar error en la interfaz

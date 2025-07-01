@@ -1,4 +1,4 @@
-// modules/carrito-utils.js - Utilidades y helpers del carrito
+// Utilidades y helpers del carrito
 
 // === FORMATEO ===
 export function formatearPrecio (precio) {

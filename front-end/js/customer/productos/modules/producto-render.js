@@ -3,7 +3,7 @@ import { crearHTMLImagenes, obtenerImagenesProducto } from './imagen-manager.js'
 // Función principal para renderizar lista de productos
 export function renderizarListaProductos (lista, contenedor) {
   if (!contenedor) {
-    console.warn('⚠️ Contenedor de productos no encontrado')
+    console.warn('Contenedor de productos no encontrado')
     return
   }
 
@@ -35,7 +35,7 @@ function mostrarMensajeSinProductos (contenedor) {
 // Función para validar si un producto tiene los datos mínimos
 function esProductoValido (producto) {
   if (!producto.producto_id || !producto.nombre || !producto.precio) {
-    console.warn('⚠️ Producto con datos incompletos:', producto)
+    console.warn('Producto con datos incompletos:', producto)
     return false
   }
   return true

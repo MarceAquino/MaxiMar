@@ -1,5 +1,3 @@
-// modules/imagen-manager.js
-
 const IMAGEN_POR_DEFECTO = '/front-end/img/notFount.png'
 
 // Función principal para obtener imágenes del producto
@@ -26,7 +24,7 @@ function parsearUrls (urls) {
     const parsed = JSON.parse(urls)
     return Array.isArray(parsed) ? parsed : []
   } catch (error) {
-    console.warn('❌ Error al parsear URLs de producto:', error)
+    console.warn('Error al parsear URLs de producto:', error)
     return []
   }
 }
@@ -93,13 +91,13 @@ export function crearHTMLImagenes (imagenes, containerId, nombreProducto) {
 export function cambiarImagen (containerId, direccion) {
   const contenedor = document.getElementById(containerId)
   if (!contenedor) {
-    console.warn(`⚠️ Contenedor ${containerId} no encontrado`)
+    console.warn(`Contenedor ${containerId} no encontrado`)
     return
   }
 
   const img = contenedor.querySelector('.product-image')
   if (!img) {
-    console.warn('⚠️ Imagen no encontrada en el contenedor')
+    console.warn('Imagen no encontrada en el contenedor')
     return
   }
 
@@ -116,19 +114,19 @@ export function cambiarImagen (containerId, direccion) {
 export function establecerImagen (containerId, indice) {
   const contenedor = document.getElementById(containerId)
   if (!contenedor) {
-    console.warn(`⚠️ Contenedor ${containerId} no encontrado`)
+    console.warn(`Contenedor ${containerId} no encontrado`)
     return
   }
 
   const img = contenedor.querySelector('.product-image')
   if (!img) {
-    console.warn('⚠️ Imagen no encontrada en el contenedor')
+    console.warn('Imagen no encontrada en el contenedor')
     return
   }
 
   const imagenes = JSON.parse(img.dataset.images || '[]')
   if (indice < 0 || indice >= imagenes.length) {
-    console.warn(`⚠️ Índice ${indice} fuera de rango`)
+    console.warn(`Indice ${indice} fuera de rango`)
     return
   }
 
@@ -154,7 +152,7 @@ function actualizarImagen (img, imagenes, indice, contenedor) {
   img.src = imagenes[indice]
   img.dataset.current = indice.toString()
   actualizarIndicadoresImagen(contenedor, indice)
-  console.log(`🖼️ Imagen actualizada a índice ${indice}`)
+  console.log(`Imagen actualizada a índice ${indice}`)
 }
 
 // Función para actualizar indicadores (si existen)
