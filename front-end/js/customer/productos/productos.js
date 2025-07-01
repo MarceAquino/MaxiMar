@@ -6,7 +6,7 @@ import { mostrarFeedbackAgregar, mostrarMensaje } from './modules/notificaciones
 import { renderizarListaProductos } from './modules/producto-render.js'
 import { validarProducto, validarStock } from './modules/validadores.js'
 
-import { actualizarContadorCarrito, agregarAlCarrito } from '../carrito.js'
+import { actualizarContadorCarrito, agregarAlCarrito } from '../carrito/carrito.js'
 
 // Variables globales
 let productos = []

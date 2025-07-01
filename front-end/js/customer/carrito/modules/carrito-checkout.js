@@ -1,5 +1,5 @@
 // modules/carrito-checkout.js - Proceso de finalización de compra
-import { API_ROUTES } from '../../config/api.js'
+import { API_ROUTES } from '../../../config/api.js'
 import { guardarCarrito, obtenerCarrito, setCarrito } from './carrito-data.js'
 import { mostrarMensaje } from './carrito-utils.js'
 

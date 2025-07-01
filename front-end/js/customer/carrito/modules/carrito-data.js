@@ -1,5 +1,5 @@
 // modules/carrito-data.js - Gestión de datos y almacenamiento del carrito
-import { API_ROUTES } from '../../config/api.js'
+import { API_ROUTES } from '../../../config/api.js'
 
 let carrito = []
 let productosDisponibles = []
