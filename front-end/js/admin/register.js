@@ -1,16 +1,7 @@
 import { API_ROUTES, tokenUtils } from '../config/api.js'
 import { logout, requireAuth } from './auth-guard.js'
-
-import {
-  reactivarFormulario,
-  recopilarDatosAdmin
-} from './utils/unified-form-utils.js'
-
-import {
-  validarEmail,
-  validarNombre,
-  validarPassword
-} from './utils/validation-utils.js'
+import { reactivarFormulario, recopilarDatosAdmin } from './utils/unified-form-utils.js'
+import { validarEmail, validarNombre, validarPassword } from './utils/validation-utils.js'
 
 /**
  * Administrador de registro para nuevos administradores
@@ -103,7 +94,7 @@ function configurarEventListeners () {
  */
 async function procesarRegistro (e) {
   e.preventDefault()
-
+  confirm('Esta seguro que desea registrar al administrador?')
   try {
     const datosFormulario = {
       nombre: 'nombreAdmin',

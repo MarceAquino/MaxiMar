@@ -152,7 +152,6 @@ function actualizarImagen (img, imagenes, indice, contenedor) {
   img.src = imagenes[indice]
   img.dataset.current = indice.toString()
   actualizarIndicadoresImagen(contenedor, indice)
-  console.log(`Imagen actualizada a índice ${indice}`)
 }
 
 // Función para actualizar indicadores (si existen)
