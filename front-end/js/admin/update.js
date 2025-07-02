@@ -3,10 +3,7 @@ import { requireAuth } from './auth-guard.js'
 
 // Importar módulo unificado de formularios
 import { mostrarErrores } from './utils/ui-utils.js'
-import {
-  configurarCamposDinamicosProducto,
-  llenarFormularioProducto
-} from './utils/unified-form-utils.js'
+import { configurarCamposDinamicosProducto, llenarFormularioProducto } from './utils/unified-form-utils.js'
 
 /**
  * Administrador de actualización de productos
@@ -31,8 +28,7 @@ function getIdFromURL () {
  */
 async function cargarProducto (id) {
   try {
-    const url = API_ROUTES.productoPorId(id)
-    const res = await fetch(url)
+    const res = await fetch(API_ROUTES.productoPorId(id))
 
     if (!res.ok) {
       throw new Error(`No se pudo cargar el producto. Status: ${res.status}`)
@@ -49,7 +45,7 @@ async function cargarProducto (id) {
  * Maneja el envío del formulario de actualización
  * @param {Event} e - Evento del formulario
  */
-async function handleSubmitActualizacion (e) {
+async function actualizarProducto (e) {
   e.preventDefault()
   const id = getIdFromURL()
   const formData = new FormData(form)
@@ -127,7 +123,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   // Configurar envío del formulario
   if (form) {
-    form.addEventListener('submit', handleSubmitActualizacion)
+    form.addEventListener('submit', actualizarProducto)
   }
 
   // Configurar logout button

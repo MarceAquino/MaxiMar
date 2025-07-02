@@ -1,8 +1,7 @@
+import { API_ROUTES, tokenUtils } from '../config/api.js'
 import { requireAuth } from './auth-guard.js'
 import { deshabilitarBotonTemporal } from './utils/ui-utils.js'
-import {
-  configurarCamposDinamicosProducto
-} from './utils/unified-form-utils.js'
+import { configurarCamposDinamicosProducto } from './utils/unified-form-utils.js'
 
 const form = document.getElementById('formCrearProducto')
 const imageInput = document.getElementById('imagenesCrear')
@@ -73,34 +72,70 @@ if (imageInput && previewContainer) {
   })
 }
 
-// 4. Envío del formulario con imágenes
-async function handleSubmitCreacion (e) {
+// Manejador de creacion de producto.
+async function crearProducto (e) {
   e.preventDefault()
   if (window.submitInProgress) return
   window.procesoSubmitActivo = true
   window.submitInProgress = true
   const submitBtn = form.querySelector('button[type="submit"]')
   const estadoOriginal = deshabilitarBotonTemporal(submitBtn, 'Creando...', 10000)
+
   try {
+    const authHeaders = tokenUtils.getAuthHeaders()
     const files = imageInput.files
     const errores = validarImagenesFront(files)
     if (errores.length) {
       alert(errores.join('\n'))
       return
     }
-    const formData = new FormData(form)
+
+    // SINCRONIZAR CATEGORIA CON TIPO_PRODUCTO
+    const tipoProductoSelect = document.getElementById('tipoProducto')
+    const categoriaHidden = document.getElementById('categoriaCrear')
+    if (tipoProductoSelect && categoriaHidden) {
+      categoriaHidden.value = tipoProductoSelect.value
+    }
+
+    const formData = new FormData()
+
+    // Procesar campos del formulario
+    const originalFormData = new FormData(form)
+    for (const [key, value] of originalFormData.entries()) {
+      if (key === 'precio') {
+        const precio = parseFloat(value)
+        if (isNaN(precio) || precio < 0.01) {
+          throw new Error('El precio debe ser un número mayor o igual a 0.01')
+        }
+        formData.append(key, precio.toString())
+      } else if (key === 'stock') {
+        const stock = parseInt(value)
+        if (isNaN(stock) || stock < 0) {
+          throw new Error('El stock debe ser un número igual o mayor a 0')
+        }
+        formData.append(key, stock.toString())
+      } else if (!key.endsWith('_display')) {
+        // Agregar todos los campos excepto los de display
+        formData.append(key, value)
+      }
+    }
+
+    // Agregar imágenes
     Array.from(files).forEach(file => {
       formData.append('imagenes', file)
     })
-    // Cambia la URL para apuntar al backend real
-    const response = await fetch('http://localhost:3030/api/products', {
+
+    const response = await fetch(API_ROUTES.crearProducto, {
       method: 'POST',
-      headers: {
-        Authorization: localStorage.getItem('token') ? `Bearer ${localStorage.getItem('token')}` : ''
-      },
+      headers: authHeaders,
       body: formData
     })
-    if (!response.ok) throw new Error('Error al crear producto')
+
+    if (!response.ok) {
+      const errorText = await response.text()
+      throw new Error(`Error al crear producto: ${response.status} - ${errorText}`)
+    }
+
     window.location.href = '/front-end/html/admin/dashboard.html'
   } catch (error) {
     alert(`Error: ${error.message}`)
@@ -116,7 +151,7 @@ async function handleSubmitCreacion (e) {
 
 // 5. Reemplazar el event listener del submit
 if (form) {
-  form.addEventListener('submit', handleSubmitCreacion)
+  form.addEventListener('submit', crearProducto)
 }
 
 document.addEventListener('DOMContentLoaded', async () => {
@@ -129,7 +164,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   })
 
   if (form) {
-    form.addEventListener('submit', handleSubmitCreacion)
+    form.addEventListener('submit', crearProducto)
   }
 
   const logoutBtn = document.getElementById('logoutBtn')
