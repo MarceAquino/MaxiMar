@@ -154,7 +154,7 @@
 
 .categoria-card:hover .categoria-icon,
 .categoria-card.active .categoria-icon {
-  color: var(--primary-orange);
+  color: var(--text-dark);
 }
 
 .categoria-card h6 {
