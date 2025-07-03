@@ -5,6 +5,7 @@ import { cambiarImagen, establecerImagen } from './modules/imagen-manager.js'
 import { mostrarFeedbackAgregar, mostrarMensaje } from './modules/notificaciones.js'
 import { renderizarListaProductos } from './modules/producto-render.js'
 import { validarProducto, validarStock } from './modules/validadores.js'
+
 import { actualizarContadorCarrito, agregarAlCarrito } from '../carrito/carrito.js'
 
 // Variables globales
@@ -25,7 +26,6 @@ async function cargarProductos () {
 
     const data = await response.json()
     productos = Array.isArray(data) ? data : []
-
     localStorage.setItem('productos', JSON.stringify(productos))
   } catch (error) {
     console.error('Error al cargar productos desde API:', error)
@@ -61,6 +61,7 @@ function renderizarProductos (lista) {
     console.warn('Contenedor de productos no encontrado')
     return
   }
+
   renderizarListaProductos(lista, elementos.divProductos)
 }
 
@@ -70,6 +71,7 @@ function configurarEventos () {
     console.warn('Contenedor de productos no encontrado para eventos')
     return
   }
+
   elementos.divProductos.addEventListener('click', manejarClickProductos)
 }
 
@@ -123,7 +125,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     inicializarPaginaProductos()
     actualizarContadorCarrito()
   } catch (error) {
-    console.error('Error al inicializar aplicación:', error)
     mostrarMensaje('Error al cargar la aplicación', 'danger')
   }
 })
