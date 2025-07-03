@@ -8,16 +8,17 @@
 }
 
 .btn{
-    border: 2px solid var(--border-light);
+    border: 2px solid var(--text-dark);
+    background: var(--primary-orange);
     border-radius: 50px;
     padding: 10px 20px;
     font-weight: bold;
 }
 
 .btn:hover {
-    transform: translateY(-2px);
+    transform:scale(1.05);
     box-shadow: var(--shadow-medium);
-    border-color: var(--primary-orange-hover);
+    border-color: var(--text-dark);
     background: var(--primary-orange-hover);
 }
 .login-card {
@@ -41,22 +42,19 @@
     color: var(--text-dark);
     border-color: var(--border-light);
 }
-
+#loginBtn{
+    background: var(--card-bg);
+}
+.fa-home {
+    color: var(--text-dark);
+    font-size: 20px;
+}
+.btn-warning {
+   color: var(--text-dark);
+}
+.btn-warning:hover {
+    color: var(--text-dark);
+}
 .text-decoration-none {
     color: black;
-}
-.btn{
-    background: var(--primary-orange);
-    border: 2px solid var(--primary-orange-hover);
-    color: var(--text-dark)
-}
-
-.btn:hover {
-    background: var(--primary-orange-hover);
-    color: black;
-}
-[data-bs-theme="dark"] .btn {
-    color: var(--text-dark);
-    background: var(--primary-orange-light)
-
 }
