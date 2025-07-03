@@ -2,24 +2,24 @@
 
 **Sistema de E-commerce para Tienda de Mascotas**
 
-Proyecto integrador de Programación III - UTN Avellaneda  
+Proyecto integrador de Programación III - UTN Avellaneda
 Desarrollado por: **Marcelo Aquino** y **Maximiliano Arcieri**
 
 ---
 
 ## 📋 Descripción
 
-MaxiMar Pet Store es un sistema completo de e-commerce diseñado específicamente para tiendas de mascotas. Permite la gestión integral de productos, ventas y administradores a través de una interfaz web moderna y responsiva.
+MaxiMar Pet Store es un sistema completo de e-commerce diseñado específicamente para tiendas de mascotas. Permite la gestión integral de productos, ventas y administradores a través de una interfaz web moderna y responsive.
 
 ### ✨ Características Principales
 
-- 🛒 **Carrito de Compras**: Sistema completo con persistencia de datos
-- 👨‍💼 **Panel de Administración**: Gestión de productos, ventas y usuarios
-- 🔐 **Sistema de Autenticación**: JWT para administradores con roles
-- 📱 **Responsive Design**: Compatible con dispositivos móviles y desktop
-- 🎨 **Modo Oscuro/Claro**: Interfaz adaptable según preferencias
-- 📦 **Gestión de Stock**: Control automático de inventario
-- 📊 **Reportes de Ventas**: Visualización y análisis de transacciones
+- 🛒 **Carrito de Compras**: Sistema completo con persistencia de datos.
+- 👨‍💼 **Panel de Administración**: Gestión de productos, ventas y usuarios.
+- 🔐 **Sistema de Autenticación**: JWT para administradores con roles.
+- 📱 **Responsive Design**: Compatible con dispositivos móviles y desktop.
+- 🎨 **Modo Oscuro/Claro**: Interfaz adaptable.
+- 📦 **Gestión de Stock**: Control de inventario.
+- 📊 **Reportes de Ventas**: Visualización y análisis de ventas.
 
 ---
 
@@ -27,7 +27,7 @@ MaxiMar Pet Store es un sistema completo de e-commerce diseñado específicament
 
 ### Frontend
 - **HTML5, CSS3, JavaScript (ES6+)**
-- **Bootstrap 5** para diseño responsivo
+- **Bootstrap 5** para diseño responsive
 - **Font Awesome** para iconografía
 - **Módulos ES6** para organización del código
 - **Local/Session Storage** para persistencia local
@@ -107,7 +107,7 @@ MaxiMar Pet Store es un sistema completo de e-commerce diseñado específicament
 
 ### 1. Clonar el Repositorio
 ```bash
-git clone <url-del-repositorio>
+git clone <https://github.com/MarceAquino/MaxiMar.git>
 cd MaxiMar-Pet-Store
 ```
 
@@ -124,8 +124,8 @@ npm install
 DB_HOST=localhost
 DB_PORT=3306
 DB_NAME=maximar_pet_store
-DB_USER=tu_usuario_mysql
-DB_PASSWORD=tu_contraseña_mysql
+DB_USER=usuario_mysql
+DB_PASSWORD=contraseña_mysql
 
 # Servidor
 PORT=3030
@@ -278,7 +278,6 @@ MaxiMar-Pet-Store/
 #### **Catálogo de Productos**
 - Visualización de productos con imágenes, precios y detalles
 - Filtros por categoría (alimento/juguete) y tipo de mascota (perro/gato)
-- Sistema de búsqueda por nombre o código
 - Paginación y ordenamiento de resultados
 
 #### **Carrito de Compras**
@@ -288,7 +287,7 @@ MaxiMar-Pet-Store/
 - Validación de disponibilidad antes de compra
 
 #### **Proceso de Compra**
-- Checkout sencillo con datos mínimos del cliente
+- Checkout sencillo con datos del cliente
 - Generación automática de número de orden
 - Descuento automático de stock
 - Ticket de compra descargable/imprimible
@@ -297,7 +296,7 @@ MaxiMar-Pet-Store/
 
 #### **Gestión de Productos**
 - CRUD completo de productos
-- Subida múltiple de imágenes (hasta 5 por producto)
+- Carga múltiple de imágenes (hasta 5 por producto)
 - Validación de datos y códigos únicos
 - Control de stock y estado (activo/inactivo)
 - Atributos específicos por tipo de producto
@@ -329,17 +328,10 @@ MaxiMar-Pet-Store/
   "cors": "^2.8.5",
   "multer": "^2.0.1",
   "dotenv": "^16.5.0",
-  "accesscontrol": "^2.2.1"
 }
 ```
 
 ### Frontend
-```json
-{
-  "live-server": "^1.2.2",
-  "standard": "^17.1.2"
-}
-```
 
 ### CDN Externas
 - **Bootstrap 5.3.6**: Framework CSS
@@ -358,7 +350,6 @@ MaxiMar-Pet-Store/
 - **Expiración automática** de tokens (24h)
 
 ### 🔐 **Validaciones**
-- **Sanitización de inputs** en frontend y backend
 - **Validación de tipos de datos** con Sequelize
 - **Constraints de base de datos** (UNIQUE, NOT NULL)
 - **Validación de stock** antes de ventas
@@ -380,11 +371,6 @@ MaxiMar-Pet-Store/
 - Tablas expandibles para datos detallados
 - Formularios en modal o páginas dedicadas
 
-### 📱 **Tablet (768px - 1199px)**
-- Sidebar colapsable
-- Grilla adaptativa de productos
-- Navegación optimizada por touch
-- Cards redimensionables
 
 ### 📱 **Mobile (320px - 767px)**
 - Menú hamburguesa
@@ -414,22 +400,14 @@ MaxiMar-Pet-Store/
 
 ### 🌐 **Configuración para Producción**
 
-1. **Variables de Entorno:**
+**Variables de Entorno:**
 ```env
 NODE_ENV=production
 DB_HOST=tu_servidor_produccion
 JWT_SECRET=clave_super_segura_de_produccion
 ```
 
-2. **Optimizaciones Recomendadas:**
-- Minificación de CSS y JavaScript
-- Compresión de imágenes
-- Configuración de HTTPS
-- CDN para assets estáticos
-- Cache de base de datos
-- Rate limiting en API
-
-3. **Monitoreo:**
+**Monitoreo:**
 - Logs estructurados
 - Métricas de performance
 - Monitoreo de errores
@@ -451,19 +429,15 @@ JWT_SECRET=clave_super_segura_de_produccion
 ### 👨‍💼 **Gestión de Productos (Admin)**
 1. Admin inicia sesión en el panel
 2. Navega a gestión de productos
-3. Crea/edita producto con imágenes
-4. Configura precio, stock y atributos
-5. Activa/desactiva productos según disponibilidad
-6. Monitorea ventas y stock
+3. Crea producto
+4. Activa/desactiva productos según stock
 
 ### 🔧 **Administración del Sistema (SuperAdmin)**
 1. SuperAdmin accede al panel completo
 2. Registra nuevos administradores
-3. Gestiona permisos y estados de admins
+3. Gestiona estados de admins, activa o desactiva
 4. Revisa reportes de ventas completos
-5. Administra productos con permisos totales
-6. Configura parámetros del sistema
-
+5. Administra productos con permisos totales, creacion, modificacion y eliminacion
 ---
 
 ## 🐛 Solución de Problemas Comunes
@@ -497,57 +471,16 @@ app.use(cors({
   origin: 'http://localhost:8080',
   credentials: true
 }));
-```
-
----
-
-## 🤝 Contribución
-
-### 📋 **Guías para Contribuir**
-1. Fork del repositorio
-2. Crear branch feature (`git checkout -b feature/nueva-funcionalidad`)
-3. Commit de cambios (`git commit -m 'Agrega nueva funcionalidad'`)
-4. Push al branch (`git push origin feature/nueva-funcionalidad`)
-5. Crear Pull Request
-
-### 📝 **Convenciones de Código**
-- **Nombres en español** para variables y funciones
-- **Comentarios descriptivos** en funciones principales
-- **Console.log con emojis** para mejor debugging
-- **Manejo de errores** siempre con try-catch
 
 ---
 
 ## 👥 Equipo de Desarrollo
 
 ### 👨‍💻 **Marcelo Aquino**
-- Backend Development
-- Database Design
-- API Architecture
-
 ### 👨‍💻 **Maximiliano Arcieri**
-- Frontend Development
-- UI/UX Design
-- Testing & QA
 
 ---
 
-## 📄 Licencia
-
-Este proyecto es desarrollado como trabajo académico para la UTN Avellaneda.  
-**Programación III** - Proyecto Integrador
-
----
-
-## 📞 Soporte
-
-Para preguntas o soporte técnico:
-- 📧 Email: [contacto@maximar-petstore.com](mailto:contacto@maximar-petstore.com)
-- 🐛 Issues: [GitHub Issues](link-a-issues)
-- 📖 Documentación: [Wiki del Proyecto](link-a-wiki)
-
----
-
-**Última actualización:** Julio 2025  
-**Versión del Sistema:** 1.0.0  
+**Última actualización:** Julio 2025
+**Versión del Sistema:** 1.0.0
 **Estado:** ✅ Estable para Producción
