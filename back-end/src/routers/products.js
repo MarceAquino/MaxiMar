@@ -22,7 +22,7 @@ router.get('/products/:id', getProduct) // Obtener producto por ID
 
 // Rutas protegidas de productos
 router.post('/products', authenticateToken, requireRole(['admin', 'superadmin']), upload.array('imagenes', 5), crearProducto) // Crear producto
-router.put('/products/:id', authenticateToken, requireRole(['admin', 'superadmin']), upload.array('imagenes', 5), actualizarProducto) // Actualizar producto
+router.put('/products/:id', authenticateToken, requireRole(['admin', 'superadmin']), actualizarProducto) // Actualizar producto (sin imágenes)
 router.delete('/products/:id', authenticateToken, requireRole(['superadmin']), borrarProducto) // Borrar producto
 
 // Activar/desactivar productos (solo superadmin)
