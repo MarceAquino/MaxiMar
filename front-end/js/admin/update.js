@@ -218,14 +218,4 @@ document.addEventListener('DOMContentLoaded', async () => {
   if (form) {
     form.addEventListener('submit', actualizarProducto)
   }
-
-  // Configurar logout button
-  const logoutBtn = document.getElementById('logoutBtn')
-  if (logoutBtn) {
-    logoutBtn.addEventListener('click', async (e) => {
-      e.preventDefault()
-      const { logout } = await import('./auth-guard.js')
-      await logout()
-    })
-  }
 })

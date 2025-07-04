@@ -11,6 +11,9 @@
  */
 
 document.addEventListener('DOMContentLoaded', function () {
+  // Limpiar flag de redirección si existe
+  sessionStorage.removeItem('redirigiendo')
+
   // Configurar el truco secreto del carrusel
   configurarTrucoSecreto()
 

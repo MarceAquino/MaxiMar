@@ -23,19 +23,27 @@ document.addEventListener('DOMContentLoaded', () => {
       // Confirmar acción del usuario
       if (confirm('¿Estás seguro que quieres salir?')) {
         /**
-         * LIMPIEZA COMPLETA DE DATOS
+         * LIMPIEZA ESPECÍFICA SEGÚN CONTEXTO
          *
-         * sessionStorage.clear():
-         * - Elimina tokens de administrador
-         * - Elimina datos temporales de sesión
-         *
-         * localStorage.clear():
-         * - Elimina carrito del usuario
-         * - Elimina preferencias guardadas (tema, etc.)
-         * - Elimina cualquier dato persistente
+         * Para admin: limpia tokens y datos de sesión
+         * Para cliente: usa la función específica de customer-auth
          */
-        sessionStorage.clear()
-        localStorage.clear()
+        const esAdmin = window.location.pathname.includes('/admin/')
+        
+        if (esAdmin) {
+          // Limpieza para administradores
+          sessionStorage.clear()
+          localStorage.clear()
+        } else {
+          // Limpieza para clientes (usa la función específica si está disponible)
+          if (window.customerAuth && window.customerAuth.limpiarSesionCliente) {
+            window.customerAuth.limpiarSesionCliente()
+          } else {
+            // Fallback: limpieza manual para clientes
+            localStorage.removeItem('nombreUsuario')
+            localStorage.removeItem('carrito')
+          }
+        }
 
         /**
          * REDIRECCIÓN INTELIGENTE
@@ -44,7 +52,6 @@ document.addEventListener('DOMContentLoaded', () => {
          * - Si URL contiene '/admin/' → Login de administrador
          * - En cualquier otro caso → Página principal
          */
-        const esAdmin = window.location.pathname.includes('/admin/')
         const destino = esAdmin ? '/front-end/html/admin/login.html' : '/front-end/index.html'
         window.location.href = destino
       }
