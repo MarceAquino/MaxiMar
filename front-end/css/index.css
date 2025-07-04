@@ -62,12 +62,6 @@
     border-color: var(--border-light);
 }
 
-[data-bs-theme="dark"] .form-control {
-    background: var(--card-bg);
-    color: var(--text-dark);
-    border-color: var(--border-light);
-}
-
 .btn-orange{
     background: var(--primary-orange);
     border: 2px solid var(--border-light);
@@ -90,7 +84,7 @@
     visibility: hidden;
     opacity: 0;
     background: var(--primary-orange);
-    border: 1px solid black;
+    border: 2px solid var(--border-light);
     font-weight: bold;
     width: auto;
     margin-top:1rem;
@@ -110,9 +104,6 @@
     transform: translateY(-1.5px);
 }
 
-[data-bs-theme="dark"] #secretButton{
-    background: var(--primary-orange-light);
-    border: 2px solid var(--border-light);
-}
+
 .invalid-feedback {
     display: block}

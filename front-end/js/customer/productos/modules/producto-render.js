@@ -1,19 +1,41 @@
+/**
+ * MÓDULO: Renderizado de Productos
+ *
+ * Maneja la creación y renderizado de tarjetas de productos en la interfaz.
+ *
+ * FUNCIONALIDADES:
+ * - Renderiza listas de productos en contenedores
+ * - Crea tarjetas HTML individuales para cada producto
+ * - Muestra mensajes cuando no hay productos
+ * - Valida datos de productos antes de renderizar
+ * - Maneja información de stock y precios
+ *
+ * DEPENDENCIAS:
+ * - imagen-manager.js para manejo de imágenes
+ */
+
 import { crearHTMLImagenes, obtenerImagenesProducto } from './imagen-manager.js'
 
-// Función principal para renderizar lista de productos
+/**
+ * Renderiza una lista de productos en el contenedor especificado
+ * @param {Array} lista - Array de productos a renderizar
+ * @param {HTMLElement} contenedor - Elemento DOM donde mostrar los productos
+ */
 export function renderizarListaProductos (lista, contenedor) {
   if (!contenedor) {
-    console.warn('Contenedor de productos no encontrado')
     return
   }
 
+  // Limpiar contenido anterior
   contenedor.innerHTML = ''
 
+  // Mostrar mensaje si no hay productos
   if (!lista.length) {
     mostrarMensajeSinProductos(contenedor)
     return
   }
 
+  // Crear tarjeta para cada producto válido
   lista.forEach(producto => {
     if (esProductoValido(producto)) {
       const tarjeta = crearTarjetaProducto(producto)
@@ -22,7 +44,10 @@ export function renderizarListaProductos (lista, contenedor) {
   })
 }
 
-// Función para mostrar mensaje cuando no hay productos
+/**
+ * Muestra un mensaje cuando no se encuentran productos
+ * @param {HTMLElement} contenedor - Contenedor donde mostrar el mensaje
+ */
 function mostrarMensajeSinProductos (contenedor) {
   contenedor.innerHTML = `
     <div class="col-12 text-center py-5">
@@ -32,16 +57,23 @@ function mostrarMensajeSinProductos (contenedor) {
     </div>`
 }
 
-// Función para validar si un producto tiene los datos mínimos
+/**
+ * Valida si un producto tiene los datos mínimos necesarios
+ * @param {Object} producto - Producto a validar
+ * @returns {boolean} - true si el producto es válido
+ */
 function esProductoValido (producto) {
   if (!producto.producto_id || !producto.nombre || !producto.precio) {
-    console.warn('Producto con datos incompletos:', producto)
     return false
   }
   return true
 }
 
-// Función para crear tarjeta de producto
+/**
+ * Crea una tarjeta HTML para mostrar un producto
+ * @param {Object} producto - Datos del producto
+ * @returns {HTMLElement} - Elemento div con la tarjeta del producto
+ */
 export function crearTarjetaProducto (producto) {
   const col = document.createElement('div')
   col.className = 'col-12 col-lg-3'
@@ -81,7 +113,11 @@ export function crearTarjetaProducto (producto) {
   return col
 }
 
-// Función auxiliar para obtener información del stock
+/**
+ * Obtiene información formateada del stock de un producto
+ * @param {Object} producto - Producto del cual obtener info de stock
+ * @returns {Object} - Objeto con stock, clase CSS y texto a mostrar
+ */
 function obtenerInfoStock (producto) {
   const stock = producto.stock || 0
   return {

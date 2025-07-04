@@ -1,4 +1,10 @@
-// Archivo principal del carrito
+/**
+ * CARRITO DE COMPRAS - Archivo principal
+ *
+ * Gestiona la inicialización y coordinación de todos los módulos del carrito.
+ * Maneja eventos principales y exporta funciones para compatibilidad global.
+ */
+
 import {
   agregarAlCarrito,
   cambiarCantidadCarrito,
@@ -14,39 +20,50 @@ import {
 } from './modules/carrito-ui.js'
 import { mostrarMensaje, obtenerPaginaActual } from './modules/carrito-utils.js'
 
-// === INICIALIZACIÓN DE LA PÁGINA DEL CARRITO ===
+/**
+ * Muestra mensaje de bienvenida si hay usuario logueado
+ */
+function mostrarMensajeBienvenida () {
+  const mensajeBienvenida = document.getElementById('welcomeMessage')
+  const usuarioGuardado = localStorage.getItem('nombreUsuario')
+
+  if (mensajeBienvenida && usuarioGuardado) {
+    mensajeBienvenida.textContent = `¡Hola, ${usuarioGuardado}!`
+  }
+}
+
+/**
+ * Inicializa la página del carrito
+ */
 export async function inicializarPaginaCarrito () {
   try {
-    // Cargar productos para validación de stock
     await cargarProductos()
-
-    // Renderizar carrito
     renderCarrito()
-
-    // Configurar eventos
     configurarEventosCarrito()
     configurarEventosEspeciales()
   } catch (error) {
-    console.error('Error inicializando página del carrito:', error)
     mostrarMensaje('Error al cargar la página del carrito', 'danger')
   }
 }
 
-// === CONFIGURACIÓN DE EVENTOS ESPECIALES ===
+/**
+ * Configura eventos especiales del carrito
+ */
 function configurarEventosEspeciales () {
-  // Botón vaciar carrito
   const vaciarBtn = document.getElementById('vaciar-carrito')
   if (vaciarBtn) {
     vaciarBtn.addEventListener('click', manejarVaciarCarrito)
   }
 
-  // Botón finalizar compra
   const finalizarBtn = document.getElementById('btn-finalizar-compra')
   if (finalizarBtn) {
     finalizarBtn.addEventListener('click', finalizarCompra)
   }
 }
 
+/**
+ * Maneja el vaciado del carrito con confirmación
+ */
 function manejarVaciarCarrito () {
   const carrito = JSON.parse(localStorage.getItem('carrito') || '[]')
 
@@ -62,48 +79,28 @@ function manejarVaciarCarrito () {
   }
 }
 
-// === INICIALIZACIÓN ===
+/**
+ * Inicialización principal de la aplicación
+ */
 document.addEventListener('DOMContentLoaded', async () => {
   try {
-    // Cargar carrito desde localStorage
     cargarCarrito()
-
-    // Cargar productos para validación de stock
     await cargarProductos()
-
-    // Actualizar contador del carrito
     actualizarContadorCarrito()
 
-    // Si estamos en la página del carrito, inicializar completamente
     if (obtenerPaginaActual() === 'carrito') {
       await inicializarPaginaCarrito()
     }
 
-    // Exportar funciones globales para compatibilidad
-    exportarFuncionesGlobales()
+    mostrarMensajeBienvenida()
   } catch (error) {
-    console.error('Error crítico al inicializar carrito:', error)
+    mostrarMensaje('Error al inicializar la aplicación', 'danger')
   }
 })
 
-// === EXPORTACIÓN PARA COMPATIBILIDAD ===
-function exportarFuncionesGlobales () {
-  // Exportar funciones al objeto window para compatibilidad con HTML onclick
-  window.agregarAlCarrito = agregarAlCarrito
-  window.eliminarItemCarrito = eliminarItemCarrito
-  window.cambiarCantidadCarrito = cambiarCantidadCarrito
-  window.vaciarCarrito = vaciarCarrito
-  window.finalizarCompra = finalizarCompra
-  window.actualizarContadorCarrito = actualizarContadorCarrito
-}
-
-// === EXPORTACIONES DEL MÓDULO ===
+// Exportaciones del módulo
 export {
-
-  // Funciones de UI
-  actualizarContadorCarrito,
-  // Funciones principales
-  agregarAlCarrito, cambiarCantidadCarrito, eliminarItemCarrito, finalizarCompra,
-  // Función de inicialización
-  renderCarrito, vaciarCarrito
+  actualizarContadorCarrito, agregarAlCarrito,
+  cambiarCantidadCarrito,
+  eliminarItemCarrito, finalizarCompra, renderCarrito, vaciarCarrito
 }

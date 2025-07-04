@@ -1,7 +1,27 @@
-// Función principal para mostrar mensajes
-export function mostrarMensaje (mensaje, tipo = 'info') {
-  console.log(`Mostrando mensaje: ${mensaje} (${tipo})`)
+/**
+ * MÓDULO: Sistema de Notificaciones
+ *
+ * Maneja la visualización de mensajes y alertas al usuario.
+ *
+ * FUNCIONALIDADES:
+ * - Mostrar mensajes de información, éxito, advertencia y error
+ * - Crear alertas con Bootstrap
+ * - Mostrar feedback al agregar productos al carrito
+ * - Soporte para sistema de alertas personalizado
+ *
+ * TIPOS DE MENSAJE:
+ * - 'info': Información general (azul)
+ * - 'success': Operación exitosa (verde)
+ * - 'warning': Advertencia (amarillo)
+ * - 'danger': Error (rojo)
+ */
 
+/**
+ * Muestra un mensaje al usuario usando alertas Bootstrap
+ * @param {string} mensaje - Texto del mensaje a mostrar
+ * @param {string} tipo - Tipo de alerta ('info', 'success', 'warning', 'danger')
+ */
+export function mostrarMensaje (mensaje, tipo = 'info') {
   // Usar las nuevas alertas personalizadas si están disponibles
   if (window.customAlert) {
     return window.customAlert.show(mensaje, tipo, { duration: 4000 })
@@ -10,7 +30,11 @@ export function mostrarMensaje (mensaje, tipo = 'info') {
   crearAlertaBootstrap(mensaje, tipo)
 }
 
-// Función para crear alerta con Bootstrap
+/**
+ * Crea y muestra una alerta usando Bootstrap
+ * @param {string} mensaje - Texto del mensaje
+ * @param {string} tipo - Tipo de alerta Bootstrap
+ */
 function crearAlertaBootstrap (mensaje, tipo) {
   const alerta = document.createElement('div')
   alerta.className = `alert alert-${tipo} alert-dismissible fade show position-fixed`
@@ -22,6 +46,7 @@ function crearAlertaBootstrap (mensaje, tipo) {
 
   document.body.appendChild(alerta)
 
+  // Auto-eliminar después de 3 segundos
   setTimeout(() => {
     if (alerta.parentNode) {
       alerta.remove()
@@ -29,13 +54,17 @@ function crearAlertaBootstrap (mensaje, tipo) {
   }, 3000)
 }
 
-// Función para mostrar feedback al agregar producto
+/**
+ * Muestra un toast de confirmación al agregar producto al carrito
+ * Aparece brevemente en pantalla con ícono de éxito
+ */
 export function mostrarFeedbackAgregar () {
   const toast = document.createElement('div')
   toast.className = 'toast-feedback'
   toast.innerHTML = '<i class="fas fa-check-circle me-2"></i> Producto agregado al carrito'
   document.body.appendChild(toast)
 
+  // Auto-eliminar después de 2 segundos
   setTimeout(() => {
     toast.remove()
   }, 2000)

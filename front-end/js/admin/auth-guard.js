@@ -4,7 +4,13 @@
  */
 
 import { API_ROUTES, tokenUtils } from '../config/api.js'
-import { redirectToLogin } from './utils/redirectToLogin.js'
+
+// Función simple para redirigir al login
+function redirectToLogin () {
+  if (window.location.pathname !== '/front-end/html/admin/login.html') {
+    window.location.replace('/front-end/html/admin/login.html')
+  }
+}
 
 /**
  * Verifica si el usuario está autenticado y el token es válido

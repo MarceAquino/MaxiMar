@@ -1,4 +1,14 @@
-// Acciones de manipulación del carrito
+/**
+ * ACCIONES DEL CARRITO DE COMPRAS
+ *
+ * Módulo que contiene las operaciones principales para la gestión del carrito:
+ * - Agregar productos
+ * - Eliminar productos
+ * - Modificar cantidades
+ * - Vaciar carrito
+ */
+
+// Importación de dependencias para manejo de datos y UI
 import {
   guardarCarrito,
   obtenerCarrito,
@@ -6,23 +16,28 @@ import {
   verificarStock
 } from './carrito-data.js'
 import { actualizarContadorCarrito, renderCarrito } from './carrito-ui.js'
-import { mostrarMensajeCarrito, obtenerPaginaActual } from './carrito-utils.js'
+import { mostrarMensaje, obtenerPaginaActual } from './carrito-utils.js'
 
-// === AGREGAR PRODUCTOS ===
+/**
+ * Agrega un producto al carrito o incrementa su cantidad si ya existe
+ * @param {Object} producto - Objeto producto a agregar
+ * @returns {boolean} - Resultado de la operación
+ */
 export function agregarAlCarrito (producto) {
   const id = producto.producto_id || producto.id
   const carrito = obtenerCarrito()
 
-  // Verificar stock antes de agregar
+  // Verificar disponibilidad de stock
   const verificacion = verificarStock(id, 1)
   if (!verificacion.disponible) {
-    mostrarMensajeCarrito(verificacion.mensaje, 'warning')
+    mostrarMensaje(verificacion.mensaje, 'warning')
     return false
   }
 
-  const existe = carrito.find(item => (item.producto_id || item.id) === id)
-  if (existe) {
-    existe.cantidad += 1
+  const productoExistente = carrito.find(item => (item.producto_id || item.id) === id)
+
+  if (productoExistente) {
+    productoExistente.cantidad += 1
   } else {
     carrito.push({
       ...producto,
@@ -32,55 +47,44 @@ export function agregarAlCarrito (producto) {
     })
   }
 
-  // Guardar cambios
+  // Actualizar estado y UI
   setCarrito(carrito)
   guardarCarrito()
   actualizarContadorCarrito()
 
-  // Si estamos en la página del carrito, re-renderizar
   if (obtenerPaginaActual() === 'carrito') {
     renderCarrito()
   }
+
   return true
 }
 
-// === ELIMINAR PRODUCTOS ===
+/**
+ * Elimina completamente un producto del carrito
+ * @param {number|string} id - ID del producto a eliminar
+ */
 export function eliminarItemCarrito (id) {
   const carrito = obtenerCarrito()
-  const productoAntes = carrito.find(item => (item.producto_id || item.id) === id)
-
-  if (productoAntes) {
-    console.log(`❌ Eliminando "${productoAntes.nombre}"`)
-  }
-
-  const carritoFiltrado = carrito.filter(item => (item.producto_id || item.id) !== id)
-
-  // Guardar cambios
-  setCarrito(carritoFiltrado)
-  guardarCarrito()
-  actualizarContadorCarrito()
-
-  if (obtenerPaginaActual() === 'carrito') {
-    renderCarrito()
-  }
+  const carritoSinItem = carrito.filter(item => (item.producto_id || item.id) !== id)
+  actualizarCarritoCompleto(carritoSinItem)
 }
 
-// === CAMBIAR CANTIDAD ===
+/**
+ * Modifica la cantidad de un producto en el carrito
+ * @param {number|string} id - ID del producto
+ * @param {number} cambio - Incremento o decremento de cantidad
+ */
 export function cambiarCantidadCarrito (id, cambio) {
   const carrito = obtenerCarrito()
   const item = carrito.find(item => (item.producto_id || item.id) === id)
 
-  if (!item) {
-    console.warn('⚠️ Producto no encontrado en el carrito')
-    return
-  }
+  if (!item) return
 
-  // Si es incremento (+1), verificar stock
+  // Verificar stock disponible para incrementos
   if (cambio > 0) {
     const verificacion = verificarStock(id, cambio)
     if (!verificacion.disponible) {
-      console.warn('⚠️ No se puede incrementar cantidad:', verificacion.mensaje)
-      mostrarMensajeCarrito(verificacion.mensaje, 'warning')
+      mostrarMensaje(verificacion.mensaje, 'warning')
       return
     }
   }
@@ -88,25 +92,25 @@ export function cambiarCantidadCarrito (id, cambio) {
   item.cantidad += cambio
 
   if (item.cantidad < 1) {
-    // Si la cantidad es menor a 1, eliminar el producto
     eliminarItemCarrito(id)
   } else {
-    console.log(`✅ Nueva cantidad: ${item.cantidad}`)
-
-    // Guardar cambios
-    setCarrito(carrito)
-    guardarCarrito()
-    actualizarContadorCarrito()
-
-    if (obtenerPaginaActual() === 'carrito') {
-      renderCarrito()
-    }
+    actualizarCarritoCompleto(carrito)
   }
 }
 
-// === VACIAR CARRITO ===
+/**
+ * Vacía completamente el carrito
+ */
 export function vaciarCarrito () {
-  setCarrito([])
+  actualizarCarritoCompleto([])
+}
+
+/**
+ * Función auxiliar para actualizar el carrito y sincronizar la UI
+ * @param {Array} nuevoCarrito - Estado actualizado del carrito
+ */
+function actualizarCarritoCompleto (nuevoCarrito) {
+  setCarrito(nuevoCarrito)
   guardarCarrito()
   actualizarContadorCarrito()
 

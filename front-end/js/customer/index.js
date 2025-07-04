@@ -1,6 +1,16 @@
-document.addEventListener('DOMContentLoaded', function () {
-  console.log('🏠 Iniciando página principal...')
+/**
+ * MÓDULO: Página Principal
+ *
+ * Maneja la funcionalidad de la página de inicio de la tienda.
+ *
+ * FUNCIONALIDADES:
+ * - Truco secreto del carrusel (easter egg)
+ * - Sistema de login básico para clientes
+ * - Validación y almacenamiento de nombres de usuario
+ * - Redirección automática a productos si ya hay usuario
+ */
 
+document.addEventListener('DOMContentLoaded', function () {
   // Configurar el truco secreto del carrusel
   configurarTrucoSecreto()
 
@@ -8,9 +18,11 @@ document.addEventListener('DOMContentLoaded', function () {
   configurarLoginCliente()
 })
 
+/**
+ * Configura el truco secreto del carrusel (easter egg)
+ * Secuencia: derecha x3, izquierda x3 para activar efecto especial
+ */
 function configurarTrucoSecreto () {
-  console.log('🎮 Configurando truco secreto del carrusel...')
-
   // Variables para el truco secreto
   const clicksUsuario = [] // Guardar los clicks del usuario
   const codigoSecreto = ['right', 'right', 'right', 'left', 'left', 'left'] // Secuencia secreta
@@ -23,8 +35,6 @@ function configurarTrucoSecreto () {
 
   // Función que se ejecuta cuando se activa el truco
   function activarTrucoSecreto () {
-    console.log('🎉 ¡TRUCO SECRETO ACTIVADO!')
-
     // Agregar efecto visual al carrusel
     carrusel.classList.add('carousel-flip')
     setTimeout(() => carrusel.classList.remove('carousel-flip'), 10000)
@@ -68,9 +78,11 @@ function configurarTrucoSecreto () {
   })
 }
 
+/**
+ * Configura el sistema de login básico para clientes
+ * Valida nombres de usuario y maneja redirecciones automáticas
+ */
 function configurarLoginCliente () {
-  console.log('👤 Configurando sistema de login de clientes...')
-
   // Elementos del formulario
   const formularioLogin = document.getElementById('loginForm')
   const campoNombre = document.getElementById('nombreUsuario')
@@ -78,25 +90,19 @@ function configurarLoginCliente () {
   // Verificar si ya hay un usuario logueado
   const usuarioYaLogueado = localStorage.getItem('nombreUsuario')
   if (usuarioYaLogueado) {
-    console.log(`👤 Usuario ya logueado: ${usuarioYaLogueado}`)
-    console.log('🔄 Redirigiendo a productos...')
-
     // Si ya hay usuario guardado, redirigir directamente a productos
     window.location.href = '/front-end/html/customer/productos.html'
     return // Salir de la función
   }
 
-  // Configurar evento del formulario
+  // Configurar evento del formulario de login
   formularioLogin?.addEventListener('submit', function (evento) {
     evento.preventDefault() // Evitar que la página se recargue
 
     const nombreIngresado = campoNombre.value.trim()
-    console.log(`👤 Intento de login con nombre: "${nombreIngresado}"`)
 
-    // Validar que el nombre tenga al menos 2 caracteres
-    if (nombreIngresado.length >= 2) {
-      console.log('✅ Nombre válido - Guardando usuario')
-
+    // Validar que el nombre tenga al menos 3 caracteres
+    if (nombreIngresado.length >= 3) {
       // Guardar nombre en localStorage
       localStorage.setItem('nombreUsuario', nombreIngresado)
 
@@ -105,12 +111,9 @@ function configurarLoginCliente () {
 
       // Redirigir después de una pequeña pausa para mostrar el efecto visual
       setTimeout(() => {
-        console.log('🔄 Redirigiendo a productos...')
         window.location.href = '/front-end/html/customer/productos.html'
       }, 300)
     } else {
-      console.log('❌ Nombre muy corto - Mostrando error')
-
       // Mostrar campo como inválido
       campoNombre.classList.add('is-invalid')
 
@@ -119,11 +122,5 @@ function configurarLoginCliente () {
         campoNombre.classList.remove('is-invalid')
       }, 3000)
     }
-  })
-
-  // Limpiar estado visual cuando el usuario escribe
-  campoNombre?.addEventListener('input', function () {
-    // Quitar las clases de validación para limpiar el estado visual
-    this.classList.remove('is-valid', 'is-invalid')
   })
 }

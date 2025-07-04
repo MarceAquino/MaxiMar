@@ -1,3 +1,23 @@
+/**
+ * MÓDULO: Gestión de Productos
+ *
+ * Archivo principal para la página de productos del cliente.
+ *
+ * FUNCIONALIDADES:
+ * - Carga productos desde la API
+ * - Renderiza lista de productos
+ * - Maneja filtros por mascota y categoría
+ * - Gestiona eventos de agregar al carrito
+ * - Actualiza contador del carrito
+ * - Muestra mensajes de bienvenida
+ *
+ * DEPENDENCIAS:
+ * - API para cargar productos
+ * - Sistema de filtros
+ * - Módulos de renderizado y validación
+ * - Sistema de carrito
+ */
+
 // productos.js - Archivo principal optimizado
 import { API_ROUTES } from '../../config/api.js'
 import { inicializarFiltros } from '../filtros-tabs.js'
@@ -8,6 +28,18 @@ import { validarProducto, validarStock } from './modules/validadores.js'
 
 import { actualizarContadorCarrito, agregarAlCarrito } from '../carrito/carrito.js'
 
+/**
+ * Muestra mensaje de bienvenida si hay usuario logueado
+ */
+function mostrarMensajeBienvenida () {
+  const mensajeBienvenida = document.getElementById('welcomeMessage')
+  const usuarioGuardado = localStorage.getItem('nombreUsuario')
+
+  if (mensajeBienvenida && usuarioGuardado) {
+    mensajeBienvenida.textContent = `¡Hola, ${usuarioGuardado}!`
+  }
+}
+
 // Variables globales
 let productos = []
 const elementos = {
@@ -15,7 +47,10 @@ const elementos = {
   cartCountElement: document.getElementById('cart-icon-count')
 }
 
-// Función principal de carga de productos
+/**
+ * Carga productos desde la API del backend
+ * Filtra solo productos activos para mostrar al cliente
+ */
 async function cargarProductos () {
   try {
     const response = await fetch(API_ROUTES.productos)
@@ -26,56 +61,51 @@ async function cargarProductos () {
 
     const data = await response.json()
     productos = Array.isArray(data) ? data : []
-    localStorage.setItem('productos', JSON.stringify(productos))
+
+    // Filtrar solo productos activos
+    productos = productos.filter(producto => producto.activo)
   } catch (error) {
-    console.error('Error al cargar productos desde API:', error)
-    await cargarProductosDesdeCache()
-  }
-
-  // Filtrar productos activos
-  productos = productos.filter(producto => producto.activo)
-}
-
-// Función auxiliar para cargar desde caché
-async function cargarProductosDesdeCache () {
-  const productosGuardados = localStorage.getItem('productos')
-  if (productosGuardados) {
-    productos = JSON.parse(productosGuardados)
-    mostrarMensaje('Productos cargados desde caché local', 'warning')
-  } else {
-    console.warn('No hay productos disponibles')
+    mostrarMensaje('Error al cargar productos. Por favor, recarga la página.', 'danger')
     productos = []
   }
 }
 
-// Función principal de inicialización
+/**
+ * Inicializa la página de productos con filtros y eventos
+ */
 function inicializarPaginaProductos () {
   renderizarProductos(productos)
   inicializarFiltros(productos, renderizarProductos)
   configurarEventos()
 }
 
-// Función de renderizado principal
+/**
+ * Renderiza la lista de productos en el contenedor
+ * @param {Array} lista - Array de productos a mostrar
+ */
 function renderizarProductos (lista) {
   if (!elementos.divProductos) {
-    console.warn('Contenedor de productos no encontrado')
     return
   }
 
   renderizarListaProductos(lista, elementos.divProductos)
 }
 
-// Configuración de eventos
+/**
+ * Configura los event listeners de la página
+ */
 function configurarEventos () {
   if (!elementos.divProductos) {
-    console.warn('Contenedor de productos no encontrado para eventos')
     return
   }
 
   elementos.divProductos.addEventListener('click', manejarClickProductos)
 }
 
-// Manejador de clicks en productos
+/**
+ * Maneja los clicks en botones de productos
+ * @param {Event} e - Evento de click
+ */
 function manejarClickProductos (e) {
   const btnAgregar = e.target.closest('.agregarCarrito')
   if (btnAgregar && !btnAgregar.disabled) {
@@ -83,12 +113,14 @@ function manejarClickProductos (e) {
   }
 }
 
-// Función para agregar al carrito
+/**
+ * Agrega un producto al carrito con validaciones
+ * @param {HTMLElement} boton - Botón que fue clickeado
+ */
 function manejarAgregarAlCarrito (boton) {
   const id = parseInt(boton.dataset.id)
 
   if (!validarProducto.validarId(id)) {
-    console.error('ID de producto inválido')
     return
   }
 
@@ -117,13 +149,15 @@ document.addEventListener('DOMContentLoaded', async () => {
   try {
     await cargarProductos()
 
+    // Verificar si hay carrito guardado y actualizar contador
     const carritoGuardado = localStorage.getItem('carrito')
     if (carritoGuardado) {
-      console.log('Carrito encontrado en localStorage')
+      // Carrito encontrado, el contador se actualizará automáticamente
     }
 
     inicializarPaginaProductos()
     actualizarContadorCarrito()
+    mostrarMensajeBienvenida()
   } catch (error) {
     mostrarMensaje('Error al cargar la aplicación', 'danger')
   }
@@ -137,6 +171,7 @@ window.setImage = establecerImagen
 export {
   cargarProductos,
   inicializarPaginaProductos,
+  mostrarMensajeBienvenida,
   productos,
   renderizarProductos
 }

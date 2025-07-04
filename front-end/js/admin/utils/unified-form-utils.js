@@ -1,6 +1,5 @@
 import { API_ROUTES, tokenUtils } from '../../config/api.js'
 import { logout } from '../auth-guard.js'
-import { mostrarErrores } from './ui-utils.js'
 
 export function configurarCamposDinamicosProducto (selectTipoId, contenedores) {
   const selectTipo = document.getElementById(selectTipoId)
@@ -242,7 +241,7 @@ export async function manejarEnvioFormulario (e, options = {}) {
     }
 
     if (errores.length > 0) {
-      mostrarErrores(errores)
+      alert('Errores encontrados:\n\n' + errores.map((e, i) => `${i + 1}. ${e}`).join('\n'))
       return
     }
 

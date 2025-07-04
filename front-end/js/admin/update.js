@@ -1,6 +1,5 @@
 import { API_ROUTES, tokenUtils } from '../config/api.js'
 import { requireAuth } from './auth-guard.js'
-import { mostrarErrores } from './utils/ui-utils.js'
 import { configurarCamposDinamicosProducto, llenarFormularioProducto } from './utils/unified-form-utils.js'
 
 /**
@@ -38,7 +37,7 @@ async function cargarProducto (id) {
     llenarFormularioProducto('formModificarProducto', producto)
   } catch (error) {
     console.error('Error al cargar producto:', error)
-    mostrarErrores(['Error al cargar el producto: ' + error.message])
+    alert('Error al cargar el producto: ' + error.message)
   }
 }
 
@@ -188,7 +187,7 @@ async function actualizarProducto (e) {
     }, 1000)
   } catch (error) {
     console.error('Error:', error)
-    mostrarErrores(['Error al actualizar el producto: ' + error.message])
+    alert('Error al actualizar el producto: ' + error.message)
   }
 }
 
@@ -202,7 +201,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   // Cargar producto
   const id = getIdFromURL()
   if (!id) {
-    mostrarErrores(['ID de producto no encontrado'])
+    alert('ID de producto no encontrado')
     window.location.href = '/front-end/html/admin/dashboard.html'
     return
   }

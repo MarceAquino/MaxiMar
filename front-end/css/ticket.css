@@ -27,7 +27,7 @@ h3{
 }
 /* Caja de totales */
 .total-box {
-    background: var(--orange-bg);
+    background: var(--primary-orange-light);
     border-radius: 8px;
     padding: 1.5rem;
     margin-top: 2rem;
@@ -59,7 +59,7 @@ h3{
 .table-active td,
 .table-active th {
     background: var(--primary-orange);
-    color: white;
+    color: var(--text-dark);
 }
 
 /* Botones con tema consistente */
@@ -77,4 +77,21 @@ h3{
     transform: translateY(-2px);
     box-shadow: var(--shadow-medium);
     color: var(--text-dark);
+}
+
+/* ===== ESTILOS PARA IMPRESIÓN ===== */
+@media print {
+    /* Ocultar navegación y footer en impresión */
+    nav,
+    footer,
+    .navbar {
+        display: none ;
+    }
+
+    /* Asegurar que el fondo naranja del total se imprima */
+    .total-box {
+        -webkit-print-color-adjust: exact ;
+        print-color-adjust: exact ;
+        background: var(--primary-orange-light) ;
+    }
 }

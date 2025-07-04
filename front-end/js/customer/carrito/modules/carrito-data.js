@@ -1,21 +1,45 @@
+/**
+ * Gestión de datos y almacenamiento del carrito
+ *
+ * Este módulo maneja:
+ * - Persistencia del carrito en localStorage
+ * - Carga y almacenamiento de productos disponibles
+ * - Validación de stock de productos
+ * - Operaciones CRUD básicas del carrito
+ */
+
 // Gestión de datos y almacenamiento del carrito
 import { API_ROUTES } from '../../../config/api.js'
 
+// Variables globales para almacenar datos en memoria
 let carrito = []
 let productosDisponibles = []
 
 // === GESTIÓN DE LOCALSTORAGE ===
+
+/**
+ * Carga el carrito desde localStorage
+ * @returns {Array} Array con los items del carrito
+ */
 export function cargarCarrito () {
   const carritoGuardado = localStorage.getItem('carrito')
   carrito = carritoGuardado ? JSON.parse(carritoGuardado) : []
   return carrito
 }
 
+/**
+ * Guarda el carrito actual en localStorage
+ */
 export function guardarCarrito () {
   localStorage.setItem('carrito', JSON.stringify(carrito))
 }
 
 // === GESTIÓN DE PRODUCTOS ===
+
+/**
+ * Carga la lista de productos disponibles desde el servidor
+ * @returns {Array} Array con todos los productos disponibles
+ */
 export async function cargarProductos () {
   try {
     const response = await fetch(API_ROUTES.productos)
@@ -25,17 +49,29 @@ export async function cargarProductos () {
     productosDisponibles = await response.json()
     return productosDisponibles
   } catch (error) {
-    console.error('Error cargando productos:', error)
+    // En caso de error, devolver array vacío
     productosDisponibles = []
     return []
   }
 }
 
+/**
+ * Busca un producto específico por su ID
+ * @param {number} id - ID del producto a buscar
+ * @returns {Object|null} Producto encontrado o null si no existe
+ */
 export function obtenerProductoPorId (id) {
   return productosDisponibles.find(p => p.producto_id === id) || null
 }
 
 // === VALIDACIÓN DE STOCK ===
+
+/**
+ * Verifica si hay suficiente stock de un producto
+ * @param {number} productoId - ID del producto a verificar
+ * @param {number} cantidadDeseada - Cantidad que se quiere agregar
+ * @returns {Object} {disponible: boolean, mensaje: string}
+ */
 export function verificarStock (productoId, cantidadDeseada) {
   const producto = obtenerProductoPorId(productoId)
 
@@ -76,21 +112,38 @@ export function verificarStock (productoId, cantidadDeseada) {
   }
 }
 
-// === GETTERS ===
+// === OPERACIONES DE CARRITO ===
+
+/**
+ * Obtiene una copia del carrito actual
+ * @returns {Array} Copia del array del carrito
+ */
 export function obtenerCarrito () {
   return [...carrito] // Retorna copia para evitar mutaciones
 }
 
+/**
+ * Obtiene el carrito directamente desde localStorage
+ * @returns {Array} Items del carrito guardados
+ */
 export function obtenerCarritoActual () {
   const carritoGuardado = localStorage.getItem('carrito')
   return carritoGuardado ? JSON.parse(carritoGuardado) : []
 }
 
+/**
+ * Calcula la cantidad total de items en el carrito
+ * @returns {number} Número total de productos en el carrito
+ */
 export function obtenerCantidadTotalCarrito () {
   const carritoActual = obtenerCarritoActual()
   return carritoActual.reduce((suma, item) => suma + item.cantidad, 0)
 }
 
+/**
+ * Calcula los totales del carrito (subtotal, total, cantidad de items)
+ * @returns {Object} {subtotal, total, items}
+ */
 export function calcularTotales () {
   let subtotal = 0
   let totalItemsCount = 0
@@ -108,6 +161,11 @@ export function calcularTotales () {
 }
 
 // === SETTER INTERNO ===
+
+/**
+ * Actualiza el carrito en memoria (uso interno)
+ * @param {Array} nuevoCarrito - Nuevo array del carrito
+ */
 export function setCarrito (nuevoCarrito) {
   carrito = nuevoCarrito
 }

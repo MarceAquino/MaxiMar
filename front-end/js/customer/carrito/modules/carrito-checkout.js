@@ -1,22 +1,38 @@
+/**
+ * Módulo de finalización de compras del carrito
+ *
+ * Este archivo maneja todo el proceso de checkout:
+ * - Validación del carrito antes de comprar
+ * - Confirmación de la compra con el usuario
+ * - Envío de datos al servidor
+ * - Limpieza del carrito tras compra exitosa
+ * - Redirección al ticket de compra
+ */
+
 // Proceso de finalización de compra
 import { API_ROUTES } from '../../../config/api.js'
 import { guardarCarrito, obtenerCarrito, setCarrito } from './carrito-data.js'
 import { mostrarMensaje } from './carrito-utils.js'
 
 // === FINALIZAR COMPRA ===
+/**
+ * Función principal que maneja todo el proceso de checkout
+ * Valida el carrito, confirma con el usuario y procesa la venta
+ */
 export async function finalizarCompra () {
   const carrito = obtenerCarrito()
 
+  // Validar que el carrito no esté vacío
   if (carrito.length === 0) {
     mostrarMensaje('Tu carrito está vacío', 'warning')
     return
   }
 
-  // Obtener datos del cliente
+  // Obtener datos del cliente desde localStorage
   const nombreUsuario = localStorage.getItem('nombreUsuario')
   const cliente = nombreUsuario || 'Cliente Anónimo'
 
-  // Mostrar confirmación
+  // Mostrar confirmación al usuario
   if (!confirmarCompra(carrito, cliente)) {
     return // Usuario canceló la compra
   }
@@ -24,29 +40,38 @@ export async function finalizarCompra () {
   try {
     mostrarMensaje('Procesando compra...', 'info')
 
+    // Preparar datos para enviar al servidor
     const ventaData = prepararDatosVenta(carrito, cliente)
     const resultado = await enviarVenta(ventaData)
 
     if (resultado.success) {
-      // Guardar ID de venta para el ticket
+      // Guardar ID de venta para mostrar en el ticket
       localStorage.setItem('ultima_venta_id', resultado.venta_id)
 
-      // Limpiar carrito
+      // Limpiar carrito tras compra exitosa
       limpiarCarritoCompra()
 
-      // Redirigir a ticket
+      // Redirigir a la página del ticket
       window.location.href = '/front-end/html/customer/ticket.html'
     } else {
       mostrarMensaje(`Error: ${resultado.message}`, 'danger')
     }
   } catch (error) {
-    console.error('Error al procesar compra:', error)
+    // Manejo de errores de conexión o servidor
     mostrarMensaje('Error de conexión. Intenta nuevamente.', 'danger')
   }
 }
 
-// === HELPERS DE COMPRA ===
+// === FUNCIONES AUXILIARES ===
+
+/**
+ * Muestra un diálogo de confirmación con resumen de la compra
+ * @param {Array} carrito - Items del carrito a comprar
+ * @param {string} cliente - Nombre del cliente
+ * @returns {boolean} true si el usuario confirma, false si cancela
+ */
 function confirmarCompra (carrito, cliente) {
+  // Calcular totales para mostrar en confirmación
   const cantidadItems = carrito.reduce((total, item) => total + item.cantidad, 0)
   const totalCompra = carrito.reduce((total, item) => total + (item.precio * item.cantidad), 0)
 
@@ -62,6 +87,12 @@ Esta acción no se puede deshacer.`
   return confirm(confirmMessage)
 }
 
+/**
+ * Prepara los datos de la venta en el formato esperado por el servidor
+ * @param {Array} carrito - Items del carrito
+ * @param {string} cliente - Nombre del cliente
+ * @returns {Object} Datos formateados para enviar al API
+ */
 function prepararDatosVenta (carrito, cliente) {
   return {
     cliente,
@@ -72,6 +103,11 @@ function prepararDatosVenta (carrito, cliente) {
   }
 }
 
+/**
+ * Envía los datos de venta al servidor
+ * @param {Object} ventaData - Datos de la venta a enviar
+ * @returns {Object} Resultado con éxito, ID de venta y mensaje
+ */
 async function enviarVenta (ventaData) {
   const response = await fetch(API_ROUTES.ventas.crear, {
     method: 'POST',
@@ -90,11 +126,15 @@ async function enviarVenta (ventaData) {
   }
 }
 
+/**
+ * Limpia completamente el carrito después de una compra exitosa
+ * También actualiza el contador visual si está disponible
+ */
 function limpiarCarritoCompra () {
   setCarrito([])
   guardarCarrito()
 
-  // Actualizar contador si está disponible
+  // Actualizar contador visual si la función está disponible
   if (window.actualizarContadorCarrito) {
     window.actualizarContadorCarrito()
   }
