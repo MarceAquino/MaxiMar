@@ -35,9 +35,3 @@ coverage/
 # Ignora lockfiles si solo usás uno
 package-lock.json
 # yarn.lock
-
-# === TypeScript (si lo usás) ===
-*.tsbuildinfo
-
-# === Others (personalizá según tu stack) ===
-# public/uploads/        # por si usás multer u otros que suben archivos

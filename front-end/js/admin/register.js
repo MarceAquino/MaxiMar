@@ -1,5 +1,5 @@
 import { API_ROUTES, tokenUtils } from '../config/api.js'
-import { logout, requireAuth } from './auth-guard.js'
+import { requireAuth } from './auth-guard.js'
 import { reactivarFormulario, recopilarDatosAdmin } from './utils/unified-form-utils.js'
 import { validarEmail, validarNombre, validarPassword } from './utils/validation-utils.js'
 
@@ -80,11 +80,6 @@ function configurarEventListeners () {
   const form = document.getElementById('formRegistrarAdmin')
   if (form) {
     form.addEventListener('submit', procesarRegistro)
-  }
-
-  const logoutBtn = document.getElementById('logoutBtn')
-  if (logoutBtn) {
-    logoutBtn.addEventListener('click', logout)
   }
 }
 

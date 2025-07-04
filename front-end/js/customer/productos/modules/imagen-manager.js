@@ -1,53 +1,55 @@
+/**
+ * IMAGEN MANAGER - Gestión de imágenes de productos
+ *
+ * Maneja el procesamiento y navegación de imágenes de productos.
+ * Soporta diferentes formatos de URLs y navegación entre múltiples imágenes.
+ */
+
 const IMAGEN_POR_DEFECTO = '/front-end/img/notFount.png'
 
-// Función principal para obtener imágenes del producto
+/**
+ * Obtiene y procesa las imágenes de un producto
+ * @param {Object} producto - Producto con propiedad urls
+ * @returns {Array<string>} URLs de imágenes procesadas
+ */
 export function obtenerImagenesProducto (producto) {
-  console.log('🖼️ Procesando imágenes para producto:', producto.nombre, 'URLs originales:', producto.urls)
-
   if (!producto.urls) {
-    console.log('⚠️ No hay URLs de imágenes, usando imagen por defecto')
     return [IMAGEN_POR_DEFECTO]
   }
 
   const urls = parsearUrls(producto.urls)
-  console.log('📋 URLs parseadas:', urls)
-
   const urlsProcessed = procesarUrls(urls)
-  console.log('🔄 URLs procesadas:', urlsProcessed)
 
   const finalUrls = urlsProcessed.length === 0
     ? [IMAGEN_POR_DEFECTO]
     : formatearUrls(urlsProcessed)
 
-  console.log('✅ URLs finales:', finalUrls)
   return finalUrls
 }
 
-// Función para parsear URLs (array o JSON string)
+/**
+ * Parsea URLs desde diferentes formatos (array, JSON string, string simple)
+ */
 function parsearUrls (urls) {
-  // Si ya es un array, devolverlo directamente
   if (Array.isArray(urls)) {
     return urls
   }
 
-  // Si es una string que parece JSON array
   if (typeof urls === 'string') {
-    // Intentar parsear como JSON
     try {
       const parsed = JSON.parse(urls)
       return Array.isArray(parsed) ? parsed : [urls]
     } catch (error) {
-      // Si no es JSON válido, tratarlo como una sola URL
-      console.warn('Error al parsear URLs de producto, usando como string simple:', error)
       return [urls]
     }
   }
 
-  // Si no es ni array ni string, devolver array vacío
   return []
 }
 
-// Función para procesar URLs separadas por comas
+/**
+ * Procesa URLs que pueden contener múltiples valores separados por comas
+ */
 function procesarUrls (urls) {
   const urlsProcessed = []
 
@@ -65,35 +67,43 @@ function procesarUrls (urls) {
   return urlsProcessed
 }
 
-// Función para formatear URLs con las rutas correctas
+/**
+ * Formatea URLs con las rutas correctas del sistema de archivos
+ */
 function formatearUrls (urls) {
   return urls.map(url => {
-    // Si ya es una URL completa que empieza con /front-end/, usarla tal como está
+    // URL ya completa
     if (url.startsWith('/front-end/')) {
       return url
     }
 
-    // Si empieza con nuevos-Producto/, agregar el prefijo completo
+    // Productos nuevos
     if (url.startsWith('nuevos-Producto/')) {
       return `/front-end/img/${url}`
     }
 
-    // Si es solo un nombre de archivo, asumir que va en nuevos-Producto
+    // Solo nombre de archivo -> nuevos productos
     if (!url.includes('/')) {
       return `/front-end/img/nuevos-Producto/${url}`
     }
 
-    // Por defecto, asumir que va en la carpeta productos
+    // Por defecto -> carpeta productos
     return `/front-end/img/productos/${url}`
   })
 }
 
-// Función para crear HTML de imágenes con navegación
+/**
+ * Crea el HTML del contenedor de imágenes con navegación
+ * @param {Array<string>} imagenes - URLs de imágenes
+ * @param {string} containerId - ID del contenedor
+ * @param {string} nombreProducto - Nombre para el alt de la imagen
+ * @returns {string} HTML del contenedor
+ */
 export function crearHTMLImagenes (imagenes, containerId, nombreProducto) {
   const tieneMultiplesImagenes = imagenes.length > 1
   const primeraImagen = imagenes[0]
 
-  return `
+  const html = `
     <div class="product-image-container ${!tieneMultiplesImagenes ? 'single-image' : ''}" id="${containerId}">
       <img src="${primeraImagen}"
            class="product-image"
@@ -104,28 +114,53 @@ export function crearHTMLImagenes (imagenes, containerId, nombreProducto) {
 
       ${tieneMultiplesImagenes
         ? `
-          <button class="image-nav prev" onclick="changeImage('${containerId}', -1)">
+          <button class="image-nav prev" data-container="${containerId}" data-direction="-1">
             <i class="fas fa-chevron-left"></i>
           </button>
-          <button class="image-nav next" onclick="changeImage('${containerId}', 1)">
+          <button class="image-nav next" data-container="${containerId}" data-direction="1">
             <i class="fas fa-chevron-right"></i>
           </button>
         `
         : ''}
     </div>`
+
+  // Configurar eventos después de insertar el HTML
+  setTimeout(() => configurarEventosNavegacion(containerId), 0)
+
+  return html
 }
 
-// Función para cambiar imagen (navegación)
+/**
+ * Configura los eventos de navegación para un contenedor específico
+ */
+function configurarEventosNavegacion (containerId) {
+  const contenedor = document.getElementById(containerId)
+  if (!contenedor) return
+
+  const botones = contenedor.querySelectorAll('.image-nav')
+  botones.forEach(boton => {
+    boton.addEventListener('click', (e) => {
+      e.preventDefault()
+      const container = boton.dataset.container
+      const direccion = parseInt(boton.dataset.direction)
+      cambiarImagen(container, direccion)
+    })
+  })
+}
+
+// FUNCIONES DE NAVEGACIÓN
+
+/**
+ * Cambia la imagen actual (anterior/siguiente)
+ */
 export function cambiarImagen (containerId, direccion) {
   const contenedor = document.getElementById(containerId)
   if (!contenedor) {
-    console.warn(`Contenedor ${containerId} no encontrado`)
     return
   }
 
   const img = contenedor.querySelector('.product-image')
   if (!img) {
-    console.warn('Imagen no encontrada en el contenedor')
     return
   }
 
@@ -138,30 +173,33 @@ export function cambiarImagen (containerId, direccion) {
   actualizarImagen(img, imagenes, indiceActual, contenedor)
 }
 
-// Función para establecer imagen específica
+/**
+ * Establece una imagen específica por índice
+ */
 export function establecerImagen (containerId, indice) {
   const contenedor = document.getElementById(containerId)
   if (!contenedor) {
-    console.warn(`Contenedor ${containerId} no encontrado`)
     return
   }
 
   const img = contenedor.querySelector('.product-image')
   if (!img) {
-    console.warn('Imagen no encontrada en el contenedor')
     return
   }
 
   const imagenes = JSON.parse(img.dataset.images || '[]')
   if (indice < 0 || indice >= imagenes.length) {
-    console.warn(`Indice ${indice} fuera de rango`)
     return
   }
 
   actualizarImagen(img, imagenes, indice, contenedor)
 }
 
-// Función auxiliar para calcular nuevo índice
+// FUNCIONES AUXILIARES
+
+/**
+ * Calcula el nuevo índice con navegación circular
+ */
 function calcularNuevoIndice (indiceActual, direccion, totalImagenes) {
   indiceActual += direccion
 
@@ -175,17 +213,24 @@ function calcularNuevoIndice (indiceActual, direccion, totalImagenes) {
   return indiceActual
 }
 
-// Función auxiliar para actualizar imagen
+/**
+ * Actualiza la imagen y sus indicadores
+ */
 function actualizarImagen (img, imagenes, indice, contenedor) {
   img.src = imagenes[indice]
   img.dataset.current = indice.toString()
   actualizarIndicadoresImagen(contenedor, indice)
 }
 
-// Función para actualizar indicadores (si existen)
+/**
+ * Actualiza los indicadores visuales de posición
+ */
 function actualizarIndicadoresImagen (contenedor, indiceActivo) {
   const indicadores = contenedor.querySelectorAll('.image-dot')
   indicadores.forEach((indicador, indice) => {
     indicador.classList.toggle('active', indice === indiceActivo)
   })
 }
+
+// Exponer función de configuración para uso externo si es necesario
+export { configurarEventosNavegacion }

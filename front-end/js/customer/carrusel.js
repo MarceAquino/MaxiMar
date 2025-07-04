@@ -17,7 +17,6 @@ document.addEventListener('DOMContentLoaded', function () {
       botonSecreto.classList.add('show')
 
       clicks.length = 0
-      console.log('¡TRUCO ACTIVADO!')
     }
 
     botonDerecha?.addEventListener('click', () => {

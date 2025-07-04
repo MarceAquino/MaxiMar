@@ -1,11 +1,31 @@
+/**
+ * MÓDULO: Sistema de Filtros y Tabs
+ *
+ * Maneja el filtrado de productos por mascota y categoría en la página de productos.
+ *
+ * FUNCIONALIDADES:
+ * - Filtrado por tipo de mascota (perros, gatos, todos)
+ * - Filtrado por categoría (alimentos, juguetes, etc.)
+ * - Manejo de tabs con Bootstrap
+ * - Interfaz visual con tarjetas de categoría
+ *
+ * VARIABLES GLOBALES:
+ * - productosParaFiltrar: Lista completa de productos
+ * - funcionRenderizado: Función que dibuja los productos
+ * - mascotaActual/categoriaActual: Filtros activos
+ */
+
 let productosParaFiltrar = [] // Lista completa de productos disponibles
 let funcionRenderizado = null // Función que dibuja los productos en pantalla
 let mascotaActual = null // Filtro actual por mascota (null = todos)
 let categoriaActual = null // Filtro actual por categoría (null = todas)
 
+/**
+ * Inicializa el sistema de filtros con productos y función de renderizado
+ * @param {Array} productos - Array de productos a filtrar
+ * @param {Function} renderizarProductos - Función para mostrar productos
+ */
 function inicializarFiltros (productos, renderizarProductos) {
-  console.log('🔍 Inicializando sistema de filtros...')
-
   // Guardar datos importantes para usar después
   productosParaFiltrar = productos
   funcionRenderizado = renderizarProductos
@@ -17,13 +37,13 @@ function inicializarFiltros (productos, renderizarProductos) {
   // Mostrar todos los productos al inicio
   if (funcionRenderizado) {
     funcionRenderizado(productosParaFiltrar)
-    console.log('✅ Productos mostrados inicialmente')
   }
 }
 
+/**
+ * Configura eventos de click en las tarjetas de categoría
+ */
 function configurarEventosCategorias () {
-  console.log('🎯 Configurando eventos de categorías...')
-
   // Buscar todas las tarjetas de categoría en la página
   const tarjetasCategorias = document.querySelectorAll('.categoria-card')
 
@@ -33,8 +53,6 @@ function configurarEventosCategorias () {
       // Obtener datos de la tarjeta clickeada
       const mascota = this.dataset.mascota
       const categoria = this.dataset.categoria
-
-      console.log(`📦 Seleccionada categoría: ${categoria} para ${mascota}`)
 
       // Quitar selección activa de todas las tarjetas del mismo panel
       const panelActual = this.closest('.tab-pane')
@@ -51,9 +69,10 @@ function configurarEventosCategorias () {
   })
 }
 
+/**
+ * Configura eventos de click en botones con filtros especiales
+ */
 function configurarEventosBotones () {
-  console.log('🔘 Configurando eventos de botones especiales...')
-
   // Buscar botones con datos de filtro
   const botones = document.querySelectorAll('button[data-mascota][data-categoria]')
 
@@ -63,8 +82,6 @@ function configurarEventosBotones () {
       // Obtener datos del botón clickeado
       const mascota = this.dataset.mascota
       const categoria = this.dataset.categoria
-
-      console.log(`🔘 Botón presionado: ${mascota} - ${categoria}`)
 
       // Limpiar selecciones activas del panel actual
       const panelActual = this.closest('.tab-pane')
@@ -80,23 +97,23 @@ function configurarEventosBotones () {
   })
 }
 
+/**
+ * Aplica los filtros activos y muestra los productos resultantes
+ */
 function filtrarYMostrarProductos () {
   // Verificar que tenemos datos para trabajar
   if (!productosParaFiltrar.length || !funcionRenderizado) {
-    console.log('⚠️ No hay productos o función de renderizado disponible')
     return
   }
 
-  console.log(`🔍 Filtrando productos: mascota=${mascotaActual}, categoría=${categoriaActual}`)
-
   // Empezar con todos los productos
   let productosFiltrados = productosParaFiltrar
+
   // Aplicar filtro por mascota si está seleccionado
   if (mascotaActual) {
     productosFiltrados = productosFiltrados.filter(producto =>
       producto.tipo_mascota === mascotaActual
     )
-    console.log(`📋 Después de filtrar por mascota: ${productosFiltrados.length} productos`)
   }
 
   // Aplicar filtro por categoría si está seleccionado
@@ -104,26 +121,23 @@ function filtrarYMostrarProductos () {
     productosFiltrados = productosFiltrados.filter(producto =>
       producto.categoria === categoriaActual
     )
-    console.log(`📋 Después de filtrar por categoría: ${productosFiltrados.length} productos`)
   }
 
   // Mostrar los productos filtrados en pantalla
   funcionRenderizado(productosFiltrados)
-
-  console.log(`✅ Mostrados ${productosFiltrados.length} productos filtrados`)
 }
 
+/**
+ * Configura eventos de cambio de tabs de Bootstrap
+ * Limpia filtros al cambiar entre mascotas
+ */
 document.addEventListener('DOMContentLoaded', function () {
-  console.log('🔄 Configurando eventos de tabs...')
-
   // Buscar todos los tabs de mascotas
   const tabs = document.querySelectorAll('#mascotaTabs button[data-bs-toggle="pill"]')
 
   // Para cada tab, configurar evento cuando se muestra
   tabs.forEach(tab => {
     tab.addEventListener('shown.bs.tab', function (event) {
-      console.log(`🔄 Cambiando a tab: ${event.target.textContent}`)
-
       // Limpiar todos los filtros cuando se cambia de tab
       mascotaActual = null
       categoriaActual = null
@@ -137,7 +151,6 @@ document.addEventListener('DOMContentLoaded', function () {
       if (event.target.id === 'todos-tab') {
         if (funcionRenderizado && productosParaFiltrar.length) {
           funcionRenderizado(productosParaFiltrar)
-          console.log('📋 Mostrando todos los productos')
         }
       }
     })

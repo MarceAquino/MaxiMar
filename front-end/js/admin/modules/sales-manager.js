@@ -190,7 +190,7 @@ export async function toggleDetalleVenta (ventaCard, ventaId) {
   mostrarCargandoDetalle(detalleExpandido)
 
   try {
-    const response = await fetch(API_ROUTES.ventas.detalle(ventaId), {
+    const response = await fetch(API_ROUTES.ventas.obtener(ventaId), {
       headers: tokenUtils.getAuthHeaders()
     })
 

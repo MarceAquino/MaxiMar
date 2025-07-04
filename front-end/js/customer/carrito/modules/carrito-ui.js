@@ -1,9 +1,20 @@
+/**
+ * Interfaz y renderizado del carrito de compras
+ *
+ * Este módulo se encarga de:
+ * - Renderizar visualmente los items del carrito
+ * - Actualizar contadores y totales en tiempo real
+ * - Manejar eventos de UI (botones de cantidad, eliminar)
+ * - Mostrar/ocultar secciones según el estado del carrito
+ */
+
 // Interfaz y renderizado del carrito
 import { cambiarCantidadCarrito, eliminarItemCarrito } from './carrito-actions.js'
 import { calcularTotales, obtenerCarrito, obtenerProductoPorId } from './carrito-data.js'
 import { formatearPrecio, procesarURLsProducto } from './carrito-utils.js'
 
 // === ELEMENTOS DEL DOM ===
+// Cache de elementos frecuentemente utilizados para mejor rendimiento
 const elementos = {
   cartCountElement: document.getElementById('cart-icon-count'),
   carritoItems: document.getElementById('carrito-items'),
@@ -19,6 +30,11 @@ const elementos = {
 }
 
 // === CONTADOR DEL CARRITO ===
+
+/**
+ * Actualiza el contador visual del carrito en el icono
+ * Suma todas las cantidades de productos en el carrito
+ */
 export function actualizarContadorCarrito () {
   const carrito = obtenerCarrito()
   const totalItems = carrito.reduce((suma, item) => suma + item.cantidad, 0)
@@ -29,6 +45,11 @@ export function actualizarContadorCarrito () {
 }
 
 // === RENDERIZADO DEL CARRITO ===
+
+/**
+ * Renderiza todos los items del carrito en el DOM
+ * Maneja tanto carrito vacío como con productos
+ */
 export function renderCarrito () {
   if (!elementos.carritoItems) return
 

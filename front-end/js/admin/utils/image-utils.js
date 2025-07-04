@@ -148,7 +148,7 @@ export function crearPreviewsImagenes (files, container, options = {}) {
 
       if (allowRemove) {
         cardContent += `
-            <button type="button" class="btn btn-sm btn-danger mt-1" onclick="eliminarImagenPreview(this, ${index})">
+            <button type="button" class="btn btn-sm btn-danger mt-1 eliminar-imagen-preview" data-index="${index}">
               <i class="fas fa-times"></i> Eliminar
             </button>
         `
@@ -164,7 +164,7 @@ export function crearPreviewsImagenes (files, container, options = {}) {
     }
 
     reader.onerror = function () {
-      console.error(`❌ Error al leer archivo: ${file.name}`)
+      // Error al leer archivo
     }
 
     reader.readAsDataURL(file)
@@ -201,7 +201,7 @@ export function mostrarImagenesActuales (urls, containerId, options = {}) {
   try {
     imagenesArray = typeof urls === 'string' ? JSON.parse(urls) : urls
   } catch (e) {
-    console.error('Error al parsear URLs:', e)
+    // Error al parsear URLs
     container.innerHTML = '<p class="text-danger">Error al cargar imágenes</p>'
     return
   }
@@ -230,14 +230,33 @@ export function mostrarImagenesActuales (urls, containerId, options = {}) {
     imageDiv.innerHTML = content
     container.appendChild(imageDiv)
   })
+
+  // Configurar event delegation para botones de eliminar si no está ya configurado
+  if (!container.dataset.eventConfigured) {
+    container.addEventListener('click', manejarEliminarImagen)
+    container.dataset.eventConfigured = 'true'
+  }
 }
 
 /**
- * Función global para eliminar imagen del preview
+ * Maneja la eliminación de imágenes del preview
+ * @param {Event} e - Evento de click
+ */
+function manejarEliminarImagen (e) {
+  const button = e.target.closest('.eliminar-imagen-preview')
+  if (!button) return
+
+  e.preventDefault()
+  const index = parseInt(button.dataset.index)
+  eliminarImagenPreview(button, index)
+}
+
+/**
+ * Función para eliminar imagen del preview
  * @param {HTMLElement} button - Botón que disparó el evento
  * @param {number} index - Índice de la imagen a eliminar
  */
-window.eliminarImagenPreview = function (button, index) {
+function eliminarImagenPreview (button, index) {
   // Buscar el input file más cercano
   const card = button.closest('.card')
   const container = card.closest('[id]')
@@ -253,7 +272,7 @@ window.eliminarImagenPreview = function (button, index) {
   }
 
   if (!input) {
-    console.error('❌ No se encontró el input file para eliminar imagen')
+    // No se encontró el input file
     return
   }
 

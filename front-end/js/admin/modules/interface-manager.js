@@ -4,7 +4,6 @@
  * y la navegación entre diferentes secciones
  */
 
-import { logout } from '../auth-guard.js'
 import { cargarAdministradores, renderizarAdministradores } from './admins-manager.js'
 import { DashboardState } from './dashboard-state.js'
 import { aplicarFiltros } from './products-manager.js'
@@ -101,7 +100,6 @@ export function configurarEventListeners () {
   document.getElementById('filtroCategoria').addEventListener('change', aplicarFiltros)
   document.getElementById('filtroMascota').addEventListener('change', aplicarFiltros)
   document.getElementById('filtroEstado').addEventListener('change', aplicarFiltros)
-  document.getElementById('logoutBtn').addEventListener('click', logout)
 
   const ordenarVentas = document.getElementById('ordenarVentas')
   if (ordenarVentas) {
