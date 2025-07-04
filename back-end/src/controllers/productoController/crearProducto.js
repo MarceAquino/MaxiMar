@@ -22,9 +22,19 @@ const crearProducto = async (req, res) => {
       datos.stock = parseInt(datos.stock)
     }
 
-    // Si hay imágenes, guardar los nombres de archivo como array
+    // Si hay imágenes, guardar las rutas completas como array
     if (req.files && req.files.length > 0) {
-      datos.urls = req.files.map(f => f.filename)
+      datos.urls = req.files.map(f => `/front-end/img/nuevos-Producto/${f.filename}`)
+    }
+
+    // Parsear atributos_especificos si viene como string JSON
+    if (datos.atributos_especificos && typeof datos.atributos_especificos === 'string') {
+      try {
+        datos.atributos_especificos = JSON.parse(datos.atributos_especificos)
+      } catch (error) {
+        console.log('❌ Error al parsear atributos_especificos:', error)
+        return res.status(400).json({ ok: false, error: 'Los atributos específicos tienen formato inválido' })
+      }
     }
 
     console.log('Datos recibidos para crear:', datos)
@@ -41,6 +51,27 @@ const crearProducto = async (req, res) => {
     res.json({ ok: true, mensaje: 'Producto creado', producto })
   } catch (error) {
     console.error('Error al crear producto:', error)
+
+    // Manejar error de código duplicado
+    if (error.name === 'SequelizeUniqueConstraintError' && error.fields && error.fields.codigo) {
+      return res.status(400).json({
+        ok: false,
+        error: 'Ya existe un producto con ese código',
+        detalles: [`El código "${error.fields.codigo}" ya está en uso. Use un código diferente.`]
+      })
+    }
+
+    // Otros errores de Sequelize
+    if (error.name === 'SequelizeValidationError') {
+      const errores = error.errors.map(err => err.message)
+      return res.status(400).json({
+        ok: false,
+        error: 'Datos inválidos',
+        detalles: errores
+      })
+    }
+
+    // Error genérico
     res.status(500).json({ ok: false, error: 'Error al crear producto' })
   }
 }

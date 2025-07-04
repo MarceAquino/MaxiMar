@@ -2,31 +2,49 @@ const IMAGEN_POR_DEFECTO = '/front-end/img/notFount.png'
 
 // Función principal para obtener imágenes del producto
 export function obtenerImagenesProducto (producto) {
+  console.log('🖼️ Procesando imágenes para producto:', producto.nombre, 'URLs originales:', producto.urls)
+
   if (!producto.urls) {
+    console.log('⚠️ No hay URLs de imágenes, usando imagen por defecto')
     return [IMAGEN_POR_DEFECTO]
   }
 
   const urls = parsearUrls(producto.urls)
-  const urlsProcessed = procesarUrls(urls)
+  console.log('📋 URLs parseadas:', urls)
 
-  return urlsProcessed.length === 0
+  const urlsProcessed = procesarUrls(urls)
+  console.log('🔄 URLs procesadas:', urlsProcessed)
+
+  const finalUrls = urlsProcessed.length === 0
     ? [IMAGEN_POR_DEFECTO]
     : formatearUrls(urlsProcessed)
+
+  console.log('✅ URLs finales:', finalUrls)
+  return finalUrls
 }
 
 // Función para parsear URLs (array o JSON string)
 function parsearUrls (urls) {
+  // Si ya es un array, devolverlo directamente
   if (Array.isArray(urls)) {
     return urls
   }
 
-  try {
-    const parsed = JSON.parse(urls)
-    return Array.isArray(parsed) ? parsed : []
-  } catch (error) {
-    console.warn('Error al parsear URLs de producto:', error)
-    return []
+  // Si es una string que parece JSON array
+  if (typeof urls === 'string') {
+    // Intentar parsear como JSON
+    try {
+      const parsed = JSON.parse(urls)
+      return Array.isArray(parsed) ? parsed : [urls]
+    } catch (error) {
+      // Si no es JSON válido, tratarlo como una sola URL
+      console.warn('Error al parsear URLs de producto, usando como string simple:', error)
+      return [urls]
+    }
   }
+
+  // Si no es ni array ni string, devolver array vacío
+  return []
 }
 
 // Función para procesar URLs separadas por comas
@@ -50,12 +68,22 @@ function procesarUrls (urls) {
 // Función para formatear URLs con las rutas correctas
 function formatearUrls (urls) {
   return urls.map(url => {
+    // Si ya es una URL completa que empieza con /front-end/, usarla tal como está
     if (url.startsWith('/front-end/')) {
       return url
     }
+
+    // Si empieza con nuevos-Producto/, agregar el prefijo completo
     if (url.startsWith('nuevos-Producto/')) {
       return `/front-end/img/${url}`
     }
+
+    // Si es solo un nombre de archivo, asumir que va en nuevos-Producto
+    if (!url.includes('/')) {
+      return `/front-end/img/nuevos-Producto/${url}`
+    }
+
+    // Por defecto, asumir que va en la carpeta productos
     return `/front-end/img/productos/${url}`
   })
 }

@@ -14,7 +14,7 @@ const actualizarProducto = async (req, res) => {
   try {
     const datos = { ...req.body }
 
-    // Convertir campos numéricos de string a number (vienen como string desde FormData)
+    // Convertir campos numéricos de string a number
     if (datos.precio !== undefined) {
       datos.precio = parseFloat(datos.precio)
     }
@@ -22,8 +22,16 @@ const actualizarProducto = async (req, res) => {
       datos.stock = parseInt(datos.stock)
     }
 
-    if (req.files && req.files.length > 0) {
-      datos.urls = JSON.stringify(req.files.map(f => f.filename))
+    // NO procesar imágenes en actualización - solo se suben en creación
+
+    // Parsear atributos_especificos si viene como string JSON
+    if (datos.atributos_especificos && typeof datos.atributos_especificos === 'string') {
+      try {
+        datos.atributos_especificos = JSON.parse(datos.atributos_especificos)
+      } catch (error) {
+        console.log('❌ Error al parsear atributos_especificos:', error)
+        return res.status(400).json({ ok: false, error: 'Los atributos específicos tienen formato inválido' })
+      }
     }
 
     console.log('Datos recibidos para actualizar:', datos)

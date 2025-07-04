@@ -76,10 +76,6 @@ if (imageInput && previewContainer) {
 async function crearProducto (e) {
   e.preventDefault()
   if (window.submitInProgress) return
-  window.procesoSubmitActivo = true
-  window.submitInProgress = true
-  const submitBtn = form.querySelector('button[type="submit"]')
-  const estadoOriginal = deshabilitarBotonTemporal(submitBtn, 'Creando...', 10000)
 
   try {
     const authHeaders = tokenUtils.getAuthHeaders()
@@ -97,31 +93,137 @@ async function crearProducto (e) {
       categoriaHidden.value = tipoProductoSelect.value
     }
 
-    const formData = new FormData()
-
-    // Procesar campos del formulario
+    // Recopilar datos del formulario para mostrar en confirmación
     const originalFormData = new FormData(form)
+    const datosProducto = {}
+    const atributosEspecificos = {}
+
     for (const [key, value] of originalFormData.entries()) {
       if (key === 'precio') {
         const precio = parseFloat(value)
         if (isNaN(precio) || precio < 0.01) {
           throw new Error('El precio debe ser un número mayor o igual a 0.01')
         }
-        formData.append(key, precio.toString())
+        datosProducto.precio = precio
       } else if (key === 'stock') {
         const stock = parseInt(value)
         if (isNaN(stock) || stock < 0) {
           throw new Error('El stock debe ser un número igual o mayor a 0')
         }
-        formData.append(key, stock.toString())
+        datosProducto.stock = stock
+      } else if (key === 'edad' || key === 'peso' || key === 'sabor' || key === 'tamano' || key === 'material') {
+        // Ignorar atributos específicos aquí - se capturan por separado
+        continue
+      } else if (key === 'imagenes') {
+        // IGNORAR imágenes aquí - se agregan manualmente después
+        continue
       } else if (!key.endsWith('_display')) {
-        // Agregar todos los campos excepto los de display
-        formData.append(key, value)
+        datosProducto[key] = value
       }
     }
 
+    // Capturar atributos específicos de campos visibles
+    const tipoProducto = datosProducto.tipo_producto
+
+    if (tipoProducto === 'alimento') {
+      // Capturar atributos de alimento
+      const edadField = document.getElementById('edadCrear')
+      const pesoField = document.getElementById('pesoCrear')
+      const saborField = document.getElementById('saborCrear')
+
+      if (edadField && edadField.value && edadField.value.trim()) {
+        atributosEspecificos.edad = edadField.value.trim()
+      }
+      if (pesoField && pesoField.value && pesoField.value.trim()) {
+        atributosEspecificos.peso = pesoField.value.trim()
+      }
+      if (saborField && saborField.value && saborField.value.trim()) {
+        atributosEspecificos.sabor = saborField.value.trim()
+      }
+    } else if (tipoProducto === 'juguete') {
+      // Capturar atributos de juguete
+      const tamanoField = document.getElementById('tamanoCrear')
+      const materialField = document.getElementById('materialCrear')
+
+      if (tamanoField && tamanoField.value && tamanoField.value.trim()) {
+        atributosEspecificos.tamano = tamanoField.value.trim()
+      }
+      if (materialField && materialField.value && materialField.value.trim()) {
+        atributosEspecificos.material = materialField.value.trim()
+      }
+    }
+
+    // Agregar atributos específicos al objeto principal
+    if (Object.keys(atributosEspecificos).length > 0) {
+      datosProducto.atributos_especificos = JSON.stringify(atributosEspecificos)
+    }
+
+    console.log('Datos del producto:', datosProducto)
+    console.log('Atributos específicos:', atributosEspecificos)
+
+    // Validaciones adicionales antes de mostrar confirmación
+    if (!datosProducto.codigo || datosProducto.codigo.trim().length < 3) {
+      throw new Error('El código debe tener al menos 3 caracteres')
+    }
+    if (!datosProducto.nombre || datosProducto.nombre.trim().length < 3) {
+      throw new Error('El nombre debe tener al menos 3 caracteres')
+    }
+    if (!datosProducto.marca || datosProducto.marca.trim().length < 2) {
+      throw new Error('La marca debe tener al menos 2 caracteres')
+    }
+
+    // Mensaje de confirmación con detalles del producto
+    let mensajeConfirmacion = '¿Está seguro que desea crear este producto?\n\n' +
+      `Código: ${datosProducto.codigo || 'N/A'} (debe ser único)\n` +
+      `Nombre: ${datosProducto.nombre || 'N/A'}\n` +
+      `Marca: ${datosProducto.marca || 'N/A'}\n` +
+      `Precio: $${datosProducto.precio || 'N/A'}\n` +
+      `Stock: ${datosProducto.stock || 'N/A'}\n` +
+      `Tipo: ${datosProducto.tipo_producto || 'N/A'}\n` +
+      `Mascota: ${datosProducto.tipo_mascota || 'N/A'}\n`
+
+    // Agregar atributos específicos al mensaje
+    if (Object.keys(atributosEspecificos).length > 0) {
+      mensajeConfirmacion += '\nAtributos específicos:\n'
+      Object.entries(atributosEspecificos).forEach(([key, value]) => {
+        const nombreAtributo = {
+          edad: 'Edad',
+          peso: 'Peso',
+          sabor: 'Sabor',
+          tamano: 'Tamaño',
+          material: 'Material'
+        }[key] || key
+        mensajeConfirmacion += `- ${nombreAtributo}: ${value}\n`
+      })
+    }
+
+    mensajeConfirmacion += `\nImágenes: ${files.length} archivo(s)`
+
+    const confirmacion = confirm(mensajeConfirmacion)
+
+    if (!confirmacion) {
+      return // Usuario canceló
+    }
+
+    // Proceder con la creación si confirma
+    window.procesoSubmitActivo = true
+    window.submitInProgress = true
+    const submitBtn = form.querySelector('button[type="submit"]')
+    deshabilitarBotonTemporal(submitBtn, 'Creando...', 10000)
+
+    const formData = new FormData()
+
+    // Agregar campos procesados al FormData
+    Object.entries(datosProducto).forEach(([key, value]) => {
+      if (key === 'precio' || key === 'stock') {
+        formData.append(key, value.toString())
+      } else {
+        formData.append(key, value)
+      }
+    })
+
     // Agregar imágenes
-    Array.from(files).forEach(file => {
+    Array.from(files).forEach((file, index) => {
       formData.append('imagenes', file)
     })
 
@@ -132,26 +234,79 @@ async function crearProducto (e) {
     })
 
     if (!response.ok) {
-      const errorText = await response.text()
-      throw new Error(`Error al crear producto: ${response.status} - ${errorText}`)
+      let errorData
+      const contentType = response.headers.get('content-type')
+
+      try {
+        if (contentType && contentType.includes('application/json')) {
+          errorData = await response.json()
+        } else {
+          // Si no es JSON, leer como texto
+          const errorText = await response.text()
+          errorData = { error: errorText || 'Error del servidor' }
+        }
+      } catch (parseError) {
+        errorData = { error: 'Error del servidor - respuesta inválida' }
+      }
+
+      let mensajeError = 'Error al crear producto'
+
+      if (errorData.error === 'Ya existe un producto con ese código') {
+        mensajeError = `El código "${datosProducto.codigo}" ya existe. Por favor, use un código diferente.`
+      } else if (errorData.detalles && Array.isArray(errorData.detalles)) {
+        mensajeError = `Errores de validación:\n${errorData.detalles.join('\n')}`
+      } else if (errorData.error) {
+        mensajeError = errorData.error
+      }
+
+      throw new Error(mensajeError)
     }
 
-    window.location.href = '/front-end/html/admin/dashboard.html'
+    // Procesar respuesta exitosa
+    let responseData
+    try {
+      responseData = await response.json()
+    } catch (parseError) {
+      throw new Error('Respuesta del servidor inválida')
+    }
+
+    // Verificar si la respuesta indica éxito
+    if (!responseData.ok) {
+      throw new Error(responseData.error || 'Error desconocido del servidor')
+    }
+
+    // Mensaje de éxito
+    const producto = responseData.producto
+    let mensajeExito = `¡Producto creado con éxito!\n\nEl producto "${datosProducto.nombre}" ha sido creado correctamente.`
+
+    if (producto && producto.producto_id) {
+      mensajeExito += `\nID del producto: ${producto.producto_id}`
+    }
+
+    alert(mensajeExito)
+
+    // Limpiar formulario
+    form.reset()
+    previewContainer.innerHTML = ''
+    previewContainer.style.display = 'none'
+
+    // Redirigir al dashboard
+    setTimeout(() => {
+      window.location.href = '/front-end/html/admin/dashboard.html'
+    }, 1000)
   } catch (error) {
     alert(`Error: ${error.message}`)
   } finally {
-    if (estadoOriginal) {
-      submitBtn.textContent = estadoOriginal.texto
-      submitBtn.disabled = estadoOriginal.deshabilitado
+    if (window.procesoSubmitActivo) {
+      const submitBtn = form.querySelector('button[type="submit"]')
+      if (submitBtn) {
+        submitBtn.textContent = 'Crear Producto'
+        submitBtn.disabled = false
+      }
+      window.procesoSubmitActivo = false
+      window.submitInProgress = false
     }
-    window.procesoSubmitActivo = false
-    window.submitInProgress = false
   }
-}
-
-// 5. Reemplazar el event listener del submit
-if (form) {
-  form.addEventListener('submit', crearProducto)
 }
 
 document.addEventListener('DOMContentLoaded', async () => {
@@ -163,6 +318,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     juguete: 'camposJugueteCrear'
   })
 
+  // Event listener del formulario (solo una vez)
   if (form) {
     form.addEventListener('submit', crearProducto)
   }
