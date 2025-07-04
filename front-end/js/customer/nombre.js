@@ -1,6 +1,4 @@
 function configurarSistemaNombres () {
-  console.log('👤 Iniciando sistema de nombres de usuario...')
-
   // Elementos importantes de la página
   const formularioLogin = document.getElementById('loginForm')
   const campoNombreUsuario = document.getElementById('nombreUsuario')
@@ -8,15 +6,11 @@ function configurarSistemaNombres () {
 
   // Obtener usuario guardado
   const usuarioGuardado = localStorage.getItem('nombreUsuario')
-  console.log(`👤 Usuario guardado: ${usuarioGuardado || 'ninguno'}`)
-
   if (mensajeBienvenida && usuarioGuardado) {
     mensajeBienvenida.textContent = `¡Hola, ${usuarioGuardado}!`
-    console.log('👋 Mensaje de bienvenida mostrado')
   }
 
   if (!formularioLogin || !campoNombreUsuario) {
-    console.log('ℹ️ No hay formulario de login en esta página')
     return // No es una página de login, salir
   }
 

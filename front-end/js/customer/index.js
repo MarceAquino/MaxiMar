@@ -9,8 +9,6 @@ document.addEventListener('DOMContentLoaded', function () {
 })
 
 function configurarTrucoSecreto () {
-  console.log('🎮 Configurando truco secreto del carrusel...')
-
   // Variables para el truco secreto
   const clicksUsuario = [] // Guardar los clicks del usuario
   const codigoSecreto = ['right', 'right', 'right', 'left', 'left', 'left'] // Secuencia secreta
@@ -23,7 +21,7 @@ function configurarTrucoSecreto () {
 
   // Función que se ejecuta cuando se activa el truco
   function activarTrucoSecreto () {
-    console.log('🎉 ¡TRUCO SECRETO ACTIVADO!')
+    console.log('¡TRUCO SECRETO ACTIVADO!')
 
     // Agregar efecto visual al carrusel
     carrusel.classList.add('carousel-flip')
@@ -69,8 +67,6 @@ function configurarTrucoSecreto () {
 }
 
 function configurarLoginCliente () {
-  console.log('👤 Configurando sistema de login de clientes...')
-
   // Elementos del formulario
   const formularioLogin = document.getElementById('loginForm')
   const campoNombre = document.getElementById('nombreUsuario')
@@ -78,9 +74,6 @@ function configurarLoginCliente () {
   // Verificar si ya hay un usuario logueado
   const usuarioYaLogueado = localStorage.getItem('nombreUsuario')
   if (usuarioYaLogueado) {
-    console.log(`👤 Usuario ya logueado: ${usuarioYaLogueado}`)
-    console.log('🔄 Redirigiendo a productos...')
-
     // Si ya hay usuario guardado, redirigir directamente a productos
     window.location.href = '/front-end/html/customer/productos.html'
     return // Salir de la función
@@ -91,12 +84,9 @@ function configurarLoginCliente () {
     evento.preventDefault() // Evitar que la página se recargue
 
     const nombreIngresado = campoNombre.value.trim()
-    console.log(`👤 Intento de login con nombre: "${nombreIngresado}"`)
 
     // Validar que el nombre tenga al menos 2 caracteres
     if (nombreIngresado.length >= 2) {
-      console.log('✅ Nombre válido - Guardando usuario')
-
       // Guardar nombre en localStorage
       localStorage.setItem('nombreUsuario', nombreIngresado)
 
@@ -109,8 +99,6 @@ function configurarLoginCliente () {
         window.location.href = '/front-end/html/customer/productos.html'
       }, 300)
     } else {
-      console.log('❌ Nombre muy corto - Mostrando error')
-
       // Mostrar campo como inválido
       campoNombre.classList.add('is-invalid')
 
