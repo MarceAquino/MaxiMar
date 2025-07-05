@@ -20,24 +20,12 @@
 
 import { API_ROUTES } from '../../config/api.js'
 import { actualizarContadorCarrito, agregarAlCarrito } from '../carrito/carrito.js'
-// import { inicializarFiltros } from '../filtros-tabs.js'
 import { inicializarFiltros } from './modules/filtros-tabs.js'
 import { cambiarImagen, establecerImagen } from './modules/imagen-manager.js'
 import { mostrarFeedbackAgregar, mostrarMensaje } from './modules/notificaciones.js'
 import { renderizarListaProductos } from './modules/producto-render.js'
 import { validarProducto, validarStock } from './modules/validadores.js'
-
-/**
- * Muestra mensaje de bienvenida si hay usuario logueado
- */
-function mostrarMensajeBienvenida () {
-  const mensajeBienvenida = document.getElementById('welcomeMessage')
-  const usuarioGuardado = localStorage.getItem('nombreUsuario')
-
-  if (mensajeBienvenida && usuarioGuardado) {
-    mensajeBienvenida.textContent = `¡Hola, ${usuarioGuardado}!`
-  }
-}
+import { mostrarMensajeBienvenida } from '../utils/mensajeBienvenida.js'
 
 // Variables globales
 let productos = []
@@ -156,6 +144,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     inicializarPaginaProductos()
     actualizarContadorCarrito()
+    // mostrarMensajeBienvenida()
     mostrarMensajeBienvenida()
   } catch (error) {
     mostrarMensaje('Error al cargar la aplicación', 'danger')

@@ -19,18 +19,7 @@ import {
   renderCarrito
 } from './modules/carrito-ui.js'
 import { mostrarMensaje, obtenerPaginaActual } from './modules/carrito-utils.js'
-
-/**
- * Muestra mensaje de bienvenida si hay usuario logueado
- */
-function mostrarMensajeBienvenida () {
-  const mensajeBienvenida = document.getElementById('welcomeMessage')
-  const usuarioGuardado = localStorage.getItem('nombreUsuario')
-
-  if (mensajeBienvenida && usuarioGuardado) {
-    mensajeBienvenida.textContent = `¡Hola, ${usuarioGuardado}!`
-  }
-}
+import { mostrarMensajeBienvenida } from '../utils/mensajeBienvenida.js'
 
 /**
  * Inicializa la página del carrito
