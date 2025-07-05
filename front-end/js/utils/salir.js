@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
          * Para cliente: usa la función específica de customer-auth
          */
         const esAdmin = window.location.pathname.includes('/admin/')
-        
+
         if (esAdmin) {
           // Limpieza para administradores
           sessionStorage.clear()

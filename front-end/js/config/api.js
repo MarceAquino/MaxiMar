@@ -11,38 +11,38 @@
  * facilitando la comunicación entre la interfaz de usuario y la base de datos.
  */
 
-// 🌐 URL base donde está corriendo nuestro servidor backend
+// URL base donde está corriendo nuestro servidor backend
 const API_URL = 'http://localhost:3030/api'
 
 /**
- * 📋 RUTAS DE LA API
+ * RUTAS DE LA API
  * Aquí definimos todas las URLs que usamos para comunicarnos con el servidor.
  * Están organizadas por categorías para que sea más fácil encontrarlas.
  */
 const API_ROUTES = {
-  // 🛍️ PRODUCTOS - Todo lo relacionado con los productos de la tienda
+  // PRODUCTOS - Todo lo relacionado con los productos de la tienda
   productos: `${API_URL}/products`,
   productoPorId: (id) => `${API_URL}/products/${id}`,
   crearProducto: `${API_URL}/products`,
   actualizarProducto: (id) => `${API_URL}/products/${id}`,
 
-  // 🔐 AUTENTICACIÓN - Para que los administradores puedan iniciar sesión
+  // AUTENTICACIÓN - Para que los administradores puedan iniciar sesión
   auth: {
     login: `${API_URL}/auth/login`, // Iniciar sesión
     verify: `${API_URL}/auth/verify`, // Verificar si el token es válido
     logout: `${API_URL}/auth/logout` // Cerrar sesión
   },
 
-  // 👤 REGISTRO - Para crear nuevos administradores
+  // REGISTRO - Para crear nuevos administradores
   registrarAdmin: `${API_URL}/auth/register`,
 
-  // 👥 ADMINISTRADORES - Gestión de usuarios administradores
+  // ADMINISTRADORES - Gestión de usuarios administradores
   admin: {
     list: `${API_URL}/admin/list`, // Ver todos los admins
     toggle: (id) => `${API_URL}/admin/${id}/toggle` // Activar/desactivar admin
   },
 
-  // 💰 VENTAS - Todo lo relacionado con las compras
+  // VENTAS - Todo lo relacionado con las compras
   ventas: {
     crear: `${API_URL}/sales`, // Crear una nueva venta
     obtener: (id) => `${API_URL}/sales/${id}`, // Obtener una venta específica
@@ -51,7 +51,7 @@ const API_ROUTES = {
 }
 
 /**
- * 🔑 UTILIDADES PARA TOKENS DE AUTENTICACIÓN
+ * UTILIDADES PARA TOKENS DE AUTENTICACIÓN
  *
  * Un token JWT es un mecanismo seguro de autenticación que permite
  * verificar la identidad del usuario sin necesidad de almacenar credenciales.
@@ -60,11 +60,11 @@ const API_ROUTES = {
  * que se elimina automáticamente al cerrar la sesión del navegador.
  */
 
-// 🗝️ Clave para el almacenamiento del token en sessionStorage
+// Clave para el almacenamiento del token en sessionStorage
 const TOKEN_KEY = 'maximar_admin_token'
 
 /**
- * 🛠️ UTILIDADES PARA MANEJO DE TOKENS
+ * UTILIDADES PARA MANEJO DE TOKENS
  * Conjunto de funciones para gestionar el ciclo de vida del token de autenticación
  */
 const tokenUtils = {

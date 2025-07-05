@@ -4,7 +4,7 @@
  * Maneja la funcionalidad de la página de inicio de la tienda.
  *
  * FUNCIONALIDADES:
- * - Truco secreto del carrusel (easter egg)
+ * - Truco secreto del carrusel (acceso al boton administradores)
  * - Sistema de login básico para clientes
  * - Validación y almacenamiento de nombres de usuario
  * - Redirección automática a productos si ya hay usuario

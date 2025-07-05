@@ -20,19 +20,19 @@ function tieneNombreValido () {
 
   // Verificar que existe, no esté vacío y tenga al menos 3 caracteres
   return nombreGuardado &&
-         nombreGuardado.trim().length >= 3
+           nombreGuardado.trim().length >= 3
 }
 
 /**
- * Redirige al usuario a la página de inicio
- * Con un pequeño delay para evitar loops de redirección
- */
+   * Redirige al usuario a la página de inicio
+   * Con un pequeño delay para evitar loops de redirección
+   */
 function redirigirAInicio () {
   // Verificar que no estemos ya en la página de inicio
   const esPaginaInicio = window.location.pathname.endsWith('/index.html') ||
-                        window.location.pathname === '/front-end/' ||
-                        window.location.pathname === '/front-end/index.html' ||
-                        window.location.pathname === '/'
+                          window.location.pathname === '/front-end/' ||
+                          window.location.pathname === '/front-end/index.html' ||
+                          window.location.pathname === '/'
 
   if (!esPaginaInicio) {
     // Evitar loops de redirección
@@ -53,9 +53,9 @@ function redirigirAInicio () {
 }
 
 /**
- * Verifica la autenticación del cliente
- * Se ejecuta automáticamente al cargar el script
- */
+   * Verifica la autenticación del cliente
+   * Se ejecuta automáticamente al cargar el script
+   */
 function verificarAutenticacionCliente () {
   // Solo ejecutar en páginas de customer
   const esPaginaCustomer = window.location.pathname.includes('/customer/')
@@ -75,16 +75,16 @@ function verificarAutenticacionCliente () {
 }
 
 /**
- * Obtiene el nombre del usuario actual
- * @returns {string|null} El nombre del usuario o null si no existe
- */
+   * Obtiene el nombre del usuario actual
+   * @returns {string|null} El nombre del usuario o null si no existe
+   */
 function obtenerNombreUsuario () {
   return localStorage.getItem('nombreUsuario')
 }
 
 /**
- * Limpia la sesión del usuario (para logout)
- */
+   * Limpia la sesión del usuario (para logout)
+   */
 function limpiarSesionCliente () {
   localStorage.removeItem('nombreUsuario')
   // También limpiar carrito si existe

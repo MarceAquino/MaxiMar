@@ -18,15 +18,14 @@
  * - Sistema de carrito
  */
 
-// productos.js - Archivo principal optimizado
 import { API_ROUTES } from '../../config/api.js'
-import { inicializarFiltros } from '../filtros-tabs.js'
+import { actualizarContadorCarrito, agregarAlCarrito } from '../carrito/carrito.js'
+// import { inicializarFiltros } from '../filtros-tabs.js'
+import { inicializarFiltros } from './modules/filtros-tabs.js'
 import { cambiarImagen, establecerImagen } from './modules/imagen-manager.js'
 import { mostrarFeedbackAgregar, mostrarMensaje } from './modules/notificaciones.js'
 import { renderizarListaProductos } from './modules/producto-render.js'
 import { validarProducto, validarStock } from './modules/validadores.js'
-
-import { actualizarContadorCarrito, agregarAlCarrito } from '../carrito/carrito.js'
 
 /**
  * Muestra mensaje de bienvenida si hay usuario logueado
