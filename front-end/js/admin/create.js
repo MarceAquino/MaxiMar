@@ -1,4 +1,5 @@
 import { API_ROUTES, tokenUtils } from '../config/api.js'
+import { crearProductoModal } from '../utils/controladorModales.js'
 import { requireAuth } from './auth-guard.js'
 import { configurarCamposDinamicosProducto } from './utils/unified-form-utils.js'
 
@@ -67,6 +68,7 @@ if (imageInput) {
 async function crearProducto (e) {
   e.preventDefault()
 
+  console.log('entre a crear producto')
   try {
     const files = imageInput.files
     const errores = validarImagenes(files)
@@ -105,12 +107,9 @@ async function crearProducto (e) {
       formData.set('atributos_especificos', JSON.stringify(atributos))
     }
 
-    // Confirmar creación
-    const codigo = formData.get('codigo')
-    const nombre = formData.get('nombre')
-    const precio = formData.get('precio')
-
-    if (!confirm(`¿Crear producto "${nombre}" con código "${codigo}" y precio $${precio}?`)) {
+    // Creacion de modal para confirmar crear producto.
+    const confirmar = await crearProductoModal()
+    if (!confirmar) {
       return
     }
 
