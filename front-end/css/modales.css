@@ -1,0 +1,163 @@
+/* modales.css - Estilos para el sistema de modales de Maximar Petshop */
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.modal-overlay.mostrar {
+    opacity: 1;
+}
+
+.modal-container {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    max-width: 500px;
+    width: 90%;
+    max-height: 90vh;
+    overflow-y: auto;
+    transform: scale(0.9);
+    transition: transform 0.3s ease;
+}
+
+.modal-overlay.mostrar .modal-container {
+    transform: scale(1);
+}
+
+.modal-header {
+    padding: 25px 30px 20px;
+    border-bottom: 1px solid #e5e7eb;
+    text-align: center;
+}
+
+.modal-icon {
+    font-size: 3rem;
+    margin-bottom: 15px;
+    display: block;
+}
+
+.modal-icon.alerta {
+    color: #f59e0b;
+}
+
+.modal-icon.confirmacion {
+    color: #3b82f6;
+}
+
+.modal-icon.exito {
+    color: #10b981;
+}
+
+.modal-icon.error {
+    color: #ef4444;
+}
+
+.modal-titulo {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #1f2937;
+    margin: 0 0 10px 0;
+}
+
+.modal-mensaje {
+    font-size: 1rem;
+    color: #6b7280;
+    line-height: 1.5;
+    margin: 0;
+}
+
+.modal-footer {
+    padding: 20px 30px 30px;
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.modal-boton {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    min-width: 100px;
+}
+
+.modal-boton:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.modal-boton:active {
+    transform: translateY(0);
+}
+
+.modal-boton.primario {
+    background-color: #3b82f6;
+    color: white;
+}
+
+.modal-boton.primario:hover {
+    background-color: #2563eb;
+}
+
+.modal-boton.secundario {
+    background-color: #6b7280;
+    color: white;
+}
+
+.modal-boton.secundario:hover {
+    background-color: #4b5563;
+}
+
+.modal-boton.peligro {
+    background-color: #ef4444;
+    color: white;
+}
+
+.modal-boton.peligro:hover {
+    background-color: #dc2626;
+}
+
+.modal-boton.exito {
+    background-color: #10b981;
+    color: white;
+}
+
+.modal-boton.exito:hover {
+    background-color: #059669;
+}
+
+/* Responsive Design */
+@media (max-width: 480px) {
+    .modal-container {
+        width: 95%;
+        margin: 10px;
+    }
+
+    .modal-header {
+        padding: 20px 20px 15px;
+    }
+
+    .modal-footer {
+        padding: 15px 20px 20px;
+        flex-direction: column;
+    }
+
+    .modal-boton {
+        width: 100%;
+    }
+}

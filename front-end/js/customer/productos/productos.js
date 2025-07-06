@@ -144,7 +144,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     inicializarPaginaProductos()
     actualizarContadorCarrito()
-    // mostrarMensajeBienvenida()
     mostrarMensajeBienvenida()
   } catch (error) {
     mostrarMensaje('Error al cargar la aplicación', 'danger')

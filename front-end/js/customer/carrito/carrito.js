@@ -5,6 +5,8 @@
  * Maneja eventos principales y exporta funciones para compatibilidad global.
  */
 
+import { mostrarMensajeBienvenida } from '../utils/mensajeBienvenida.js'
+import { vaciarCarritoModal } from '../../utils/controladorModales.js'
 import {
   agregarAlCarrito,
   cambiarCantidadCarrito,
@@ -19,7 +21,6 @@ import {
   renderCarrito
 } from './modules/carrito-ui.js'
 import { mostrarMensaje, obtenerPaginaActual } from './modules/carrito-utils.js'
-import { mostrarMensajeBienvenida } from '../utils/mensajeBienvenida.js'
 
 /**
  * Inicializa la página del carrito
@@ -51,9 +52,9 @@ function configurarEventosEspeciales () {
 }
 
 /**
- * Maneja el vaciado del carrito con confirmación
+ * Maneja el vaciado del carrito con un modal de confirmacion.
  */
-function manejarVaciarCarrito () {
+async function manejarVaciarCarrito () {
   const carrito = JSON.parse(localStorage.getItem('carrito') || '[]')
 
   if (carrito.length === 0) {
@@ -61,7 +62,8 @@ function manejarVaciarCarrito () {
     return
   }
 
-  const confirmar = confirm('¿Estás seguro de que quieres vaciar todo el carrito? Esta acción no se puede deshacer.')
+  const confirmar = await vaciarCarritoModal()
+
   if (confirmar) {
     vaciarCarrito()
     mostrarMensaje('Carrito vaciado correctamente', 'success')
