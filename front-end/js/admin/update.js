@@ -1,7 +1,7 @@
 import { API_ROUTES, tokenUtils } from '../config/api.js'
 import { requireAuth } from './auth-guard.js'
 import { configurarCamposDinamicosProducto, llenarFormularioProducto } from './utils/unified-form-utils.js'
-
+import { modificarProductoModal } from '../utils/controladorModales.js'
 /**
  * Administrador de actualización de productos
  * Permite editar productos existentes
@@ -25,7 +25,6 @@ function getIdFromURL () {
  */
 async function cargarProducto (id) {
   try {
-    console.log('Cargando producto con ID:', id)
     const res = await fetch(API_ROUTES.productoPorId(id))
 
     if (!res.ok) {
@@ -33,7 +32,6 @@ async function cargarProducto (id) {
     }
 
     const producto = await res.json()
-    console.log('Producto cargado:', producto)
     llenarFormularioProducto('formModificarProducto', producto)
   } catch (error) {
     console.error('Error al cargar producto:', error)
@@ -122,9 +120,6 @@ async function actualizarProducto (e) {
       datos.atributos_especificos = atributosEspecificos
     }
 
-    console.log('Datos a enviar:', datos)
-    console.log('Atributos específicos capturados:', atributosEspecificos)
-
     // Validaciones básicas
     if (!datos.nombre || datos.nombre.length < 3) {
       throw new Error('El nombre debe tener al menos 3 caracteres')
@@ -133,35 +128,41 @@ async function actualizarProducto (e) {
       throw new Error('La marca debe tener al menos 2 caracteres')
     }
 
-    // Mensaje de confirmación con detalles del producto
-    let mensajeConfirmacion = '¿Está seguro que desea actualizar este producto?\n\n' +
-      `Nombre: ${datos.nombre || 'N/A'}\n` +
-      `Código: ${datos.codigo || 'N/A'}\n` +
-      `Marca: ${datos.marca || 'N/A'}\n` +
-      `Precio: $${datos.precio || 'N/A'}\n` +
-      `Stock: ${datos.stock || 'N/A'}\n` +
-      `Tipo: ${tipoProducto || 'N/A'}\n` +
-      `Mascota: ${datos.tipo_mascota || 'N/A'}\n`
+    // // Mensaje de confirmación con detalles del producto
+    // let mensajeConfirmacion = '¿Está seguro que desea actualizar este producto?\n\n' +
+    //   `Nombre: ${datos.nombre || 'N/A'}\n` +
+    //   `Código: ${datos.codigo || 'N/A'}\n` +
+    //   `Marca: ${datos.marca || 'N/A'}\n` +
+    //   `Precio: $${datos.precio || 'N/A'}\n` +
+    //   `Stock: ${datos.stock || 'N/A'}\n` +
+    //   `Tipo: ${tipoProducto || 'N/A'}\n` +
+    //   `Mascota: ${datos.tipo_mascota || 'N/A'}\n`
 
-    // Agregar atributos específicos al mensaje
-    if (Object.keys(atributosEspecificos).length > 0) {
-      mensajeConfirmacion += '\nAtributos específicos:\n'
-      Object.entries(atributosEspecificos).forEach(([key, value]) => {
-        const nombreAtributo = {
-          edad: 'Edad',
-          peso: 'Peso',
-          sabor: 'Sabor',
-          tamano: 'Tamaño',
-          material: 'Material'
-        }[key] || key
-        mensajeConfirmacion += `- ${nombreAtributo}: ${value}\n`
-      })
-    }
+    // // Agregar atributos específicos al mensaje
+    // if (Object.keys(atributosEspecificos).length > 0) {
+    //   mensajeConfirmacion += '\nAtributos específicos:\n'
+    //   Object.entries(atributosEspecificos).forEach(([key, value]) => {
+    //     const nombreAtributo = {
+    //       edad: 'Edad',
+    //       peso: 'Peso',
+    //       sabor: 'Sabor',
+    //       tamano: 'Tamaño',
+    //       material: 'Material'
+    //     }[key] || key
+    //     mensajeConfirmacion += `- ${nombreAtributo}: ${value}\n`
+    //   })
+    // }
 
-    const confirmacion = confirm(mensajeConfirmacion)
+    // const confirmacion = confirm(mensajeConfirmacion)
 
-    if (!confirmacion) {
-      return // Usuario canceló
+    // if (!confirmacion) {
+    //   return // Usuario canceló
+    // }
+
+    // Creacion de modal para confirmar modificacion producto.
+    const confirmar = await modificarProductoModal()
+    if (!confirmar) {
+      return
     }
 
     const response = await fetch(API_ROUTES.actualizarProducto(id), {
@@ -174,9 +175,6 @@ async function actualizarProducto (e) {
       const errorText = await response.text()
       throw new Error(`Error al actualizar producto: ${response.status} - ${errorText}`)
     }
-
-    const result = await response.json()
-    console.log('Producto actualizado:', result)
 
     // Mostrar mensaje de éxito detallado
     alert(`¡Producto actualizado con éxito!\n\nEl producto "${datos.nombre}" ha sido actualizado correctamente.`)

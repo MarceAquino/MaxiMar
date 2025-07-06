@@ -140,4 +140,33 @@ async function crearProductoModal () {
     tipoConfirmar: 'confirmar'
   })
 }
-export { crearProductoModal, vaciarCarritoModal }
+
+/**
+ * Confirmación específica para salir.
+ * @returns {Promise<boolean>} - true si confirma salir
+ */
+async function salirModal () {
+  return await mostrarConfirmacion({
+    titulo: 'salir',
+    mensaje: '¿Estás seguro que desea salir?',
+    botonConfirmar: 'Salir',
+    botonCancelar: 'Cancelar',
+    tipoConfirmar: 'peligro'
+  })
+}
+
+/**
+ * Confirmación específica para salir.
+ * @returns {Promise<boolean>} - true si confirma salir
+ */
+async function modificarProductoModal () {
+  return await mostrarConfirmacion({
+    titulo: 'modificar producto',
+    mensaje: '¿Estás seguro que desea modificar el producto?',
+    botonConfirmar: 'Confirmar',
+    botonCancelar: 'Cancelar',
+    tipoConfirmar: 'confirmar'
+  })
+}
+
+export { salirModal, crearProductoModal, modificarProductoModal, vaciarCarritoModal }
