@@ -1,4 +1,5 @@
 import { API_ROUTES, tokenUtils } from '../config/api.js'
+import { confirmarModal } from '../utils/modales.js'
 import { requireAuth } from './auth-guard.js'
 import { reactivarFormulario, recopilarDatosAdmin } from './utils/unified-form-utils.js'
 import { validarEmail, validarNombre, validarPassword } from './utils/validation-utils.js'
@@ -89,7 +90,11 @@ function configurarEventListeners () {
  */
 async function procesarRegistro (e) {
   e.preventDefault()
-  confirm('Esta seguro que desea registrar al administrador?')
+  // Creacion de modal para confirmar modificacion producto.
+  const confirmar = await confirmarModal('Registrar admin', '¿Estás seguro que desea registrar al nuevo administrador?', 'Registrar', 'confirmar')
+  if (!confirmar) {
+    return
+  }
   try {
     const datosFormulario = {
       nombre: 'nombreAdmin',
@@ -128,7 +133,7 @@ async function procesarRegistro (e) {
       reactivarFormulario('formRegistrarAdmin')
       setTimeout(() => {
         window.location.href = '/front-end/html/admin/dashboard.html'
-      }, 3000)
+      }, 1000)
     } else {
       manejarErrorRegistro(response.status, data)
     }

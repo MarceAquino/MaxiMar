@@ -1,5 +1,5 @@
 import { API_ROUTES, tokenUtils } from '../config/api.js'
-import { crearProductoModal } from '../utils/controladorModales.js'
+import { confirmarModal } from '../utils/modales.js'
 import { requireAuth } from './auth-guard.js'
 import { configurarCamposDinamicosProducto } from './utils/unified-form-utils.js'
 
@@ -67,8 +67,6 @@ if (imageInput) {
 // Función principal para crear producto
 async function crearProducto (e) {
   e.preventDefault()
-
-  console.log('entre a crear producto')
   try {
     const files = imageInput.files
     const errores = validarImagenes(files)
@@ -108,7 +106,7 @@ async function crearProducto (e) {
     }
 
     // Creacion de modal para confirmar crear producto.
-    const confirmar = await crearProductoModal()
+    const confirmar = await confirmarModal('Crear Producto', '¿Estás seguro que desea crear el producto?', 'Crear', 'confirmar')
     if (!confirmar) {
       return
     }
@@ -120,22 +118,30 @@ async function crearProducto (e) {
       body: formData
     })
 
-    if (!response.ok) {
-      const error = await response.json()
-      throw new Error(error.error || 'Error del servidor')
-    }
+    // if (!response.ok) {
+    //   const error = await response.json()
+    //   throw new Error(error.error || 'Error del servidor')
+    // }
 
     const resultado = await response.json()
     alert(`Producto creado exitosamente! ID: ${resultado.producto.producto_id}`)
 
-    // Limpiar y redirigir
+    // Limpiar formulario
     form.reset()
     previewContainer.innerHTML = ''
     previewContainer.style.display = 'none'
-    window.location.href = '/front-end/html/admin/dashboard.html'
+
+    // Redirección con pequeño delay para asegurar que el alert se vea
+    console.log('Preparando redirección...')
+    setTimeout(() => {
+      console.log('Redirigiendo ahora...')
+      window.location.href = '/front-end/html/admin/dashboard.html'
+    }, 100)
   } catch (error) {
+    console.error('Error completo:', error)
     alert(`Error: ${error.message}`)
   }
+  return false // ← Añade esto para prevenir el envío tradicional
 }
 
 // Configurar página
@@ -151,6 +157,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   // Event listener del formulario
   if (form) {
-    form.addEventListener('submit', crearProducto)
+    form.addEventListener('submit', (e) => {
+      e.preventDefault()
+      crearProducto(e).catch(console.error)
+    })
   }
 })

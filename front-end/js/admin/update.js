@@ -1,7 +1,7 @@
 import { API_ROUTES, tokenUtils } from '../config/api.js'
+import { confirmarModal } from '../utils/modales.js'
 import { requireAuth } from './auth-guard.js'
 import { configurarCamposDinamicosProducto, llenarFormularioProducto } from './utils/unified-form-utils.js'
-import { modificarProductoModal } from '../utils/controladorModales.js'
 /**
  * Administrador de actualización de productos
  * Permite editar productos existentes
@@ -128,39 +128,8 @@ async function actualizarProducto (e) {
       throw new Error('La marca debe tener al menos 2 caracteres')
     }
 
-    // // Mensaje de confirmación con detalles del producto
-    // let mensajeConfirmacion = '¿Está seguro que desea actualizar este producto?\n\n' +
-    //   `Nombre: ${datos.nombre || 'N/A'}\n` +
-    //   `Código: ${datos.codigo || 'N/A'}\n` +
-    //   `Marca: ${datos.marca || 'N/A'}\n` +
-    //   `Precio: $${datos.precio || 'N/A'}\n` +
-    //   `Stock: ${datos.stock || 'N/A'}\n` +
-    //   `Tipo: ${tipoProducto || 'N/A'}\n` +
-    //   `Mascota: ${datos.tipo_mascota || 'N/A'}\n`
-
-    // // Agregar atributos específicos al mensaje
-    // if (Object.keys(atributosEspecificos).length > 0) {
-    //   mensajeConfirmacion += '\nAtributos específicos:\n'
-    //   Object.entries(atributosEspecificos).forEach(([key, value]) => {
-    //     const nombreAtributo = {
-    //       edad: 'Edad',
-    //       peso: 'Peso',
-    //       sabor: 'Sabor',
-    //       tamano: 'Tamaño',
-    //       material: 'Material'
-    //     }[key] || key
-    //     mensajeConfirmacion += `- ${nombreAtributo}: ${value}\n`
-    //   })
-    // }
-
-    // const confirmacion = confirm(mensajeConfirmacion)
-
-    // if (!confirmacion) {
-    //   return // Usuario canceló
-    // }
-
     // Creacion de modal para confirmar modificacion producto.
-    const confirmar = await modificarProductoModal()
+    const confirmar = await confirmarModal('Modificar producto', '¿Estás seguro que desea modificar el producto?', 'Modificar', 'confirmar')
     if (!confirmar) {
       return
     }

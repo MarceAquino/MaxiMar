@@ -5,8 +5,8 @@
  * Maneja eventos principales y exporta funciones para compatibilidad global.
  */
 
+import { confirmarModal } from '../../utils/modales.js'
 import { mostrarMensajeBienvenida } from '../utils/mensajeBienvenida.js'
-import { vaciarCarritoModal } from '../../utils/controladorModales.js'
 import {
   agregarAlCarrito,
   cambiarCantidadCarrito,
@@ -62,8 +62,8 @@ async function manejarVaciarCarrito () {
     return
   }
 
-  const confirmar = await vaciarCarritoModal()
-
+  // Creacion de modal para confirmar vaciado de carrito.
+  const confirmar = await confirmarModal('Vaciar carrito', '¿Estás seguro de que quieres vaciar todo el carrito?', 'Vaciar', 'peligro')
   if (confirmar) {
     vaciarCarrito()
     mostrarMensaje('Carrito vaciado correctamente', 'success')
