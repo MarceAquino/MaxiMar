@@ -17,8 +17,8 @@ import { API_ROUTES, tokenUtils } from '../config/api.js'
  * @private
  */
 function redirectToLogin () {
-  if (window.location.pathname !== '/front-end/html/admin/login.html') {
-    window.location.replace('/front-end/html/admin/login.html')
+  if (window.location.pathname !== '/front-end/html/admin/loginAdmin.html') {
+    window.location.replace('/front-end/html/admin/loginAdmin.html')
   }
 }
 
@@ -58,29 +58,4 @@ export const requireAuth = async () => {
     redirectToLogin()
     return false
   }
-}
-
-/**
- * Cierra la sesión del usuario administrador
- * - Maneja errores si falla el logout en backend
- * - Siempre limpia el token localmente
- */
-export const logout = async () => {
-  if (!confirm('¿Estás seguro de que quieres cerrar sesión?')) {
-    return
-  }
-
-  try {
-    if (tokenUtils.hasToken()) {
-      await fetch(API_ROUTES.auth.logout, {
-        method: 'POST',
-        headers: tokenUtils.getAuthHeaders()
-      })
-    }
-  } catch (error) {
-    // Error en logout del servidor, continuamos con logout local
-  }
-
-  tokenUtils.removeToken()
-  window.location.replace('/front-end/html/admin/login.html')
 }

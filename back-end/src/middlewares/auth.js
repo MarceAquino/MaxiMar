@@ -38,7 +38,6 @@ const authenticateToken = async (req, res, next) => {
     req.admin = admin
     next()
   } catch (error) {
-    console.error('Error en middleware de autenticación:', error)
     return res.status(401).json({
       message: 'Token inválido',
       error: 'INVALID_TOKEN'

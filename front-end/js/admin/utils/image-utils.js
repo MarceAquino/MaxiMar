@@ -14,7 +14,6 @@
  * - validation-utils.js: Funciones de validación
  */
 
-import { mostrarErrores } from './ui-utils.js'
 import { validarImagenes } from './validation-utils.js'
 
 /**
@@ -74,7 +73,7 @@ export function manejarCambioImagen (e, container, options = {}) {
     if (onValidationError) {
       onValidationError(validacion.errores)
     } else {
-      mostrarErrores(validacion.errores)
+      console.log('error validacion')
     }
     e.target.value = '' // Limpiar selección
     return
@@ -82,7 +81,7 @@ export function manejarCambioImagen (e, container, options = {}) {
 
   // Verificar límite de archivos y ajustar si es necesario
   if (files.length > maxFiles) {
-    mostrarErrores([`Máximo ${maxFiles} imágenes permitidas. Solo se procesarán las primeras ${maxFiles}.`])
+    console.log([`Máximo ${maxFiles} imágenes permitidas. Solo se procesarán las primeras ${maxFiles}.`])
 
     // Crear un nuevo FileList con solo las primeras archivos permitidos
     const dt = new DataTransfer()
@@ -320,7 +319,7 @@ export function configurarValidacionImagenes (inputId, options = {}) {
 
     if (!validacion.esValido) {
       e.target.value = '' // Limpiar selección inválida
-      mostrarErrores(validacion.errores)
+      console.log(validacion.errores)
     }
   })
 }

@@ -30,7 +30,6 @@ const crearProducto = async (req, res) => {
       try {
         datos.atributos_especificos = JSON.parse(datos.atributos_especificos)
       } catch (error) {
-        console.log('Error al parsear atributos_especificos:', error)
         return res.status(400).json({ ok: false, error: 'Los atributos específicos tienen formato inválido' })
       }
     }
@@ -40,16 +39,12 @@ const crearProducto = async (req, res) => {
     // Validar datos antes de crear
     const validacion = validarProducto(datos, 'crear')
     if (!validacion.esValido) {
-      console.log('Errores de validación:', validacion.errores)
       return res.status(400).json({ ok: false, error: 'Datos inválidos', detalles: validacion.errores })
     }
 
     const producto = await Producto.create(datos)
-    console.log('Producto creado correctamente:', producto.producto_id)
     res.json({ ok: true, mensaje: 'Producto creado', producto })
   } catch (error) {
-    console.error('Error al crear producto:', error)
-
     // Manejar error de código duplicado
     if (error.name === 'SequelizeUniqueConstraintError' && error.fields && error.fields.codigo) {
       return res.status(400).json({

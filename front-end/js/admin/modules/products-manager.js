@@ -4,7 +4,6 @@
  */
 
 import { API_ROUTES, tokenUtils } from '../../config/api.js'
-import { logout } from '../auth-guard.js'
 import { DashboardState } from './dashboard-state.js'
 
 /**
@@ -287,7 +286,9 @@ async function eliminarProducto (id, nombre) {
 
     if (!response.ok) {
       if (response.status === 401) {
-        await logout()
+        sessionStorage.clear()
+        localStorage.clear()
+        window.location.href = '/front-end/html/admin/loginAdmin.html'
         return
       }
       const errorText = await response.text()

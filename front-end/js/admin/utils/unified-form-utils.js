@@ -15,7 +15,6 @@
  */
 
 import { API_ROUTES, tokenUtils } from '../../config/api.js'
-import { logout } from '../auth-guard.js'
 
 /**
  * Configura campos dinámicos que se muestran/ocultan según tipo de producto
@@ -342,7 +341,9 @@ export async function manejarEnvioFormulario (e, options = {}) {
     const response = await fetch(url, { method, headers, body: bodyData })
 
     if (response.status === 401) {
-      await logout()
+      sessionStorage.clear()
+      localStorage.clear()
+      window.location.href = '/front-end/html/admin/loginAdmin.html'
       return
     }
 

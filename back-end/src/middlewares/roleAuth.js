@@ -28,7 +28,7 @@ const requireRole = (rolesPermitidos) => (req, res, next) => {
 
     next()
   } catch (error) {
-    console.error('Error en middleware de autorización de roles:', error)
+    console.error(error)
   }
 }
 
