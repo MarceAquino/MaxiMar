@@ -1,6 +1,4 @@
 /**
- * MÓDULO: Gestión de Productos
- *
  * Archivo principal para la página de productos del cliente.
  *
  * FUNCIONALIDADES:

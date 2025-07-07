@@ -12,6 +12,7 @@
 import { cambiarCantidadCarrito, eliminarItemCarrito } from './carrito-acciones.js'
 import { calcularTotales, obtenerCarrito, obtenerProductoPorId } from './carrito-data.js'
 import { formatearPrecio, procesarURLsProducto } from './carrito-utils.js'
+import { confirmarModal } from '../../../utils/modales.js'
 
 // === ELEMENTOS DEL DOM ===
 // Cache de elementos frecuentemente utilizados para mejor rendimiento
@@ -154,10 +155,10 @@ export function actualizarTotales () {
 }
 
 // === CONFIGURACIÓN DE EVENTOS ===
-export function configurarEventosCarrito () {
+export async function configurarEventosCarrito () {
   // Eventos para botones de cantidad y eliminar
   if (elementos.carritoItems) {
-    elementos.carritoItems.addEventListener('click', (e) => {
+    elementos.carritoItems.addEventListener('click', async (e) => {
       const btnCantidad = e.target.closest('.btn-cantidad')
       const btnEliminar = e.target.closest('.btn-eliminar')
 
@@ -167,7 +168,10 @@ export function configurarEventosCarrito () {
         cambiarCantidadCarrito(id, cambio)
       } else if (btnEliminar) {
         const id = parseInt(btnEliminar.dataset.id)
-        if (confirm('¿Estás seguro de que quieres eliminar este producto del carrito?')) {
+
+        // Creacion de modal para confirmar crear producto.
+        const confirmar = await confirmarModal('Eliminar Producto', '¿Estás seguro de que quieres eliminar este producto del carrito?', 'Eliminar', 'peligro')
+        if (confirmar) {
           eliminarItemCarrito(id)
         }
       }

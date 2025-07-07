@@ -1,11 +1,21 @@
 /**
- * Guardia de autenticación para proteger rutas del dashboard
- * Verifica tokens y maneja el logout de usuarios
+ * Archivo para manejar la autenticación y protección de rutas del dashboard de administración.
+ *
+ * FUNCIONALIDADES:
+ * - Maneja el cierre de sesión (logout)
+ * - Proporciona funciones para requerir autenticación
+ *
+ * DEPENDENCIAS:
+ * - API_ROUTES para endpoints de autenticación
+ * - tokenUtils para manejo de tokens
  */
 
 import { API_ROUTES, tokenUtils } from '../config/api.js'
 
-// Función simple para redirigir al login
+/**
+ * Redirige al usuario a la página de login
+ * @private
+ */
 function redirectToLogin () {
   if (window.location.pathname !== '/front-end/html/admin/login.html') {
     window.location.replace('/front-end/html/admin/login.html')
@@ -14,7 +24,9 @@ function redirectToLogin () {
 
 /**
  * Verifica si el usuario está autenticado y el token es válido
- * @returns {Object|boolean} Datos del admin si está autenticado, false si no
+ *
+ * @returns {Promise<Object|boolean>} Datos del administrador si está autenticado, false si no
+ * @throws {Error} Si hay problemas de conexión con el servidor
  */
 export const requireAuth = async () => {
   if (!tokenUtils.hasToken()) {
@@ -49,8 +61,9 @@ export const requireAuth = async () => {
 }
 
 /**
- * Cierra la sesión del usuario
- * Limpia el token y redirige al login
+ * Cierra la sesión del usuario administrador
+ * - Maneja errores si falla el logout en backend
+ * - Siempre limpia el token localmente
  */
 export const logout = async () => {
   if (!confirm('¿Estás seguro de que quieres cerrar sesión?')) {

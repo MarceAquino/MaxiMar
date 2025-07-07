@@ -178,9 +178,9 @@
 
 .btn-outline-secondary:hover,
 .btn-outline-primary:hover {
-  background-color: var(--primary-orange);
-  border-color: var(--primary-orange);
-  color: white;
+  background-color: var(--primary-orange-hover);
+  border-color: var(--text-dark);
+  color: var(--text-dark);
 }
 
 .btn-outline-primary {
@@ -192,6 +192,20 @@
   background-color: var(--primary-orange);
   border-color: var(--primary-orange);
   color: white;
+}
+
+.botonHamburguesa{
+  z-index: 1045;
+}
+
+.crearModificar{
+  border-color: var(--text-dark);
+  background-color: var(--primary-orange);
+  color: var(--text-dark);
+}
+.crearModificar:hover {
+  background-color: var(--primary-orange-hover);
+  border-color: var(--text-dark);
 }
 
 /* ======================
@@ -309,5 +323,17 @@
 /* Ajuste para que el logo flotante no tape el botón hamburguesa */
 .floating-logo {
   z-index: 1030;
+  margin-left: 60px
+}
+/* ===== LOGO FLOTANTE ===== */
+.floating-logo-crear {
+  position: absolute;
+  top: 5px;
+  left: 10px;
+  height: 65px;
+  z-index: 1050;
 }
 
+.card{
+  background-color: var(--primary-orange-light)
+}

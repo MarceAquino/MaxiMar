@@ -1,6 +1,3 @@
-// ======================================================================
-// Desactivar Producto
-// ======================================================================
 // Desactiva un producto (cambia el campo activo a false)
 
 const { Producto } = require('../../models')

@@ -13,6 +13,7 @@
 import { API_ROUTES } from '../../../config/api.js'
 import { guardarCarrito, obtenerCarrito, setCarrito } from './carrito-data.js'
 import { mostrarMensaje } from './carrito-utils.js'
+import { confirmarModal } from '../../../utils/modales.js'
 
 // === FINALIZAR COMPRA ===
 /**
@@ -33,8 +34,9 @@ export async function finalizarCompra () {
   const cliente = nombreUsuario || 'Cliente Anónimo'
 
   // Mostrar confirmación al usuario
-  if (!confirmarCompra(carrito, cliente)) {
-    return // Usuario canceló la compra
+  const confirmacion = await confirmarCompra(carrito, cliente)
+  if (!confirmacion) {
+    return
   }
 
   try {
@@ -70,7 +72,7 @@ export async function finalizarCompra () {
  * @param {string} cliente - Nombre del cliente
  * @returns {boolean} true si el usuario confirma, false si cancela
  */
-function confirmarCompra (carrito, cliente) {
+async function confirmarCompra (carrito, cliente) {
   // Calcular totales para mostrar en confirmación
   const cantidadItems = carrito.reduce((total, item) => total + item.cantidad, 0)
   const totalCompra = carrito.reduce((total, item) => total + (item.precio * item.cantidad), 0)
@@ -84,7 +86,9 @@ Resumen:
 
 Esta acción no se puede deshacer.`
 
-  return confirm(confirmMessage)
+  // Creacion de modal para confirmar crear producto.
+  const confirmar = await confirmarModal('Confirmar Compra', confirmMessage, 'Comprar', 'confirmar')
+  return confirmar
 }
 
 /**

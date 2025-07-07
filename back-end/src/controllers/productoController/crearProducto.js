@@ -1,7 +1,5 @@
-// ======================================================================
-// Crear Producto
-// ======================================================================
-// Crea un nuevo producto en la base de datos y guarda los nombres de las imágenes subidas.
+// Crea un nuevo producto en la base de datos y guarda los nombres de la ruta de las imágenes subidas.
+
 const validarProducto = require('../../utils/validarProducto.js')
 const { Producto } = require('../../models')
 

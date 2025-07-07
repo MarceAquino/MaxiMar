@@ -1,3 +1,19 @@
+/**
+ * Maneja la creación de nuevos productos en el panel de administración.
+ *
+ * FUNCIONALIDADES:
+ * - Preview de imágenes antes de subir
+ * - Validación de imágenes (tipo, tamaño, cantidad)
+ * - Creación de productos con atributos específicos
+ * - Confirmación mediante modal
+ * - Redirección post-creación
+ *
+ * VARIABLES GLOBALES:
+ * - form: Formulario de creación
+ * - imageInput: Input para subir imágenes
+ * - previewContainer: Contenedor para previsualización
+ */
+
 import { API_ROUTES, tokenUtils } from '../config/api.js'
 import { confirmarModal } from '../utils/modales.js'
 import { requireAuth } from './auth-guard.js'
@@ -7,7 +23,10 @@ const form = document.getElementById('formCrearProducto')
 const imageInput = document.getElementById('imagenesCrear')
 const previewContainer = document.getElementById('previewImagenes')
 
-// Mostrar preview de imágenes
+/**
+ * Muestra preview de las imágenes seleccionadas
+ * @param {FileList} files - Archivos de imagen seleccionados
+ */
 function mostrarPreview (files) {
   previewContainer.innerHTML = ''
   if (!files.length) {
@@ -32,7 +51,11 @@ function mostrarPreview (files) {
   })
 }
 
-// Validar imágenes básicas
+/**
+ * Valida las imágenes seleccionadas
+ * @param {FileList} files - Archivos a validar
+ * @returns {Array} Lista de errores encontrados
+ */
 function validarImagenes (files) {
   if (!files.length) return ['Selecciona al menos una imagen']
   if (files.length > 5) return ['Máximo 5 imágenes']
@@ -49,7 +72,7 @@ function validarImagenes (files) {
   return errores
 }
 
-// Event listener para preview
+// Evento para mostrar preview al seleccionar imágenes
 if (imageInput) {
   imageInput.addEventListener('change', (e) => {
     const files = e.target.files
@@ -64,7 +87,10 @@ if (imageInput) {
   })
 }
 
-// Función principal para crear producto
+/**
+ * Procesa el formulario y crea un nuevo producto
+ * @param {Event} e - Evento de submit del formulario
+ */
 async function crearProducto (e) {
   e.preventDefault()
   try {
@@ -105,7 +131,7 @@ async function crearProducto (e) {
       formData.set('atributos_especificos', JSON.stringify(atributos))
     }
 
-    // Creacion de modal para confirmar crear producto.
+    // Confirmar creacion de producto con modal.
     const confirmar = await confirmarModal('Crear Producto', '¿Estás seguro que desea crear el producto?', 'Crear', 'confirmar')
     if (!confirmar) {
       return
@@ -118,10 +144,10 @@ async function crearProducto (e) {
       body: formData
     })
 
-    // if (!response.ok) {
-    //   const error = await response.json()
-    //   throw new Error(error.error || 'Error del servidor')
-    // }
+    if (!response.ok) {
+      const error = await response.json()
+      throw new Error(error.error || 'Error del servidor')
+    }
 
     const resultado = await response.json()
     alert(`Producto creado exitosamente! ID: ${resultado.producto.producto_id}`)
@@ -136,7 +162,7 @@ async function crearProducto (e) {
     setTimeout(() => {
       console.log('Redirigiendo ahora...')
       window.location.href = '/front-end/html/admin/dashboard.html'
-    }, 100)
+    })
   } catch (error) {
     console.error('Error completo:', error)
     alert(`Error: ${error.message}`)

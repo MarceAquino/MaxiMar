@@ -1,6 +1,4 @@
 /**
- * MÓDULO: Sistema de Filtros y Tabs
- *
  * Maneja el filtrado de productos por mascota y categoría en la página de productos.
  *
  * FUNCIONALIDADES:

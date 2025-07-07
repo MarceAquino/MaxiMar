@@ -1,6 +1,18 @@
 /**
  * Dashboard principal del sistema de administración
- * Inicializa y coordina todos los módulos del dashboard
+ *
+ * FUNCIONALIDADES:
+ * - Autenticación y verificación de permisos
+ * - Configuración inicial de la interfaz según rol
+ * - Carga y gestión de productos
+ * - Manejo centralizado del estado
+ * - Gestión de errores de inicialización
+ *
+ * DEPENDENCIAS:
+ * - auth-guard.js: Para verificación de autenticación
+ * - dashboard-state.js: Manejo del estado global
+ * - interface-manager.js: Configuración de la interfaz
+ * - products-manager.js: Gestión de productos
  */
 
 import { requireAuth } from '../admin/auth-guard.js'
@@ -10,7 +22,8 @@ import { configurarEventListeners, configurarInterfazSegunRol } from './modules/
 import { cargarProductos } from './modules/products-manager.js'
 
 /**
- * Muestra error de inicialización en la interfaz
+ * Muestra mensaje de error cuando falla la inicialización del dashboard
+ * @param {Error} error - Objeto de error capturado
  */
 function mostrarErrorInicializacion (error) {
   const contenedor = document.getElementById('contenedorProductos') || document.body

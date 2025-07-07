@@ -47,20 +47,3 @@
     justify-content: center;
 }
 
-.btn-outline-secondary , .d-grid{
-    color: var(--text-dark);
-        font-size: 1rem;
-        text-align: center;
-        border: 2px solid var(--text-dark);
-        border-radius: 8px;
-        padding: 4px 8px;
-        display: inline-block;
-}
-
-.btn-outline-secondary:hover ,.d-grid:hover {
-    background: var(--primary-orange-hover);
-    color: var(--text-dark);
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-medium);
-    border-color: var(--text-dark);
-}

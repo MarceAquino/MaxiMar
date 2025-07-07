@@ -3,10 +3,6 @@
  * Exporta todas las funciones de gestión de productos de forma modular.
  */
 
-// ======================================================================
-// Índice de Controlador de Producto
-// ======================================================================
-
 const crearProducto = require('./crearProducto')
 const actualizarProducto = require('./actualizarProducto')
 const borrarProducto = require('./borrarProducto')

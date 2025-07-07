@@ -1,7 +1,5 @@
-// ======================================================================
-// Actualizar Producto
-// ======================================================================
 // Actualiza los datos de un producto y, si hay imágenes, actualiza los nombres de archivo.
+
 const validarProducto = require('../../utils/validarProducto.js')
 const { Producto } = require('../../models')
 

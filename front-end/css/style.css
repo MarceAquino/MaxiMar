@@ -36,7 +36,8 @@ body {
     height: 5rem;
     border-bottom: 2px solid var(--primary-orange-hover);
 }
-[data-bs-theme="dark"] body{
+
+[data-bs-theme="dark"] body {
     background: var(--primary-orange);
 }
 
@@ -71,7 +72,8 @@ body {
     align-items: center;
     cursor: pointer;
 }
-#themeIcon{
+
+#themeIcon {
     color: var(--text-dark);
 }
 
@@ -80,6 +82,7 @@ body {
     border-color: var(--text-dark);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
+
 /* ===== FOOTER MINIMALISTA ===== */
 footer {
     background: var(--primary-orange);
@@ -90,6 +93,7 @@ footer {
 [data-bs-theme="dark"] footer {
     background: var(--primary-orange-light);
 }
+
 .floating-exit-btn {
     position: fixed;
     bottom: 20px;
@@ -117,7 +121,8 @@ footer {
 
 .floating-exit-btn:hover {
     transform: scale(1.05);
-    cursor: pointer; }
+    cursor: pointer;
+}
 
 #welcomeMessage {
     color: var(--primary-orang);
@@ -126,4 +131,25 @@ footer {
     border: 2px solid var(--text-dark);
     border-radius: 8px;
     padding: 4px 8px;
-    display: inline-block;     }
+    display: inline-block;
+}
+
+.btn-volver,
+.d-grid {
+    color: var(--text-dark);
+    font-size: 1rem;
+    text-align: center;
+    border: 2px solid var(--text-dark);
+    border-radius: 8px;
+    padding: 4px 8px;
+    display: inline-block;
+}
+
+.btn-volver:hover,
+.d-grid:hover {
+    background: var(--primary-orange-hover);
+    color: var(--text-dark);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-medium);
+    border-color: var(--text-dark);
+}
