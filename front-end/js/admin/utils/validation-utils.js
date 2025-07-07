@@ -1,15 +1,24 @@
-// ======================================================================
-// UTILIDADES DE VALIDACIÓN COMPARTIDAS
-// ======================================================================
+/**
+ * Módulo de utilidades de validación
+ *
+ * FUNCIONALIDADES:
+ * - Validación de imágenes (tipo, tamaño, cantidad)
+ * - Validación de emails (formato)
+ * - Validación de contraseñas y confirmación de contraseña
+ * - Validación de nombre
+ */
 
-/* Helper interno para homogeneizar el resultado */
+/**
+ * Construye objeto de resultado estandarizado para validaciones
+ * @param {boolean} isValid - Indica si la validación fue exitosa
+ * @param {Array} errores - Lista de mensajes de error
+ * @returns {Object} Objeto con formato {isValid, errors}
+ */
 function buildResult (isValid, errores) {
   return { isValid, errors: errores }
 }
 
-// ------------------------------------------------------------------
-// VALIDAR IMÁGENES
-// ------------------------------------------------------------------
+// Valida archivos de imagen según parámetros configurables
 export function validarImagenes (files, options = {}) {
   const {
     maxFiles = 5,
@@ -48,9 +57,7 @@ export function validarImagenes (files, options = {}) {
   return buildResult(errores.length === 0, errores)
 }
 
-// ------------------------------------------------------------------
-// VALIDAR EMAIL
-// ------------------------------------------------------------------
+// Valida que se ingrese un email valido.
 export function validarEmail (email, { required = true, fieldName = 'email' } = {}) {
   const errores = []
   if (required && (!email || email.trim() === '')) {
@@ -68,9 +75,7 @@ export function validarEmail (email, { required = true, fieldName = 'email' } = 
   return buildResult(errores.length === 0, errores)
 }
 
-// ------------------------------------------------------------------
-// VALIDAR PASSWORD
-// ------------------------------------------------------------------
+// Valida que se ingrese un password valido
 export function validarPassword (password, { required = true, minLength = 6, maxLength = 100, fieldName = 'contraseña' } = {}) {
   const errores = []
 
@@ -88,9 +93,7 @@ export function validarPassword (password, { required = true, minLength = 6, max
   return buildResult(errores.length === 0, errores)
 }
 
-// ------------------------------------------------------------------
-// VALIDAR CONFIRMACIÓN DE PASSWORD
-// ------------------------------------------------------------------
+// Valida que el password y confirmacion de password esten ingresados y sean iguales
 export function validarConfirmacionPassword (password, confirmPassword) {
   const errores = []
 
@@ -103,16 +106,12 @@ export function validarConfirmacionPassword (password, confirmPassword) {
   return buildResult(errores.length === 0, errores)
 }
 
-// ------------------------------------------------------------------
-// VALIDAR NOMBRE (wrapper sobre validarCampoTexto)
-// ------------------------------------------------------------------
+// Valida el nombre ingresado al registrar un admin
 export function validarNombre (nombre, { required = true, minLength = 2, maxLength = 50, fieldName = 'nombre' } = {}) {
   return validarCampoTexto(nombre, fieldName, { requerido: required, minLength, maxLength })
 }
 
-// ------------------------------------------------------------------
-// VALIDAR CAMPO TEXTO GENÉRICO
-// ------------------------------------------------------------------
+// Valida el campo de texto ingresado
 export function validarCampoTexto (valor, nombre, { requerido = true, minLength = 0, maxLength = Infinity } = {}) {
   const errores = []
 
@@ -135,9 +134,7 @@ export function validarCampoTexto (valor, nombre, { requerido = true, minLength 
   return buildResult(errores.length === 0, errores)
 }
 
-// ------------------------------------------------------------------
-// VALIDAR CAMPO NUMÉRICO GENÉRICO
-// ------------------------------------------------------------------
+// Valida el ingreso de los campos numericos en formularios.
 export function validarCampoNumerico (valor, nombre, { requerido = true, min = -Infinity, max = Infinity, entero = false } = {}) {
   const errores = []
 

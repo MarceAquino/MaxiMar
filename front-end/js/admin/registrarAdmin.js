@@ -1,3 +1,23 @@
+/**
+ * Registro para nuevos administradores
+ *
+ * FUNCIONALIDADES:
+ * - Registro de nuevos administradores (solo para superadmin)
+ * - Validación de datos del formulario
+ * - Confirmación mediante modal
+ * - Comunicación con API para guardado de registro
+ * - Manejo de errores y feedback
+ * - Redirección post-registro
+ *
+ * DEPENDENCIAS:
+ * - API_ROUTES: Endpoints de la API
+ * - tokenUtils: Manejo de tokens JWT
+ * - modales.js: Confirmación visual
+ * - auth-guard.js: Protección de ruta
+ * - unified-form-utils.js: Utilidades para formularios
+ * - validation-utils.js: Funciones de validación
+ */
+
 import { API_ROUTES, tokenUtils } from '../config/api.js'
 import { confirmarModal } from '../utils/modales.js'
 import { requireAuth } from './auth-guard.js'

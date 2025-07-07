@@ -1,6 +1,27 @@
+/**
+ * Utilidades para formularios de administracion
+ *
+ * FUNCIONALIDADES:
+ * - Configuración dinámica de campos según tipo de producto
+ * - Recopilación y validación de datos de formularios
+ * - Llenado automático de formularios
+ * - Manejo de envío de formularios (creación/actualización)
+ * - Manejo de atributos específicos por tipo de producto
+ *
+ * DEPENDENCIAS:
+ * - API_ROUTES: Configuración de endpoints API
+ * - tokenUtils: Manejo de tokens de autenticación
+ * - auth-guard.js: Funciones de autenticación
+ */
+
 import { API_ROUTES, tokenUtils } from '../../config/api.js'
 import { logout } from '../auth-guard.js'
 
+/**
+ * Configura campos dinámicos que se muestran/ocultan según tipo de producto
+ * @param {string} selectTipoId - ID del select que controla los campos
+ * @param {Object} contenedores - Mapeo de tipos a IDs de contenedores
+ */
 export function configurarCamposDinamicosProducto (selectTipoId, contenedores) {
   const selectTipo = document.getElementById(selectTipoId)
 
@@ -28,6 +49,11 @@ export function configurarCamposDinamicosProducto (selectTipoId, contenedores) {
   actualizarCampos()
 }
 
+/**
+ * Recopila datos del formulario de administrador
+ * @returns {Object} Datos del formulario (nombre, email, contraseñas)
+ * @throws {Error} Si faltan campos requeridos
+ */
 export function recopilarDatosAdmin () {
   // IDs fijos de los inputs
   const nombreInput = document.getElementById('nombreAdmin')
@@ -48,6 +74,12 @@ export function recopilarDatosAdmin () {
   }
 }
 
+/**
+ * Recopila y estructura datos de producto desde un formulario
+ * @param {string} formId - ID del formulario
+ * @returns {Object} Datos del producto con atributos específicos
+ * @throws {Error} Si el formulario no existe
+ */
 export function recopilarDatosProducto (formId) {
   const form = document.getElementById(formId)
   if (!form) throw new Error(`Formulario '${formId}' no encontrado`)
@@ -88,6 +120,11 @@ export function recopilarDatosProducto (formId) {
   return datos
 }
 
+/**
+ * Valida los datos básicos de un producto
+ * @param {Object} datos - Datos del producto a validar
+ * @returns {Array} Lista de errores encontrados
+ */
 export function validarDatosProducto (datos) {
   const errores = []
 
@@ -123,6 +160,11 @@ export function validarDatosProducto (datos) {
   return errores
 }
 
+/**
+ * Llena un formulario con los datos de un producto existente
+ * @param {string} formId - ID del formulario
+ * @param {Object} producto - Datos del producto
+ */
 export function llenarFormularioProducto (formId, producto) {
   const form = document.getElementById(formId)
   if (!form) {
@@ -214,9 +256,7 @@ export function llenarFormularioProducto (formId, producto) {
   }
 }
 
-// ======================================================================
-// ENVÍO DE FORMULARIO PRINCIPAL
-// ======================================================================
+// Maneja el envío del formulario de productos (creación/actualización)
 export async function manejarEnvioFormulario (e, options = {}) {
   e.preventDefault()
 
@@ -348,9 +388,7 @@ export async function manejarEnvioFormulario (e, options = {}) {
   }
 }
 
-// ======================================================================
-// FUNCIÓN DE REACTIVACIÓN
-// ======================================================================
+// Reactiva un formulario después de envío
 export function reactivarFormulario () {
   const submitBtn = document.querySelector('button[type="submit"]')
   if (submitBtn) {

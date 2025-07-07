@@ -1,4 +1,4 @@
-// Función simple para mostrar errores
+// Función para mostrar errores
 export function mostrarErrores (errores) {
   if (!errores || errores.length === 0) {
     return

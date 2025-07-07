@@ -1,8 +1,18 @@
-// ======================================================================
-// UTILIDADES DE MANEJO DE IMÁGENES COMPARTIDAS
-// ======================================================================
-// Este módulo contiene funciones para el manejo de imágenes (preview, validación, etc.)
-// reutilizables en todos los formularios de administración
+/**
+ * Módulo de utilidades para manejo de imágenes
+ *
+ * FUNCIONALIDADES:
+ * - Preview de imágenes seleccionadas
+ * - Validación de archivos (tipo, tamaño, cantidad)
+ * - Visualización de imágenes existentes
+ * - Eliminación de imágenes del preview
+ * - Configuración de validación en tiempo real
+ * - Manejo de eventos para inputs de archivos
+ *
+ * DEPENDENCIAS:
+ * - ui-utils.js: Mostrar mensajes de error
+ * - validation-utils.js: Funciones de validación
+ */
 
 import { mostrarErrores } from './ui-utils.js'
 import { validarImagenes } from './validation-utils.js'

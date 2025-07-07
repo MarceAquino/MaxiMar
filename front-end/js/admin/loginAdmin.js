@@ -1,19 +1,25 @@
-import { API_ROUTES, tokenUtils } from '../config/api.js'
-
-/**
+/*
  * Administrador de login para el panel de administración
- * Maneja la autenticación de administradores y la redirección al dashboard
- * @module LoginAdmin
+ *
+ * FUNCIONALIDADES:
+ * - Autenticación de administradores
+ * - Toggle de visibilidad de contraseña
+ * - Manejo de mensajes al usuario
+ * - Redirección al dashboard
+ *
+ * DEPENDENCIAS:
+ * - API_ROUTES: Configuración de endpoints
+ * - tokenUtils: Manejo de tokens JWT
  */
+
+import { API_ROUTES, tokenUtils } from '../config/api.js'
 
 document.addEventListener('DOMContentLoaded', () => {
   // Elementos del DOM
   const loginForm = document.getElementById('loginForm')
   const alertContainer = document.getElementById('alertContainer')
 
-  /**
-   * Configura el toggle para mostrar/ocultar contraseña
-   */
+  /* Configura el toggle para mostrar/ocultar contraseña */
   const setupPasswordToggle = () => {
     const toggleBtn = document.querySelector('.password-toggle')
     const passwordInput = document.getElementById('claveAdmin')

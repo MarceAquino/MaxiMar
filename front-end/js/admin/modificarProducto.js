@@ -1,7 +1,27 @@
+/**
+ * Administrador de actualización de productos
+ *
+ * FUNCIONALIDADES:
+ * - Carga datos de producto existente
+ * - Edición de productos con validación
+ * - Manejo de atributos específicos por tipo
+ * - Confirmación mediante modal
+ * - Actualización en base de datos
+ * - Redirección dashboard post-actualización
+ *
+ * DEPENDENCIAS:
+ * - API_ROUTES: Endpoints de la API
+ * - tokenUtils: Manejo de tokens
+ * - modales.js: Confirmación mediante modal
+ * - auth-guard.js: Protección de ruta
+ * - unified-form-utils.js: Utilidades para formularios
+ */
+
 import { API_ROUTES, tokenUtils } from '../config/api.js'
 import { confirmarModal } from '../utils/modales.js'
 import { requireAuth } from './auth-guard.js'
 import { configurarCamposDinamicosProducto, llenarFormularioProducto } from './utils/unified-form-utils.js'
+
 /**
  * Administrador de actualización de productos
  * Permite editar productos existentes

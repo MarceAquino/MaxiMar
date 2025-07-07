@@ -438,39 +438,6 @@ JWT_SECRET=clave_super_segura_de_produccion
 3. Gestiona estados de admins, activa o desactiva
 4. Revisa reportes de ventas completos
 5. Administra productos con permisos totales, creacion, modificacion y eliminacion
----
-
-## 🐛 Solución de Problemas Comunes
-
-### ❌ **Error de Conexión a Base de Datos**
-```bash
-# Verificar que MySQL esté corriendo
-sudo systemctl status mysql
-
-# Verificar credenciales en .env
-DB_USER=usuario_correcto
-DB_PASSWORD=contraseña_correcta
-```
-
-### ❌ **Problemas con JWT**
-```bash
-# Verificar que JWT_SECRET esté configurado
-JWT_SECRET=clave_secreta_de_al_menos_32_caracteres
-```
-
-### ❌ **Imágenes no se Cargan**
-```bash
-# Verificar permisos de carpeta uploads
-chmod 755 back-end/uploads/
-```
-
-### ❌ **CORS Errors**
-```javascript
-// En server.js, verificar configuración CORS
-app.use(cors({
-  origin: 'http://localhost:8080',
-  credentials: true
-}));
 
 ---
 

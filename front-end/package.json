@@ -10,7 +10,6 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "live-server": "^1.2.2",
     "standard": "^17.1.2"
   },
   "eslintConfig": {
@@ -19,6 +18,5 @@
       "browser": true,
       "es2021": true
     }
-  },
-  "description": ""
+  }
 }
