@@ -6,8 +6,6 @@
 const registrarAdmin = require('./registrarAdmin')
 const loginAdmin = require('./loginAdmin')
 const verificarToken = require('./verificarToken')
-const verificarEmail = require('./verificarEmail')
-const logoutAdmin = require('./logoutAdmin')
 const listarAdmins = require('./listarAdmins')
 const toggleAdminStatus = require('./toggleAdminStatus')
 
@@ -15,8 +13,6 @@ module.exports = {
   registrarAdmin,
   loginAdmin,
   verificarToken,
-  verificarEmail,
-  logoutAdmin,
   listarAdmins,
   toggleAdminStatus
 }

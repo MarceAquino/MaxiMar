@@ -11,6 +11,7 @@
 .carousel-control-prev {
     left: -1.1rem;
 }
+
 .carousel-control-next {
     right: -1.1rem;
 }
@@ -22,16 +23,20 @@
 }
 
 @media (max-width: 768px) {
+
     .carousel-control-prev-icon,
     .carousel-control-next-icon {
-            width: 1.5rem;
-            height: 1.5rem;
-        }
+        width: 1.5rem;
+        height: 1.5rem;
+    }
+
     .carousel-control-prev {
         left: -0.8rem;
-        }
+    }
+
     .carousel-control-next {
-        right: -0.8rem;       }
+        right: -0.8rem;
+    }
 }
 
 /* ===== CARD DE LOGIN MODERNA ===== */
@@ -62,17 +67,18 @@
     border-color: var(--border-light);
 }
 
-.btn-orange{
+.btn-orange {
     background: var(--primary-orange);
-    border: 2px solid var(--border-light);
+    border-color: var(--text-dark);
     color: var(--text-dark);
     padding: 10px 20px;
     border-radius: 50px;
     font-weight: bold;
 }
+
 .btn-orange:hover {
     background: var(--primary-orange-hover);
-    border-color: var(--primary-orange-hover);
+    border-color: var(--text-dark);
     color: var(--text-dark);
     transform: translateY(-2px);
     box-shadow: var(--shadow-medium);
@@ -87,7 +93,7 @@
     border: 2px solid var(--border-light);
     font-weight: bold;
     width: auto;
-    margin-top:1rem;
+    margin-top: 1rem;
     font-size: 0.8rem;
     border-radius: 0.6rem;
     transition: transform 0.5s ease, opacity 0.5s ease;
@@ -99,6 +105,7 @@
     transform: scale(1) rotate(0deg);
     visibility: visible;
 }
+
 #secretButton:hover {
     background: var(--primary-orange-hover);
     transform: translateY(-1.5px);
@@ -106,4 +113,5 @@
 
 
 .invalid-feedback {
-    display: block}
+    display: block
+}

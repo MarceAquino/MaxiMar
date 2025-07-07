@@ -134,8 +134,7 @@ footer {
     display: inline-block;
 }
 
-.btn-volver,
-.d-grid {
+.btn-volver{
     color: var(--text-dark);
     font-size: 1rem;
     text-align: center;
@@ -145,8 +144,7 @@ footer {
     display: inline-block;
 }
 
-.btn-volver:hover,
-.d-grid:hover {
+.btn-volver:hover{
     background: var(--primary-orange-hover);
     color: var(--text-dark);
     transform: translateY(-2px);

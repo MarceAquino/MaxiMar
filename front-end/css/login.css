@@ -1,4 +1,4 @@
-.login-card{
+.login-card {
     background: var(--card-bg);
     border: 2.5px solid var(--border-light);
     border-radius: 20px;
@@ -7,7 +7,7 @@
     transition: all 0.3s ease;
 }
 
-.btn{
+.btn {
     border: 2px solid var(--text-dark);
     background: var(--primary-orange);
     border-radius: 50px;
@@ -16,14 +16,16 @@
 }
 
 .btn:hover {
-    transform:scale(1.05);
+    transform: scale(1.05);
     box-shadow: var(--shadow-medium);
     border-color: var(--text-dark);
     background: var(--primary-orange-hover);
 }
+
 .login-card {
     color: var(--text-dark);
 }
+
 .form-control {
     background: var(--card-bg);
     color: var(--text-dark);
@@ -42,19 +44,37 @@
     color: var(--text-dark);
     border-color: var(--border-light);
 }
-#loginBtn{
-    background: var(--card-bg);
+
+#loginBtn {
+    background: var(--primary-orange);
+    border-color: var(--text-dark);
+    color: var(--text-dark);
+    padding: 10px 20px;
+    border-radius: 50px;
+    font-weight: bold;
 }
+
+#loginBtn:hover {
+    background: var(--primary-orange-hover);
+    border-color: var(--text-dark);
+    color: var(--text-dark);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-medium);
+}
+
 .fa-home {
     color: var(--text-dark);
     font-size: 20px;
 }
+
 .btn-warning {
-   color: var(--text-dark);
+    color: var(--text-dark);
 }
+
 .btn-warning:hover {
     color: var(--text-dark);
 }
+
 .text-decoration-none {
     color: black;
 }

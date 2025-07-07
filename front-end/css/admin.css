@@ -194,15 +194,16 @@
   color: white;
 }
 
-.botonHamburguesa{
+.botonHamburguesa {
   z-index: 1045;
 }
 
-.crearModificar{
+.crearModificar {
   border-color: var(--text-dark);
   background-color: var(--primary-orange);
   color: var(--text-dark);
 }
+
 .crearModificar:hover {
   background-color: var(--primary-orange-hover);
   border-color: var(--text-dark);
@@ -316,7 +317,7 @@
   margin-bottom: 0 !important;
 }
 
-.row.g-4 > [class^="col-"]:last-child {
+.row.g-4>[class^="col-"]:last-child {
   margin-bottom: 2rem;
 }
 
@@ -325,6 +326,7 @@
   z-index: 1030;
   margin-left: 60px
 }
+
 /* ===== LOGO FLOTANTE ===== */
 .floating-logo-crear {
   position: absolute;
@@ -334,6 +336,23 @@
   z-index: 1050;
 }
 
-.card{
+.card {
   background-color: var(--primary-orange-light)
+}
+
+.btn-registrar {
+  background: var(--primary-orange);
+  border-color: var(--text-dark);
+  color: var(--text-dark);
+  padding: 10px 20px;
+  border-radius: 50px;
+  font-weight: bold;
+}
+
+.btn-registrar:hover {
+  background: var(--primary-orange-hover);
+  border-color: var(--text-dark);
+  color: var(--text-dark);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-medium);
 }

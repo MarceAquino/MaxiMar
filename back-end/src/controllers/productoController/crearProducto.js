@@ -30,7 +30,7 @@ const crearProducto = async (req, res) => {
       try {
         datos.atributos_especificos = JSON.parse(datos.atributos_especificos)
       } catch (error) {
-        console.log('❌ Error al parsear atributos_especificos:', error)
+        console.log('Error al parsear atributos_especificos:', error)
         return res.status(400).json({ ok: false, error: 'Los atributos específicos tienen formato inválido' })
       }
     }
@@ -40,7 +40,7 @@ const crearProducto = async (req, res) => {
     // Validar datos antes de crear
     const validacion = validarProducto(datos, 'crear')
     if (!validacion.esValido) {
-      console.log('❌ Errores de validación:', validacion.errores)
+      console.log('Errores de validación:', validacion.errores)
       return res.status(400).json({ ok: false, error: 'Datos inválidos', detalles: validacion.errores })
     }
 
