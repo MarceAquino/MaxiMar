@@ -141,12 +141,12 @@ function configurarNavegacionSidebar () {
 export async function cambiarSeccion (nuevaSeccion) {
   // Verificar si es una redirección a otra página
   if (nuevaSeccion === 'crear-producto') {
-    window.location.href = '/front-end/html/admin/create.html'
+    window.location.href = '/front-end/html/admin/crearProducto.html'
     return
   }
 
   if (nuevaSeccion === 'registrar-admin') {
-    window.location.href = '/front-end/html/admin/register.html'
+    window.location.href = '/front-end/html/admin/registrarAdmin.html'
     return
   }
 

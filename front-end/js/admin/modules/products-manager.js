@@ -192,7 +192,7 @@ function agregarEventListenersProducto (div, producto) {
 
   if (btnModificar) {
     btnModificar.addEventListener('click', () => {
-      window.location.href = `/front-end/html/admin/update.html?id=${producto.producto_id}`
+      window.location.href = `/front-end/html/admin/modificarProducto.html?id=${producto.producto_id}`
     })
   }
 

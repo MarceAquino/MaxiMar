@@ -12,14 +12,14 @@ import {
   cambiarCantidadCarrito,
   eliminarItemCarrito,
   vaciarCarrito
-} from './modules/carrito-actions.js'
+} from './modules/carrito-acciones.js'
 import { finalizarCompra } from './modules/carrito-checkout.js'
 import { cargarCarrito, cargarProductos } from './modules/carrito-data.js'
 import {
   actualizarContadorCarrito,
   configurarEventosCarrito,
   renderCarrito
-} from './modules/carrito-ui.js'
+} from './modules/carrito-render.js'
 import { mostrarMensaje, obtenerPaginaActual } from './modules/carrito-utils.js'
 
 /**

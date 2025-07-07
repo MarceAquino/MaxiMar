@@ -56,7 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
          * - Si URL contiene '/admin/' → Login de administrador
          * - En cualquier otro caso → Página principal
          */
-      const destino = esAdmin ? '/front-end/html/admin/login.html' : '/front-end/index.html'
+      const destino = esAdmin ? '/front-end/html/admin/loginAdmin.html' : '/front-end/index.html'
       window.location.href = destino
     })
   }

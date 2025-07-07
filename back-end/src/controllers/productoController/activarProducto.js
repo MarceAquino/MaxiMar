@@ -8,7 +8,6 @@ const { Producto } = require('../../models')
  * Activa un producto (lo vuelve visible y vendible).
  * Respuesta: { ok, mensaje }
  */
-
 // Activa un producto (el stock ya fue validado por el middleware)
 const activarProducto = async (req, res) => {
   try {

@@ -15,7 +15,7 @@ import {
   setCarrito,
   verificarStock
 } from './carrito-data.js'
-import { actualizarContadorCarrito, renderCarrito } from './carrito-ui.js'
+import { actualizarContadorCarrito, renderCarrito } from './carrito-render.js'
 import { mostrarMensaje, obtenerPaginaActual } from './carrito-utils.js'
 
 /**

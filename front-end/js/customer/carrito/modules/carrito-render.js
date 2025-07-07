@@ -9,7 +9,7 @@
  */
 
 // Interfaz y renderizado del carrito
-import { cambiarCantidadCarrito, eliminarItemCarrito } from './carrito-actions.js'
+import { cambiarCantidadCarrito, eliminarItemCarrito } from './carrito-acciones.js'
 import { calcularTotales, obtenerCarrito, obtenerProductoPorId } from './carrito-data.js'
 import { formatearPrecio, procesarURLsProducto } from './carrito-utils.js'
 
