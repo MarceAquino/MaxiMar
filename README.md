@@ -26,6 +26,7 @@ MaxiMar Pet Store es un sistema completo de e-commerce diseñado específicament
 ## 🏗️ Arquitectura del Sistema
 
 ### Frontend
+
 - **HTML5, CSS3, JavaScript (ES6+)**
 - **Bootstrap 5** para diseño responsive
 - **Font Awesome** para iconografía
@@ -33,6 +34,7 @@ MaxiMar Pet Store es un sistema completo de e-commerce diseñado específicament
 - **Local/Session Storage** para persistencia local
 
 ### Backend
+
 - **Node.js** con **Express.js**
 - **MySQL** como base de datos
 - **Sequelize ORM** para manejo de datos
@@ -48,6 +50,7 @@ MaxiMar Pet Store es un sistema completo de e-commerce diseñado específicament
 ### Entidades Principales
 
 #### 🗄️ **Administradores (Admin)**
+
 ```sql
 - admin_id (PK, AUTO_INCREMENT)
 - email (UNIQUE, NOT NULL)
@@ -58,6 +61,7 @@ MaxiMar Pet Store es un sistema completo de e-commerce diseñado específicament
 ```
 
 #### 📦 **Productos (Producto)**
+
 ```sql
 - producto_id (PK, AUTO_INCREMENT)
 - codigo (UNIQUE, NOT NULL)
@@ -73,6 +77,7 @@ MaxiMar Pet Store es un sistema completo de e-commerce diseñado específicament
 ```
 
 #### 🧾 **Ventas (Venta)**
+
 ```sql
 - venta_id (PK, AUTO_INCREMENT)
 - cliente (VARCHAR, DEFAULT 'Cliente Anónimo')
@@ -82,6 +87,7 @@ MaxiMar Pet Store es un sistema completo de e-commerce diseñado específicament
 ```
 
 #### 📋 **Detalle de Ventas (DetalleVenta)**
+
 ```sql
 - detalle_id (PK, AUTO_INCREMENT)
 - venta_id (FK → Venta)
@@ -92,6 +98,7 @@ MaxiMar Pet Store es un sistema completo de e-commerce diseñado específicament
 ```
 
 ### 🔗 Relaciones
+
 - Una **Venta** tiene muchos **DetalleVenta**
 - Un **Producto** puede estar en muchos **DetalleVenta**
 - **DetalleVenta** pertenece a **Venta** y **Producto**
@@ -101,11 +108,13 @@ MaxiMar Pet Store es un sistema completo de e-commerce diseñado específicament
 ## 🚀 Instalación y Configuración
 
 ### Pre-requisitos
+
 - **Node.js** (v14 o superior)
 - **MySQL** (v8.0 o superior)
 - **npm** o **yarn**
 
 ### 1. Clonar el Repositorio
+
 ```bash
 git clone <https://github.com/MarceAquino/MaxiMar.git>
 cd MaxiMar-Pet-Store
@@ -119,6 +128,7 @@ npm install
 ```
 
 #### Crear archivo `.env` en `/back-end/`:
+
 ```env
 # Base de datos
 DB_HOST=localhost
@@ -146,6 +156,7 @@ npm install
 ### 4. Configuración de Base de Datos
 
 1. **Crear la base de datos MySQL:**
+
 ```sql
 CREATE DATABASE maximar_pet_store;
 ```
@@ -155,6 +166,7 @@ CREATE DATABASE maximar_pet_store;
 ### 5. Iniciar la Aplicación
 
 #### Servidor Backend:
+
 ```bash
 cd back-end
 npm start
@@ -162,6 +174,7 @@ npm start
 ```
 
 #### Servidor Frontend:
+
 ```bash
 cd front-end
 npm start
@@ -170,45 +183,10 @@ npm start
 
 ---
 
-## 📡 API Endpoints
-
-### 🔐 Autenticación
-| Método | Endpoint | Descripción | Protegido |
-|--------|----------|-------------|-----------|
-| POST | `/api/auth/login` | Login de administrador | ❌ |
-| GET | `/api/auth/verify` | Verificar token JWT | ✅ |
-| POST | `/api/auth/logout` | Logout de administrador | ✅ |
-| POST | `/api/auth/register` | Registrar admin (solo SuperAdmin) | ✅ |
-
-### 📦 Productos
-| Método | Endpoint | Descripción | Protegido |
-|--------|----------|-------------|-----------|
-| GET | `/api/products` | Listar todos los productos | ❌ |
-| GET | `/api/products/:id` | Obtener producto por ID | ❌ |
-| POST | `/api/products` | Crear nuevo producto | ✅ |
-| PUT | `/api/products/:id` | Actualizar producto | ✅ |
-| DELETE | `/api/products/:id` | Eliminar producto (SuperAdmin) | ✅ |
-| PATCH | `/api/products/:id/activate` | Activar producto (SuperAdmin) | ✅ |
-| PATCH | `/api/products/:id/deactivate` | Desactivar producto (SuperAdmin) | ✅ |
-
-### 🛒 Ventas
-| Método | Endpoint | Descripción | Protegido |
-|--------|----------|-------------|-----------|
-| POST | `/api/sales` | Crear nueva venta | ❌ |
-| GET | `/api/sales/:id` | Obtener venta por ID | ❌ |
-| GET | `/api/sales` | Listar todas las ventas (SuperAdmin) | ✅ |
-
-### 👥 Administradores
-| Método | Endpoint | Descripción | Protegido |
-|--------|----------|-------------|-----------|
-| GET | `/api/admin/list` | Listar administradores (SuperAdmin) | ✅ |
-| PATCH | `/api/admin/:id/toggle` | Activar/desactivar admin (SuperAdmin) | ✅ |
-
----
-
 ## 👤 Sistema de Roles
 
 ### 🔑 **SuperAdmin**
+
 - ✅ Gestión completa de productos (CRUD)
 - ✅ Activar/desactivar productos
 - ✅ Registrar nuevos administradores
@@ -217,6 +195,7 @@ npm start
 - ✅ Eliminar productos permanentemente
 
 ### 👨‍💼 **Admin**
+
 - ✅ Crear y editar productos
 - ❌ No puede activar/desactivar productos
 - ❌ No puede registrar administradores
@@ -224,6 +203,7 @@ npm start
 - ❌ No puede eliminar productos
 
 ### 🛒 **Cliente (Sin autenticación)**
+
 - ✅ Ver catálogo de productos
 - ✅ Agregar productos al carrito
 - ✅ Realizar compras
@@ -276,17 +256,20 @@ MaxiMar-Pet-Store/
 ### 🛒 Para Clientes
 
 #### **Catálogo de Productos**
+
 - Visualización de productos con imágenes, precios y detalles
 - Filtros por categoría (alimento/juguete) y tipo de mascota (perro/gato)
 - Paginación y ordenamiento de resultados
 
 #### **Carrito de Compras**
+
 - Agregar/quitar productos con validación de stock
 - Persistencia en `sessionStorage`
 - Cálculo automático de totales
 - Validación de disponibilidad antes de compra
 
 #### **Proceso de Compra**
+
 - Checkout sencillo con datos del cliente
 - Generación automática de número de orden
 - Descuento automático de stock
@@ -295,6 +278,7 @@ MaxiMar-Pet-Store/
 ### 👨‍💼 Para Administradores
 
 #### **Gestión de Productos**
+
 - CRUD completo de productos
 - Carga múltiple de imágenes (hasta 5 por producto)
 - Validación de datos y códigos únicos
@@ -302,12 +286,14 @@ MaxiMar-Pet-Store/
 - Atributos específicos por tipo de producto
 
 #### **Dashboard Intuitivo**
+
 - Vista general con métricas importantes
 - Filtros avanzados y búsqueda
 - Interfaz responsiva y moderna
 - Notificaciones en tiempo real
 
 #### **Sistema de Reportes** (Solo SuperAdmin)
+
 - Historial completo de ventas
 - Detalles expandibles de cada transacción
 - Estadísticas de productos más vendidos
@@ -318,6 +304,7 @@ MaxiMar-Pet-Store/
 ## 🔧 Tecnologías y Dependencias
 
 ### Backend
+
 ```json
 {
   "express": "^4.21.2",
@@ -327,13 +314,14 @@ MaxiMar-Pet-Store/
   "bcrypt": "^6.0.0",
   "cors": "^2.8.5",
   "multer": "^2.0.1",
-  "dotenv": "^16.5.0",
+  "dotenv": "^16.5.0"
 }
 ```
 
 ### Frontend
 
 ### CDN Externas
+
 - **Bootstrap 5.3.6**: Framework CSS
 - **Font Awesome 6.0.0**: Iconografía
 - **Google Fonts**: Tipografías personalizadas
@@ -343,6 +331,7 @@ MaxiMar-Pet-Store/
 ## 🔒 Seguridad Implementada
 
 ### 🛡️ **Autenticación y Autorización**
+
 - **JWT (JSON Web Tokens)** para sesiones seguras
 - **Bcrypt** para hash de contraseñas (salt rounds: 12)
 - **Middleware de autenticación** en rutas protegidas
@@ -350,12 +339,14 @@ MaxiMar-Pet-Store/
 - **Expiración automática** de tokens (24h)
 
 ### 🔐 **Validaciones**
+
 - **Validación de tipos de datos** con Sequelize
 - **Constraints de base de datos** (UNIQUE, NOT NULL)
 - **Validación de stock** antes de ventas
 - **Validación de permisos** por rol
 
 ### 🚪 **Gestión de Sesiones**
+
 - **sessionStorage** para tokens (se borra al cerrar navegador)
 - **Limpieza automática** de datos al cerrar sesión
 - **Eventos beforeunload** para limpieza en cierre forzoso
@@ -366,13 +357,14 @@ MaxiMar-Pet-Store/
 ## 📱 Responsive Design
 
 ### 🖥️ **Desktop (1200px+)**
+
 - Dashboard completo con sidebar fijo
 - Múltiples columnas para productos
 - Tablas expandibles para datos detallados
 - Formularios en modal o páginas dedicadas
 
-
 ### 📱 **Mobile (320px - 767px)**
+
 - Menú hamburguesa
 - Una columna para productos
 - Botones más grandes para touch
@@ -383,12 +375,14 @@ MaxiMar-Pet-Store/
 ## 🧪 Testing y Calidad de Código
 
 ### 📏 **Estándares de Código**
+
 - **ESLint Standard** para JavaScript
 - **Convenciones de nomenclatura** consistentes
 - **Comentarios JSDoc** en funciones principales
 - **Modularización** clara y separación de responsabilidades
 
 ### 🔍 **Validaciones del Sistema**
+
 - **Validación de formularios** en tiempo real
 - **Manejo de errores** con try-catch
 - **Logging** detallado en consola
@@ -401,6 +395,7 @@ MaxiMar-Pet-Store/
 ### 🌐 **Configuración para Producción**
 
 **Variables de Entorno:**
+
 ```env
 NODE_ENV=production
 DB_HOST=tu_servidor_produccion
@@ -408,6 +403,7 @@ JWT_SECRET=clave_super_segura_de_produccion
 ```
 
 **Monitoreo:**
+
 - Logs estructurados
 - Métricas de performance
 - Monitoreo de errores
@@ -418,6 +414,7 @@ JWT_SECRET=clave_super_segura_de_produccion
 ## 📚 Casos de Uso Principales
 
 ### 🛒 **Flujo de Compra del Cliente**
+
 1. Cliente navega por el catálogo
 2. Filtra productos por categoría/mascota
 3. Agrega productos al carrito
@@ -427,12 +424,14 @@ JWT_SECRET=clave_super_segura_de_produccion
 7. Recibe número de orden y ticket
 
 ### 👨‍💼 **Gestión de Productos (Admin)**
+
 1. Admin inicia sesión en el panel
 2. Navega a gestión de productos
 3. Crea producto
 4. Activa/desactiva productos según stock
 
 ### 🔧 **Administración del Sistema (SuperAdmin)**
+
 1. SuperAdmin accede al panel completo
 2. Registra nuevos administradores
 3. Gestiona estados de admins, activa o desactiva
@@ -444,6 +443,7 @@ JWT_SECRET=clave_super_segura_de_produccion
 ## 👥 Equipo de Desarrollo
 
 ### 👨‍💻 **Marcelo Aquino**
+
 ### 👨‍💻 **Maximiliano Arcieri**
 
 ---

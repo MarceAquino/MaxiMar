@@ -21,11 +21,12 @@ const loginAdmin = require('./loginAdmin')
 const verificarToken = require('./verificarToken')
 const listarAdmins = require('./listarAdmins')
 const toggleAdminStatus = require('./toggleAdminStatus')
-
+const validarEmail = require('./validarEmail')
 module.exports = {
   registrarAdmin,
   loginAdmin,
   verificarToken,
   listarAdmins,
-  toggleAdminStatus
+  toggleAdminStatus,
+  validarEmail
 }

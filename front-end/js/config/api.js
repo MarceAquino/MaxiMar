@@ -47,7 +47,10 @@ const API_ROUTES = {
     crear: `${API_URL}/sales`, // Crear una nueva venta
     obtener: (id) => `${API_URL}/sales/${id}`, // Obtener una venta específica
     todas: `${API_URL}/sales` // Obtener todas las ventas
-  }
+  },
+
+  // Endpoint para validar email de admin
+  validarEmail: `${API_URL}/auth/validar-email`
 }
 
 /**
