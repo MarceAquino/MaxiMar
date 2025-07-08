@@ -1,3 +1,4 @@
+/* Tarjeta del formulario de login */
 .login-card {
     background: var(--card-bg);
     border: 2.5px solid var(--border-light);
@@ -7,6 +8,7 @@
     transition: all 0.3s ease;
 }
 
+/* Estilo general de botones */
 .btn {
     border: 2px solid var(--text-dark);
     background: var(--primary-orange);
@@ -15,6 +17,7 @@
     font-weight: bold;
 }
 
+/* Efecto hover en los botones */
 .btn:hover {
     transform: scale(1.05);
     box-shadow: var(--shadow-medium);
@@ -22,16 +25,19 @@
     background: var(--primary-orange-hover);
 }
 
+/* Color del texto dentro de la tarjeta de login */
 .login-card {
     color: var(--text-dark);
 }
 
+/* Estilos generales de los campos de formulario */
 .form-control {
     background: var(--card-bg);
     color: var(--text-dark);
     border-color: var(--border-light);
 }
 
+/* Efecto al enfocar un input */
 .form-control:focus {
     border-color: var(--primary-orange-hover);
     box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.1);
@@ -39,12 +45,14 @@
     color: var(--text-dark);
 }
 
+/* Icono o texto dentro del input (grupo de campos) */
 .input-group-text {
     background: var(--card-bg);
     color: var(--text-dark);
     border-color: var(--border-light);
 }
 
+/* Botón específico de login */
 #loginBtn {
     background: var(--primary-orange);
     border-color: var(--text-dark);
@@ -54,6 +62,7 @@
     font-weight: bold;
 }
 
+/* Hover del botón de login */
 #loginBtn:hover {
     background: var(--primary-orange-hover);
     border-color: var(--text-dark);
@@ -62,19 +71,23 @@
     box-shadow: var(--shadow-medium);
 }
 
+/* Ícono de inicio (ej: casa) */
 .fa-home {
     color: var(--text-dark);
     font-size: 20px;
 }
 
+/* Botón con clase Bootstrap warning (tema naranja personalizado) */
 .btn-warning {
     color: var(--text-dark);
 }
 
+/* Hover del botón warning */
 .btn-warning:hover {
     color: var(--text-dark);
 }
 
+/* Enlaces sin subrayado */
 .text-decoration-none {
     color: black;
 }
