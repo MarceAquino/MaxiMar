@@ -1,8 +1,15 @@
 /**
  * IMAGEN MANAGER - Gestión de imágenes de productos
  *
- * Maneja el procesamiento y navegación de imágenes de productos.
- * Soporta diferentes formatos de URLs y navegación entre múltiples imágenes.
+ * FUNCIONALIDADES:
+ * - Procesamiento y normalización de URLs de imágenes en diferentes formatos.
+ * - Generación dinámica de HTML para contenedores de imágenes con navegación.
+ * - Navegación circular entre imágenes (anterior/siguiente).
+ * - Manejo de imágenes por defecto para productos sin imágenes válidas.
+ *
+ * DEPENDENCIAS:
+ * - Utiliza manipulación del DOM para eventos y actualización de imágenes.
+ * - Iconos FontAwesome para botones de navegación.
  */
 
 const IMAGEN_POR_DEFECTO = '/front-end/img/notFount.png'

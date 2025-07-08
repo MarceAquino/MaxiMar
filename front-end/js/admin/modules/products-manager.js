@@ -1,7 +1,23 @@
 /**
  * Gestor de productos del dashboard
- * Maneja la carga, filtrado y renderizado de productos
- */
+ *
+ * FUNCIONALIDADES:
+ * - Obtención de la lista completa de productos desde la API.
+ * - Almacenamiento y sincronización del estado global mediante `DashboardState`.
+ * - Búsqueda y filtrado por texto, categoría, tipo de mascota y estado (activo/inactivo).
+ * - Renderizado dinámico de tarjetas de producto con badges, precio, stock y acciones.
+ * - Acciones sobre el producto (según permisos):
+ *   · Modificar (administrador y superadministrador cuando el producto está activo).
+ *   · Activar / Desactivar (solo superadministrador).
+ *   · Eliminación permanente (solo superadministrador).
+ * - Contador de productos actualmente mostrados.
+ * - Manejo de errores y feedback visual al usuario.
+
+* DEPENDENCIAS:
+ * - API_ROUTES: Mapa de endpoints para la comunicación con la API.
+ * - tokenUtils: Utilidades para obtención y decodificación de tokens JWT.
+ * - DashboardState: Almacena y expone el estado (productos, filtros, usuario).
+*/
 
 import { API_ROUTES, tokenUtils } from '../../config/api.js'
 import { DashboardState } from './dashboard-state.js'

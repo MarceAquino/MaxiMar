@@ -1,21 +1,25 @@
-/**
+/*
  * Módulo de finalización de compras del carrito
  *
- * Este archivo maneja todo el proceso de checkout:
- * - Validación del carrito antes de comprar
- * - Confirmación de la compra con el usuario
- * - Envío de datos al servidor
- * - Limpieza del carrito tras compra exitosa
- * - Redirección al ticket de compra
+ * FUNCIONALIDADES:
+ * - Validación del carrito antes de la compra.
+ * - Confirmación de la compra con el usuario mediante modal.
+ * - Preparación y envío de datos de la venta al servidor.
+ * - Limpieza del carrito tras una compra exitosa.
+ * - Redirección a la página de ticket de compra.
+ *
+ * DEPENDENCIAS:
+ * - confirmarModal para mostrar modales de confirmación.
+ * - Funciones para manejo de datos del carrito: guardarCarrito, obtenerCarrito, setCarrito.
+ * - Función mostrarMensaje para notificaciones visuales.
+ * - Constantes API_ROUTES para rutas del backend.
  */
 
-// Proceso de finalización de compra
 import { API_ROUTES } from '../../../config/api.js'
 import { guardarCarrito, obtenerCarrito, setCarrito } from './carrito-data.js'
 import { mostrarMensaje } from './carrito-utils.js'
 import { confirmarModal } from '../../../utils/modales.js'
 
-// === FINALIZAR COMPRA ===
 /**
  * Función principal que maneja todo el proceso de checkout
  * Valida el carrito, confirma con el usuario y procesa la venta

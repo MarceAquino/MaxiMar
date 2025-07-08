@@ -1,6 +1,18 @@
 /**
- * Módulo para gestionar administradores en el dashboard
- * Contiene funciones para cargar, mostrar y cambiar estado de administradores
+ * Gestión de administradores para el dashboard
+ *
+ * FUNCIONALIDADES:
+ * - Carga dinámica de administradores desde la API
+ * - Filtrado de superadministradores (solo se listan administradores regulares)
+ * - Renderizado dinámico de tarjetas con información de cada administrador
+ * - Activación y desactivación de administradores con confirmación
+ * - Actualización del contador de administradores visibles
+ * - Manejo de errores y feedback visual
+ *
+ * DEPENDENCIAS:
+ * - API_ROUTES: Rutas de la API para obtener y modificar administradores
+ * - tokenUtils: Manejo y validación de tokens JWT
+ * - DashboardState: Estado compartido del dashboard
  */
 
 import { API_ROUTES, tokenUtils } from '../../config/api.js'

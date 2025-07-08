@@ -1,4 +1,23 @@
-// --- Registro de administradores (versión simplificada y comentada para estudiantes) ---
+/**
+ * Módulo para el registro de administradores en el panel de administración.
+ *
+ * FUNCIONALIDADES:
+ * - Validación de campos del formulario, incluyendo confirmacion de contraseña.
+ * - Verificación si el email ya está registrado mediante consulta al backend.
+ * - Manejo visual de errores específicos debajo de cada campo.
+ * - Confirmación mediante modal antes de enviar el registro.
+ * - Envío de datos al backend con autenticación para registrar nuevo administrador.
+ * - Control de acceso para que solo usuarios con rol "superadmin" puedan registrar.
+ * - Funcionalidad para mostrar/ocultar contraseña.
+ * - Reactivación del formulario tras registro exitoso y redirección al dashboard.
+ *
+ * DEPENDENCIAS:
+ * - API_ROUTES y tokenUtils para manejo de rutas y autenticación.
+ * - confirmarModal para mostrar modales de confirmación y éxito.
+ * - requireAuth para proteger la ruta y validar permisos.
+ * - reactivarFormulario y recopilarDatosAdmin para manejo y validación de formularios.
+ */
+
 import { API_ROUTES, tokenUtils } from '../config/api.js'
 import { confirmarModal } from '../utils/modales.js'
 import { requireAuth } from './auth-guard.js'

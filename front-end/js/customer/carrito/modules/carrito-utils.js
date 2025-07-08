@@ -1,11 +1,15 @@
 /**
- * Utilidades y funciones auxiliares del carrito de compras
+ * Módulo de utilidades y funciones auxiliares del carrito de compras
  *
- * Módulo que proporciona funciones reutilizables para:
- * - Formateo de precios en moneda local
- * - Procesamiento de URLs de imágenes
- * - Sistema de notificaciones
- * - Validaciones de datos
+ * FUNCIONALIDADES:
+ * - Formateo de precios en moneda local.
+ * - Procesamiento de URLs de imágenes para productos.
+ * - Sistema de notificaciones para mostrar mensajes al usuario.
+ * - Validaciones básicas de datos (números y cadenas).
+ *
+ * DEPENDENCIAS:
+ * - Utiliza APIs web estándar para manipulación del DOM y localización.
+ * - Puede usar sistema de alertas personalizado si está disponible en ventana global.
  */
 
 /**
