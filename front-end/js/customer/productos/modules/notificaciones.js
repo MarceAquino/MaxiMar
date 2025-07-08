@@ -1,6 +1,4 @@
 /**
- * MÓDULO: Sistema de Notificaciones
- *
  * Maneja la visualización de mensajes y alertas al usuario.
  *
  * FUNCIONALIDADES:

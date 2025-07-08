@@ -1,4 +1,17 @@
-// --- Crear producto (versión simplificada y comentada para estudiantes) ---
+/* FUNCIONALIDADES:
+* - Validaciones básicas: código, nombre, marca, precio, stock, tipo, mascota
+* - Validaciones específicas por tipo: alimento (edad, peso, sabor), juguete (tamaño, material)
+* - Validación y preview de imágenes (hasta 5, tipo imagen, máx. 5MB)
+* - Modal de confirmación antes de enviar
+* - Envío autenticado con token
+*
+* DEPENDENCIAS:
+* - `api.js` (rutas y tokens)
+* - `modales.js` (confirmación modal)
+* - `auth-guard.js` (protección de acceso)
+* - `unified-form-utils.js` (campos dinámicos según tipo de producto)
+*/
+
 import { API_ROUTES, tokenUtils } from '../config/api.js'
 import { confirmarModal } from '../utils/modales.js'
 import { requireAuth } from './auth-guard.js'

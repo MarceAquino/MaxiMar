@@ -1,7 +1,14 @@
 /**
  * GESTOR DE TEMA CLARO/OSCURO
- * Permite alternar entre tema claro y oscuro usando Bootstrap
- * Guarda la preferencia del usuario en localStorage
+ *
+ * FUNCIONALIDADES:
+ * - Alterna entre tema claro y oscuro usando Bootstrap.
+ * - Cambia el ícono del botón según el tema activo.
+ * - Guarda la preferencia del usuario en localStorage.
+ * - Dispara un evento personalizado 'themeChanged' al cambiar el tema.
+ *
+ * DEPENDENCIAS:
+ * - Elementos del DOM: botón con id 'themeBtn' e ícono con id 'themeIcon'.
  */
 
 // Elementos del DOM
