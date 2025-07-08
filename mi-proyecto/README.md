@@ -11,97 +11,15 @@ Desarrollado por: **Marcelo Aquino** y **Maximiliano Arcieri**
 
 MaxiMar Pet Store es un sistema completo de e-commerce diseñado específicamente para tiendas de mascotas. Permite la gestión integral de productos, ventas y administradores a través de una interfaz web moderna y responsive.
 
-### ✨ Características Principales
+## ✨ Características Principales
 
-- 🛒 **Carrito de Compras**: Sistema completo con persistencia de datos.
-- 👨‍💼 **Panel de Administración**: Gestión de productos, ventas y usuarios.
-- 🔐 **Sistema de Autenticación**: JWT para administradores con roles.
-- 📱 **Responsive Design**: Compatible con dispositivos móviles y desktop.
-- 🎨 **Modo Oscuro/Claro**: Interfaz adaptable.
-- 📦 **Gestión de Stock**: Control de inventario.
-- 📊 **Reportes de Ventas**: Visualización y análisis de ventas.
-
----
-
-## 🏗️ Arquitectura del Sistema
-
-### Frontend
-
-- **HTML5, CSS3, JavaScript (ES6+)**
-- **Bootstrap 5** para diseño responsive
-- **Font Awesome** para iconografía
-- **Módulos ES6** para organización del código
-- **Local/Session Storage** para persistencia local
-
-### Backend
-
-- **Node.js** con **Express.js**
-- **MySQL** como base de datos
-- **Sequelize ORM** para manejo de datos
-- **JWT** para autenticación
-- **Bcrypt** para encriptación de contraseñas
-- **Multer** para manejo de archivos
-- **CORS** habilitado para peticiones cross-origin
-
----
-
-## 📊 Base de Datos
-
-### Entidades Principales
-
-#### 🗄️ **Administradores (Admin)**
-
-```sql
-- admin_id (PK, AUTO_INCREMENT)
-- email (UNIQUE, NOT NULL)
-- nombre (NOT NULL)
-- password (HASHED, NOT NULL)
-- rol (admin|superadmin)
-- activo (BOOLEAN, DEFAULT true)
-```
-
-#### 📦 **Productos (Producto)**
-
-```sql
-- producto_id (PK, AUTO_INCREMENT)
-- codigo (UNIQUE, NOT NULL)
-- nombre (NOT NULL)
-- categoria (alimento|juguete)
-- tipo_mascota (perro|gato)
-- precio (DECIMAL, NOT NULL)
-- marca (NOT NULL)
-- urls (JSON - Array de imágenes)
-- stock (INTEGER, DEFAULT 0)
-- atributos_especificos (JSON)
-- activo (BOOLEAN, DEFAULT true)
-```
-
-#### 🧾 **Ventas (Venta)**
-
-```sql
-- venta_id (PK, AUTO_INCREMENT)
-- cliente (VARCHAR, DEFAULT 'Cliente Anónimo')
-- subtotal (DECIMAL, NOT NULL)
-- total (DECIMAL, NOT NULL)
-- createdAt (TIMESTAMP)
-```
-
-#### 📋 **Detalle de Ventas (DetalleVenta)**
-
-```sql
-- detalle_id (PK, AUTO_INCREMENT)
-- venta_id (FK → Venta)
-- producto_id (FK → Producto)
-- cantidad (INTEGER, NOT NULL)
-- precio_unitario (DECIMAL, NOT NULL)
-- subtotal (DECIMAL, NOT NULL)
-```
-
-### 🔗 Relaciones
-
-- Una **Venta** tiene muchos **DetalleVenta**
-- Un **Producto** puede estar en muchos **DetalleVenta**
-- **DetalleVenta** pertenece a **Venta** y **Producto**
+- 🛒 **Carrito de Compras**: Sistema completo con persistencia de datos
+- 👨‍💼 **Panel de Administración**: Gestión de productos, ventas y usuarios
+- 🔐 **Sistema de Autenticación**: JWT para administradores con roles
+- 📱 **Responsive Design**: Compatible con dispositivos móviles y desktop
+- 🎨 **Modo Oscuro/Claro**: Interfaz adaptable
+- 📦 **Gestión de Stock**: Control de inventario
+- 📊 **Reportes de Ventas**: Visualización y análisis de ventas
 
 ---
 
@@ -116,7 +34,7 @@ MaxiMar Pet Store es un sistema completo de e-commerce diseñado específicament
 ### 1. Clonar el Repositorio
 
 ```bash
-git clone <https://github.com/MarceAquino/MaxiMar.git>
+git clone https://github.com/MarceAquino/MaxiMar.git
 cd MaxiMar-Pet-Store
 ```
 
@@ -181,12 +99,142 @@ npm start
 # Cliente ejecutándose en http://localhost:8080
 ```
 
+### 6. Seeder de Superadmin
+
+Para crear un usuario superadmin inicial:
+
+```bash
+node back-end/seeder/superadminSeeder.js
+```
+
+**Credenciales por defecto:**
+- **Email:** superadmin@maximar.com
+- **Contraseña:** SuperAdmin123!
+
+---
+
+## 🖼️ Capturas de Pantalla
+
+### 🛒 Interfaz de Cliente
+
+#### Login de Cliente
+![Login Cliente](img/1.png)
+
+#### Catálogo de Productos
+![Productos](img/2.png)
+
+#### Carrito de Compras
+![Carrito](img/3.png)
+
+#### Ticket de Compra
+![Ticket](img/4.png)
+
+### 👨‍💼 Panel de Administración
+
+#### Login de Administrador
+![Login Admin](img/5.png)
+
+#### Dashboard Principal
+![Dashboard](img/6.png)
+
+#### Menú del Dashboard
+![Menu Dashboard](img/7.png)
+
+#### Gestión de Administradores
+![Gestión Admin](img/8.png)
+
+#### Historial de Ventas
+![Historial Ventas](img/9.png)
+
+#### Crear Producto
+![Crear Producto](img/10.png)
+
+#### Registrar Administrador
+![Registrar Admin](img/11.png)
+
+#### Modificar Producto
+![Modificar Producto](img/12.png)
+
+---
+
+## 🏗️ Arquitectura del Sistema
+
+### Frontend
+- **HTML5, CSS3, JavaScript (ES6+)**
+- **Bootstrap 5** para diseño responsive
+- **Font Awesome** para iconografía
+- **Módulos ES6** para organización del código
+- **Local/Session Storage** para persistencia local
+
+### Backend
+- **Node.js** con **Express.js**
+- **MySQL** como base de datos
+- **Sequelize ORM** para manejo de datos
+- **JWT** para autenticación
+- **Bcrypt** para encriptación de contraseñas
+- **Multer** para manejo de archivos
+- **CORS** habilitado para peticiones cross-origin
+
+---
+
+## 📊 Base de Datos
+
+### Entidades Principales
+
+#### 🗄️ Administradores (Admin)
+```sql
+- admin_id (PK, AUTO_INCREMENT)
+- email (UNIQUE, NOT NULL)
+- nombre (NOT NULL)
+- password (HASHED, NOT NULL)
+- rol (admin|superadmin)
+- activo (BOOLEAN, DEFAULT true)
+```
+
+#### 📦 Productos (Producto)
+```sql
+- producto_id (PK, AUTO_INCREMENT)
+- codigo (UNIQUE, NOT NULL)
+- nombre (NOT NULL)
+- categoria (alimento|juguete)
+- tipo_mascota (perro|gato)
+- precio (DECIMAL, NOT NULL)
+- marca (NOT NULL)
+- urls (JSON - Array de imágenes)
+- stock (INTEGER, DEFAULT 0)
+- atributos_especificos (JSON)
+- activo (BOOLEAN, DEFAULT true)
+```
+
+#### 🧾 Ventas (Venta)
+```sql
+- venta_id (PK, AUTO_INCREMENT)
+- cliente (VARCHAR, DEFAULT 'Cliente Anónimo')
+- subtotal (DECIMAL, NOT NULL)
+- total (DECIMAL, NOT NULL)
+- createdAt (TIMESTAMP)
+```
+
+#### 📋 Detalle de Ventas (DetalleVenta)
+```sql
+- detalle_id (PK, AUTO_INCREMENT)
+- venta_id (FK → Venta)
+- producto_id (FK → Producto)
+- cantidad (INTEGER, NOT NULL)
+- precio_unitario (DECIMAL, NOT NULL)
+- subtotal (DECIMAL, NOT NULL)
+```
+
+### 🔗 Relaciones
+- Una **Venta** tiene muchos **DetalleVenta**
+- Un **Producto** puede estar en muchos **DetalleVenta**
+- **DetalleVenta** pertenece a **Venta** y **Producto**
+
 ---
 
 ## 👤 Sistema de Roles
 
-### 🔑 **SuperAdmin**
-
+### 🔑 SuperAdmin
 - ✅ Gestión completa de productos (CRUD)
 - ✅ Activar/desactivar productos
 - ✅ Registrar nuevos administradores
@@ -194,20 +242,76 @@ npm start
 - ✅ Ver todas las ventas y reportes
 - ✅ Eliminar productos permanentemente
 
-### 👨‍💼 **Admin**
-
+### 👨‍💼 Admin
 - ✅ Crear y editar productos
 - ❌ No puede activar/desactivar productos
 - ❌ No puede registrar administradores
 - ❌ No puede ver ventas
 - ❌ No puede eliminar productos
 
-### 🛒 **Cliente (Sin autenticación)**
-
+### 🛒 Cliente (Sin autenticación)
 - ✅ Ver catálogo de productos
 - ✅ Agregar productos al carrito
 - ✅ Realizar compras
 - ✅ Ver detalles de productos
+
+---
+
+## 🕵️ Acceso al Panel de Administración
+
+El acceso al panel de administración está oculto mediante un "truco secreto":
+
+1. Dirígete al carrusel de imágenes de la página de inicio
+2. Haz clic 3 veces seguidas en la flecha derecha del carrusel
+3. Luego haz clic 3 veces seguidas en la flecha izquierda del carrusel
+4. Aparecerá un botón especial de acceso admin con animación
+5. Haz clic en ese botón para acceder al login de administrador
+
+**Secuencia:** → → → ← ← ←
+
+---
+
+## 🎯 Funcionalidades Detalladas
+
+### 🛒 Para Clientes
+
+#### Catálogo de Productos
+- Visualización con imágenes, precios y detalles
+- Filtros por categoría (alimento/juguete) y tipo de mascota (perro/gato)
+- Paginación y ordenamiento de resultados
+
+#### Carrito de Compras
+- Agregar/quitar productos con validación de stock
+- Persistencia en `sessionStorage`
+- Cálculo automático de totales
+- Validación de disponibilidad antes de compra
+
+#### Proceso de Compra
+- Checkout sencillo con datos del cliente
+- Generación automática de número de orden
+- Descuento automático de stock
+- Ticket de compra descargable/imprimible
+
+### 👨‍💼 Para Administradores
+
+#### Gestión de Productos
+- CRUD completo de productos
+- Carga múltiple de imágenes (hasta 5 por producto)
+- Validación de datos y códigos únicos
+- Control de stock y estado (activo/inactivo)
+- Atributos específicos por tipo de producto
+
+#### Dashboard Intuitivo
+- Vista general con métricas importantes
+- Filtros avanzados y búsqueda
+- Interfaz responsiva y moderna
+- Notificaciones en tiempo real
+
+#### Sistema de Reportes (Solo SuperAdmin)
+- Historial completo de ventas
+- Detalles expandibles de cada transacción
+- Estadísticas de productos más vendidos
+- Filtros por fecha y cliente
 
 ---
 
@@ -251,76 +355,9 @@ MaxiMar-Pet-Store/
 
 ---
 
-## 🎯 Funcionalidades Detalladas
-
----
-
-## 🕵️ Truco Secreto: Acceso al Botón de Admin
-
-En la página principal, el acceso al panel de administración está oculto mediante un "truco secreto" para mayor seguridad y diversión. Para revelar el botón de acceso admin:
-
-1. Dirígete al carrusel de imágenes de la página de inicio.
-2. Haz clic 3 veces seguidas en la flecha derecha del carrusel.
-3. Luego haz clic 3 veces seguidas en la flecha izquierda del carrusel.
-4. Si la secuencia es correcta (derecha, derecha, derecha, izquierda, izquierda, izquierda), aparecerá un botón especial de acceso admin con una animación.
-5. Haz clic en ese botón para acceder al login de administrador.
-
-**Nota:** Si te equivocas en la secuencia, puedes volver a intentarlo desde el principio. El botón permanece oculto hasta que se ingresa la secuencia correcta.
-
----
-
-### 🛒 Para Clientes
-
-#### **Catálogo de Productos**
-
-- Visualización de productos con imágenes, precios y detalles
-- Filtros por categoría (alimento/juguete) y tipo de mascota (perro/gato)
-- Paginación y ordenamiento de resultados
-
-#### **Carrito de Compras**
-
-- Agregar/quitar productos con validación de stock
-- Persistencia en `sessionStorage`
-- Cálculo automático de totales
-- Validación de disponibilidad antes de compra
-
-#### **Proceso de Compra**
-
-- Checkout sencillo con datos del cliente
-- Generación automática de número de orden
-- Descuento automático de stock
-- Ticket de compra descargable/imprimible
-
-### 👨‍💼 Para Administradores
-
-#### **Gestión de Productos**
-
-- CRUD completo de productos
-- Carga múltiple de imágenes (hasta 5 por producto)
-- Validación de datos y códigos únicos
-- Control de stock y estado (activo/inactivo)
-- Atributos específicos por tipo de producto
-
-#### **Dashboard Intuitivo**
-
-- Vista general con métricas importantes
-- Filtros avanzados y búsqueda
-- Interfaz responsiva y moderna
-- Notificaciones en tiempo real
-
-#### **Sistema de Reportes** (Solo SuperAdmin)
-
-- Historial completo de ventas
-- Detalles expandibles de cada transacción
-- Estadísticas de productos más vendidos
-- Filtros por fecha y cliente
-
----
-
 ## 🔧 Tecnologías y Dependencias
 
 ### Backend
-
 ```json
 {
   "express": "^4.21.2",
@@ -334,10 +371,7 @@ En la página principal, el acceso al panel de administración está oculto medi
 }
 ```
 
-### Frontend
-
-### CDN Externas
-
+### Frontend CDN
 - **Bootstrap 5.3.6**: Framework CSS
 - **Font Awesome 6.0.0**: Iconografía
 - **Google Fonts**: Tipografías personalizadas
@@ -346,24 +380,21 @@ En la página principal, el acceso al panel de administración está oculto medi
 
 ## 🔒 Seguridad Implementada
 
-### 🛡️ **Autenticación y Autorización**
-
+### 🛡️ Autenticación y Autorización
 - **JWT (JSON Web Tokens)** para sesiones seguras
 - **Bcrypt** para hash de contraseñas (salt rounds: 12)
 - **Middleware de autenticación** en rutas protegidas
 - **Control de roles** (SuperAdmin/Admin)
 - **Expiración automática** de tokens (24h)
 
-### 🔐 **Validaciones**
-
+### 🔐 Validaciones
 - **Validación de tipos de datos** con Sequelize
 - **Constraints de base de datos** (UNIQUE, NOT NULL)
 - **Validación de stock** antes de ventas
 - **Validación de permisos** por rol
 
-### 🚪 **Gestión de Sesiones**
-
-- **sessionStorage** para tokens (se borra al cerrar navegador)
+### 🚪 Gestión de Sesiones
+- **sessionStorage** para tokens
 - **Limpieza automática** de datos al cerrar sesión
 - **Eventos beforeunload** para limpieza en cierre forzoso
 - **Verificación continua** de tokens válidos
@@ -372,15 +403,13 @@ En la página principal, el acceso al panel de administración está oculto medi
 
 ## 📱 Responsive Design
 
-### 🖥️ **Desktop (1200px+)**
-
+### 🖥️ Desktop (1200px+)
 - Dashboard completo con sidebar fijo
 - Múltiples columnas para productos
 - Tablas expandibles para datos detallados
 - Formularios en modal o páginas dedicadas
 
-### 📱 **Mobile (320px - 767px)**
-
+### 📱 Mobile (320px - 767px)
 - Menú hamburguesa
 - Una columna para productos
 - Botones más grandes para touch
@@ -390,15 +419,13 @@ En la página principal, el acceso al panel de administración está oculto medi
 
 ## 🧪 Testing y Calidad de Código
 
-### 📏 **Estándares de Código**
-
+### 📏 Estándares de Código
 - **ESLint Standard** para JavaScript
 - **Convenciones de nomenclatura** consistentes
 - **Comentarios JSDoc** en funciones principales
 - **Modularización** clara y separación de responsabilidades
 
-### 🔍 **Validaciones del Sistema**
-
+### 🔍 Validaciones del Sistema
 - **Validación de formularios** en tiempo real
 - **Manejo de errores** con try-catch
 - **Logging** detallado en consola
@@ -408,10 +435,9 @@ En la página principal, el acceso al panel de administración está oculto medi
 
 ## 🚀 Deployment y Producción
 
-### 🌐 **Configuración para Producción**
+### 🌐 Configuración para Producción
 
 **Variables de Entorno:**
-
 ```env
 NODE_ENV=production
 DB_HOST=tu_servidor_produccion
@@ -419,7 +445,6 @@ JWT_SECRET=clave_super_segura_de_produccion
 ```
 
 **Monitoreo:**
-
 - Logs estructurados
 - Métricas de performance
 - Monitoreo de errores
@@ -429,8 +454,7 @@ JWT_SECRET=clave_super_segura_de_produccion
 
 ## 📚 Casos de Uso Principales
 
-### 🛒 **Flujo de Compra del Cliente**
-
+### 🛒 Flujo de Compra del Cliente
 1. Cliente navega por el catálogo
 2. Filtra productos por categoría/mascota
 3. Agrega productos al carrito
@@ -439,42 +463,18 @@ JWT_SECRET=clave_super_segura_de_produccion
 6. Confirma la compra
 7. Recibe número de orden y ticket
 
-### 👨‍💼 **Gestión de Productos (Admin)**
-
+### 👨‍💼 Gestión de Productos (Admin)
 1. Admin inicia sesión en el panel
 2. Navega a gestión de productos
 3. Crea producto
 4. Activa/desactiva productos según stock
 
-### 🔧 **Administración del Sistema (SuperAdmin)**
-
+### 🔧 Administración del Sistema (SuperAdmin)
 1. SuperAdmin accede al panel completo
 2. Registra nuevos administradores
-3. Gestiona estados de admins, activa o desactiva
+3. Gestiona estados de admins
 4. Revisa reportes de ventas completos
-5. Administra productos con permisos totales: creación, modificación y eliminación
-
----
-
-## 🛠️ Seeder de Superadmin
-
-Para crear un usuario superadmin inicial en la base de datos, ejecuta el siguiente comando desde la raíz del proyecto:
-
-```bash
-node back-end/seeder/superadminSeeder.js
-```
-
-**¿Qué hace este script?**
-
-- Crea un usuario con:
-  - **Email:** superadmin@maximar.com
-  - **Contraseña:** SuperAdmin123!
-  - **Nombre:** Super Admin
-  - **Rol:** superadmin
-- Si ya existe un usuario con ese email, no se creará otro.
-- Puedes modificar el email y la contraseña en el archivo antes de ejecutarlo.
-
-> Ejecuta este script solo una vez para inicializar el superadmin.
+5. Administra productos con permisos totales
 
 ---
 
