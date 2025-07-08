@@ -281,7 +281,7 @@ El acceso al panel de administración está oculto mediante un "truco secreto":
 
 #### Carrito de Compras
 - Agregar/quitar productos con validación de stock
-- Persistencia en `sessionStorage`
+- Persistencia en `LocalStorage`
 - Cálculo automático de totales
 - Validación de disponibilidad antes de compra
 
