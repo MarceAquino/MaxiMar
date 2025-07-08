@@ -118,42 +118,42 @@ node back-end/seeder/superadminSeeder.js
 ### 🛒 Interfaz de Cliente
 
 #### Login de Cliente
-![Login Cliente](img/1.png)
+![Login Cliente](mi-proyecto\img\1.jpg)
 
 #### Catálogo de Productos
-![Productos](img/2.png)
+![Productos](mi-proyecto\img\2.jpg)
 
 #### Carrito de Compras
-![Carrito](img/3.png)
+![Carrito](mi-proyecto\img\3.jpg)
 
 #### Ticket de Compra
-![Ticket](img/4.png)
+![Ticket](mi-proyecto\img\4.jpg)
 
 ### 👨‍💼 Panel de Administración
 
 #### Login de Administrador
-![Login Admin](img/5.png)
+![Login Admin](mi-proyecto\img\5.jpg)
 
 #### Dashboard Principal
-![Dashboard](img/6.png)
+![Dashboard](mi-proyecto\img\6.jpg)
 
 #### Menú del Dashboard
-![Menu Dashboard](img/7.png)
+![Menu Dashboard](mi-proyecto\img\7.jpg)
 
 #### Gestión de Administradores
-![Gestión Admin](img/8.png)
+![Gestión Admin](mi-proyecto\img\8.jpg)
 
 #### Historial de Ventas
-![Historial Ventas](img/9.png)
+![Historial Ventas](mi-proyecto\img\9.jpg)
 
 #### Crear Producto
-![Crear Producto](img/10.png)
+![Crear Producto](mi-proyecto\img\10.jpg)
 
 #### Registrar Administrador
-![Registrar Admin](img/11.png)
+![Registrar Admin](mi-proyecto\img\11.jpg)
 
 #### Modificar Producto
-![Modificar Producto](img/12.png)
+![Modificar Producto](mi-proyecto\img\12.jpg)
 
 ---
 
