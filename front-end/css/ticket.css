@@ -1,14 +1,14 @@
 /* ===== ESTILOS PARA TICKET DE COMPRA ===== */
 
-
-/* Header del ticket con tema naranja */
+/* Header del ticket con fondo naranja y texto centrado */
 .ticket-header {
     background: var(--primary-orange);
-    color:var(--text-dark);
+    color: var(--text-dark);
     padding: 1rem;
     text-align: center;
 }
-/* Datos del usuario */
+
+/* Contenedor con los datos del usuario que realizó la compra */
 .datos-usuario {
     background: var(--orange-bg);
     border-radius: 8px;
@@ -17,15 +17,20 @@
     border-left: 3px solid var(--primary-orange);
     border: 1px solid var(--border-light);
 }
-h3{
+
+/* Estilo general para títulos en el ticket */
+h3 {
     color: var(--text-dark);
     font-weight: 600;
     margin-bottom: 1rem;
 }
-.fas{
+
+/* Estilo para íconos Font Awesome */
+.fas {
     color: var(--text-dark);
 }
-/* Caja de totales */
+
+/* Contenedor donde se muestran los totales del ticket */
 .total-box {
     background: var(--primary-orange-light);
     border-radius: 8px;
@@ -34,7 +39,7 @@ h3{
     border: 1px solid var(--border-light);
 }
 
-/* Estilos para la tabla */
+/* Estilos generales de la tabla del ticket */
 .table {
     background: var(--card-bg);
     color: var(--text-dark);
@@ -43,6 +48,7 @@ h3{
     overflow: hidden;
 }
 
+/* Encabezados de tabla con fondo naranja claro */
 .table th {
     font-weight: 600;
     background: var(--orange-bg);
@@ -50,19 +56,21 @@ h3{
     border-color: var(--border-light);
 }
 
+/* Celdas de contenido de la tabla */
 .table td {
     background: var(--card-bg);
     color: var(--text-dark);
     border-color: var(--border-light);
 }
 
+/* Fila activa en la tabla, con fondo naranja */
 .table-active td,
 .table-active th {
     background: var(--primary-orange);
     color: var(--text-dark);
 }
 
-/* Botones con tema consistente */
+/* Botones con diseño naranja y efectos al pasar el mouse */
 .btn-warning {
     background: var(--primary-orange);
     border: none;
@@ -81,17 +89,18 @@ h3{
 
 /* ===== ESTILOS PARA IMPRESIÓN ===== */
 @media print {
-    /* Ocultar navegación y footer en impresión */
+
+    /* Ocultar elementos no necesarios al imprimir */
     nav,
     footer,
     .navbar {
-        display: none ;
+        display: none;
     }
 
-    /* Asegurar que el fondo naranja del total se imprima */
+    /* Mantener el color de fondo de la caja de totales al imprimir */
     .total-box {
-        -webkit-print-color-adjust: exact ;
-        print-color-adjust: exact ;
-        background: var(--primary-orange-light) ;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+        background: var(--primary-orange-light);
     }
 }

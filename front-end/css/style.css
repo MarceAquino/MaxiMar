@@ -1,4 +1,5 @@
 :root {
+    /* Variables de color para tema claro */
     --primary-orange: #f4cd92;
     --primary-orange-hover: #f9b459;
     --primary-orange-light: #ffe8c2;
@@ -9,6 +10,7 @@
 }
 
 [data-bs-theme="dark"] {
+    /* Variables de color para tema oscuro */
     --primary-orange: #7a4a00;
     --primary-orange-hover: #a56a1b;
     --primary-orange-light: #c99842;
@@ -19,6 +21,8 @@
 }
 
 /* ===== BODY ===== */
+
+/* Estilos generales del body */
 body {
     height: 100%;
     margin: 0;
@@ -28,24 +32,27 @@ body {
     color: var(--text-dark);
 }
 
-/* ===== NAV ===== */
-
 /* ===== HEADER ===== */
+/* Cabecera personalizada con fondo naranja */
 .custom-header {
     background: var(--primary-orange);
     height: 5rem;
     border-bottom: 2px solid var(--primary-orange-hover);
 }
 
+/* Fondo del body en tema oscuro */
 [data-bs-theme="dark"] body {
     background: var(--primary-orange);
 }
 
+/* Cabecera personalizada en tema oscuro */
 [data-bs-theme="dark"] .custom-header {
     background: var(--primary-orange-light);
 }
 
 /* ===== LOGO FLOTANTE ===== */
+
+/* Logo flotante en esquina superior izquierda */
 .floating-logo {
     position: absolute;
     top: 5px;
@@ -54,11 +61,14 @@ body {
     z-index: 1050;
 }
 
+/* Texto de bienvenida */
 .welcome-text {
     color: var(--text-dark);
 }
 
-/* ===== BOTÓN DE MODO OSCURO===== */
+/* ===== BOTÓN DE MODO OSCURO ===== */
+
+/* Botón circular para cambiar tema claro/oscuro */
 #themeBtn {
     background: var(--primary-orange);
     border: 2px solid var(--text-dark);
@@ -73,10 +83,12 @@ body {
     cursor: pointer;
 }
 
+/* Ícono dentro del botón de tema */
 #themeIcon {
     color: var(--text-dark);
 }
 
+/* Efecto hover en el botón de tema */
 #themeBtn:hover {
     background: var(--primary-orange-hover);
     border-color: var(--text-dark);
@@ -84,16 +96,19 @@ body {
 }
 
 /* ===== FOOTER MINIMALISTA ===== */
+/* Estilos generales del footer */
 footer {
     background: var(--primary-orange);
     border-top: 2px solid var(--primary-orange-hover);
     color: var(--text-dark);
 }
 
+/* Footer adaptado al tema oscuro */
 [data-bs-theme="dark"] footer {
     background: var(--primary-orange-light);
 }
 
+/* Botón flotante para salir (esquina inferior izquierda) */
 .floating-exit-btn {
     position: fixed;
     bottom: 20px;
@@ -101,31 +116,27 @@ footer {
     z-index: 1050;
 
     padding: 10px 15px;
-    /* ⬅️ Aumenta el tamaño */
     font-size: 1.2rem;
-    /* ⬅️ Texto más grande */
     border-radius: 12px;
-    /* ⬅️ Bordes más suaves */
 
     background-color: rgb(184, 82, 82);
-    /* Color base opcional */
     color: #fff;
     border: none;
 
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-    /* Sombra más notoria */
     white-space: nowrap;
 
     transition: transform 0.2s ease;
 }
 
+/* Efecto hover del botón flotante de salida */
 .floating-exit-btn:hover {
     transform: scale(1.05);
     cursor: pointer;
 }
 
+/* Mensaje de bienvenida destacado */
 #welcomeMessage {
-    color: var(--primary-orang);
     font-size: 1rem;
     text-align: center;
     border: 2px solid var(--text-dark);
@@ -134,7 +145,8 @@ footer {
     display: inline-block;
 }
 
-.btn-volver{
+/* Botón de volver con bordes y estilo personalizado */
+.btn-volver {
     color: var(--text-dark);
     font-size: 1rem;
     text-align: center;
@@ -144,7 +156,8 @@ footer {
     display: inline-block;
 }
 
-.btn-volver:hover{
+/* Efecto hover del botón de volver */
+.btn-volver:hover {
     background: var(--primary-orange-hover);
     color: var(--text-dark);
     transform: translateY(-2px);
