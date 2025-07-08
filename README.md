@@ -112,48 +112,47 @@ node back-end/seeder/superadminSeeder.js
 - **Contraseña:** SuperAdmin123!
 
 ---
-
-## 🖼️ Capturas de Pantalla
-
 ### 🛒 Interfaz de Cliente
 
-#### Login de Cliente
-![Login Cliente](mi-proyecto\img\1.jpg)
+#### 🔐 Login de Cliente  
+![Login Cliente](mi-proyecto/img/1.jpg)
 
-#### Catálogo de Productos
-![Productos](mi-proyecto\img\2.jpg)
+#### 🧾 Catálogo de Productos  
+![Productos](mi-proyecto/img/2.jpg)
 
-#### Carrito de Compras
-![Carrito](mi-proyecto\img\3.jpg)
+#### 🛍️ Carrito de Compras  
+![Carrito](mi-proyecto/img/3.jpg)
 
-#### Ticket de Compra
-![Ticket](mi-proyecto\img\4.jpg)
+#### 🧾 Ticket de Compra  
+![Ticket](mi-proyecto/img/4.jpg)
+
+---
 
 ### 👨‍💼 Panel de Administración
 
-#### Login de Administrador
-![Login Admin](mi-proyecto\img\5.jpg)
+#### 🔐 Login de Administrador  
+![Login Admin](mi-proyecto/img/5.jpg)
 
-#### Dashboard Principal
-![Dashboard](mi-proyecto\img\6.jpg)
+#### 📊 Dashboard Principal  
+![Dashboard](mi-proyecto/img/6.jpg)
 
-#### Menú del Dashboard
-![Menu Dashboard](mi-proyecto\img\7.jpg)
+#### 📋 Menú del Dashboard  
+![Menu Dashboard](mi-proyecto/img/7.jpg)
 
-#### Gestión de Administradores
-![Gestión Admin](mi-proyecto\img\8.jpg)
+#### 👥 Gestión de Administradores  
+![Gestión Admin](mi-proyecto/img/8.jpg)
 
-#### Historial de Ventas
-![Historial Ventas](mi-proyecto\img\9.jpg)
+#### 🧾 Historial de Ventas  
+![Historial Ventas](mi-proyecto/img/9.jpg)
 
-#### Crear Producto
-![Crear Producto](mi-proyecto\img\10.jpg)
+#### ➕ Crear Producto  
+![Crear Producto](mi-proyecto/img/10.jpg)
 
-#### Registrar Administrador
-![Registrar Admin](mi-proyecto\img\11.jpg)
+#### 🧑‍💼 Registrar Administrador  
+![Registrar Admin](mi-proyecto/img/11.jpg)
 
-#### Modificar Producto
-![Modificar Producto](mi-proyecto\img\12.jpg)
+#### ✏️ Modificar Producto  
+![Modificar Producto](mi-proyecto/img/12.jpg)
 
 ---
 
