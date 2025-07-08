@@ -1,11 +1,17 @@
 /**
- * Interfaz y renderizado del carrito de compras
+ * Módulo de interfaz y renderizado del carrito de compras
  *
- * Este módulo se encarga de:
- * - Renderizar visualmente los items del carrito
- * - Actualizar contadores y totales en tiempo real
- * - Manejar eventos de UI (botones de cantidad, eliminar)
- * - Mostrar/ocultar secciones según el estado del carrito
+ * FUNCIONALIDADES:
+ * - Renderiza visualmente los items del carrito.
+ * - Actualiza contadores y totales en tiempo real.
+ * - Maneja eventos de UI como botones para cambiar cantidad y eliminar productos.
+ * - Muestra u oculta secciones del carrito según su estado (vacío o con productos).
+ *
+ * DEPENDENCIAS:
+ * - Funciones de carrito-acciones para modificar cantidad y eliminar ítems.
+ * - Funciones de carrito-data para obtener datos y calcular totales.
+ * - Utilidades para formatear precios y procesar URLs de productos.
+ * - confirmarModal para diálogos de confirmación.
  */
 
 // Interfaz y renderizado del carrito

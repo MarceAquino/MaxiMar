@@ -1,3 +1,15 @@
+/**
+ * MÓDULO: Confirmación específica para el carrito
+ *
+ * FUNCIONALIDADES:
+ * - Proporciona una función para mostrar un modal de confirmación personalizado para acciones del carrito.
+ * - Permite configurar título, mensaje, texto y estilo del botón de confirmación.
+ * - Utiliza el módulo controladorModales para mostrar el modal.
+ *
+ * DEPENDENCIAS:
+ * - mostrarConfirmacion del módulo controladorModales.js
+ */
+
 import { mostrarConfirmacion } from './controladorModales.js'
 
 /**

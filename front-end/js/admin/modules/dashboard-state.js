@@ -1,8 +1,13 @@
 /**
  * Estado global del dashboard de administración
- * Maneja todos los datos compartidos entre diferentes módulos del dashboard
- * Funciona como un "store" simple para mantener sincronizada la información
+ *
+ * FUNCIONALIDADES:
+ * - Centraliza y sincroniza la información compartida entre módulos del dashboard
+ * - Manejo de listas: productos, administradores y ventas
+ * - Control de sesión: usuario logueado y sección activa
+ * - Funciones getter y setter para acceder y modificar el estado
  */
+
 export const DashboardState = {
   // ========== DATOS DEL ESTADO ==========
 

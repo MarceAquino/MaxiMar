@@ -1,14 +1,16 @@
 /**
- * Gestión de datos y almacenamiento del carrito
+ * Módulo de gestión de datos y almacenamiento del carrito
  *
- * Este módulo maneja:
- * - Persistencia del carrito en localStorage
- * - Carga y almacenamiento de productos disponibles
- * - Validación de stock de productos
- * - Operaciones CRUD básicas del carrito
+ * FUNCIONALIDADES:
+ * - Persistencia del carrito en localStorage.
+ * - Carga y almacenamiento de productos disponibles desde el servidor.
+ * - Validación de stock de productos antes de agregar al carrito.
+ * - Operaciones CRUD básicas sobre el carrito en localStorage.
+ *
+ * DEPENDENCIAS:
+ * - Constantes API_ROUTES para rutas de backend.
  */
 
-// Gestión de datos y almacenamiento del carrito
 import { API_ROUTES } from '../../../config/api.js'
 
 // Variables globales para almacenar datos en memoria

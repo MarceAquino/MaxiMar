@@ -1,14 +1,15 @@
 /**
  * MÓDULO: Controlador de Modales
  *
- * Sistema de confirmación personalizado para Maximar Petshop
- * Reemplaza confirm() nativo con modales estilizados
+ * FUNCIONALIDADES:
+ * - Reemplaza el método nativo confirm() por modales personalizados y estilizados.
+ * - Permite mostrar diálogos de confirmación con título, mensaje, icono y botones configurables.
+ * - Soporta confirmación por click en botones o por tecla Escape.
+ * - Maneja animaciones de entrada y salida del modal.
  *
- * USO:
- * const confirmado = await mostrarConfirmacion({
- *   titulo: 'Confirmar',
- *   mensaje: '¿Deseas continuar?'
- * })
+ * DEPENDENCIAS:
+ * - Manipulación directa del DOM para crear, mostrar y eliminar modales.
+ * - Uso de eventos para interacción y accesibilidad (teclado y mouse).
  */
 let modalActual = null
 

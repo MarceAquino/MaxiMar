@@ -1,6 +1,4 @@
 /**
- * MÓDULO: Renderizado de Productos
- *
  * Maneja la creación y renderizado de tarjetas de productos en la interfaz.
  *
  * FUNCIONALIDADES:

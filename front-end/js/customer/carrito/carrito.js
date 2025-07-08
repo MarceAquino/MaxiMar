@@ -1,8 +1,17 @@
 /**
- * CARRITO DE COMPRAS - Archivo principal
+ * Módulo principal para la gestión del carrito de compras en la aplicación.
  *
- * Gestiona la inicialización y coordinación de todos los módulos del carrito.
- * Maneja eventos principales y exporta funciones para compatibilidad global.
+ * FUNCIONALIDADES:
+ * - Inicializa y carga productos y carrito desde almacenamiento local.
+ * - Renderiza el carrito y actualiza el contador de items.
+ * - Configura eventos para interacción con el carrito (agregar, cambiar cantidad, eliminar, vaciar, finalizar compra).
+ * - Maneja eventos especiales como vaciar carrito con confirmación modal.
+ * - Muestra mensajes de estado y bienvenida al usuario.
+ *
+ * DEPENDENCIAS:
+ * - confirmarModal para modales de confirmación.
+ * - mostrarMensajeBienvenida para saludo inicial.
+ * - Funciones de los módulos carrito-acciones, carrito-checkout, carrito-data, carrito-render y carrito-utils.
  */
 
 import { confirmarModal } from '../../utils/modales.js'

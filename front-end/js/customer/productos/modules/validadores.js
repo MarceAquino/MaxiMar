@@ -1,22 +1,13 @@
 /**
- * MÓDULO: Validadores de Productos
- *
  * Contiene funciones para validar datos de productos antes de procesarlos.
  *
  * FUNCIONALIDADES:
  * - Validación de IDs de productos
  * - Validación de datos completos del producto
  * - Validación de stock disponible
- *
- * USO:
- * - Antes de agregar productos al carrito
- * - Antes de mostrar productos en la interfaz
- * - Para asegurar integridad de datos
  */
 
-/**
- * Objeto con funciones de validación para productos
- */
+// Objeto con funciones de validación para productos
 export const validarProducto = {
   /**
    * Valida que el ID del producto sea un número positivo válido

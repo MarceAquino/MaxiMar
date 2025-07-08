@@ -1,14 +1,14 @@
-/**
- * ACCIONES DEL CARRITO DE COMPRAS
+/* FUNCIONALIDADES:
+ * - Agregar productos al carrito o incrementar su cantidad si ya existen.
+ * - Eliminar productos completamente del carrito.
+ * - Modificar la cantidad de productos en el carrito con validación de stock.
+ * - Vaciar completamente el carrito.
  *
- * Módulo que contiene las operaciones principales para la gestión del carrito:
- * - Agregar productos
- * - Eliminar productos
- * - Modificar cantidades
- * - Vaciar carrito
+ * DEPENDENCIAS:
+ * - Funciones para manejar datos del carrito: guardarCarrito, obtenerCarrito, setCarrito, verificarStock.
+ * - Funciones para actualización visual y mensajes: actualizarContadorCarrito, renderCarrito, mostrarMensaje, obtenerPaginaActual.
  */
 
-// Importación de dependencias para manejo de datos y UI
 import {
   guardarCarrito,
   obtenerCarrito,

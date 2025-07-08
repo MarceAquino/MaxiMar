@@ -1,4 +1,21 @@
-// --- Modificar producto (versión simplificada y comentada para estudiantes) ---
+/**
+ * Módulo para modificar productos en el panel de administrador.
+ *
+ * FUNCIONALIDADES:
+ * - Carga y muestra los datos actuales del producto en el formulario.
+ * - Valida campos básicos y atributos específicos según tipo de producto.
+ * - Muestra mensajes de error globales de forma clara y accesible.
+ * - Solicita confirmación antes de enviar la actualización.
+ * - Envía la actualización al backend vía API con autenticación.
+ * - Redirige al dashboard tras una modificación exitosa.
+ *
+ * DEPENDENCIAS:
+ * - API_ROUTES y tokenUtils para manejo de rutas y autenticación.
+ * - confirmarModal para confirmación mediante modal.
+ * - requireAuth para proteger la ruta solo a administradores autenticados.
+ * - configurarCamposDinamicosProducto y llenarFormularioProducto para manejo dinámico y llenado del formulario.
+ */
+
 import { API_ROUTES, tokenUtils } from '../config/api.js'
 import { confirmarModal } from '../utils/modales.js'
 import { requireAuth } from './auth-guard.js'

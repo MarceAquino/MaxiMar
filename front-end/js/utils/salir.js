@@ -1,5 +1,3 @@
-import { confirmarModal } from './modales.js'
-
 /**
  * MANEJO DE BOTÓN DE SALIR/LOGOUT
  *
@@ -8,10 +6,11 @@ import { confirmarModal } from './modales.js'
  * - Limpia completamente el almacenamiento del navegador
  * - Redirige al usuario al destino apropiado según el contexto
  *
- * Contextos soportados:
- * - Admin: Redirige al login de administrador
- * - Cliente: Redirige a la página principal
+ * DEPENDENCIAS:
+ * - confirmarModal para modales de confirmación.
  */
+
+import { confirmarModal } from './modales.js'
 
 document.addEventListener('DOMContentLoaded', () => {
   // Buscar el botón de logout en la página
