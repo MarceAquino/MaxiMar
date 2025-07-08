@@ -253,6 +253,22 @@ MaxiMar-Pet-Store/
 
 ## 🎯 Funcionalidades Detalladas
 
+---
+
+## 🕵️ Truco Secreto: Acceso al Botón de Admin
+
+En la página principal, el acceso al panel de administración está oculto mediante un "truco secreto" para mayor seguridad y diversión. Para revelar el botón de acceso admin:
+
+1. Dirígete al carrusel de imágenes de la página de inicio.
+2. Haz clic 3 veces seguidas en la flecha derecha del carrusel.
+3. Luego haz clic 3 veces seguidas en la flecha izquierda del carrusel.
+4. Si la secuencia es correcta (derecha, derecha, derecha, izquierda, izquierda, izquierda), aparecerá un botón especial de acceso admin con una animación.
+5. Haz clic en ese botón para acceder al login de administrador.
+
+**Nota:** Si te equivocas en la secuencia, puedes volver a intentarlo desde el principio. El botón permanece oculto hasta que se ingresa la secuencia correcta.
+
+---
+
 ### 🛒 Para Clientes
 
 #### **Catálogo de Productos**
