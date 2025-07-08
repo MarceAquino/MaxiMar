@@ -1,3 +1,21 @@
+/**
+ * Módulo de creación de productos en el panel de administración
+ *
+ * FUNCIONALIDAD PRINCIPAL:
+ * - Permite validar y crear nuevos productos desde el formulario HTML.
+ * - Valida campos básicos y atributos específicos según el tipo de producto.
+ * - Muestra errores detallados en la interfaz en caso de validaciones fallidas.
+ * - Muestra vista previa de las imágenes seleccionadas.
+ * - Envía el producto al servidor utilizando FormData y autenticación.
+ * - Redirige al dashboard luego de una creación exitosa.
+ *
+ * DEPENDENCIAS:
+ * - API_ROUTES y tokenUtils: Para hacer peticiones autenticadas a la API
+ * - modales.js: Para confirmar acciones mediante un modal
+ * - auth-guard.js: Para restringir acceso solo a usuarios autenticados
+ * - unified-form-utils.js: Para manejar campos dinámicos según tipo de producto
+ */
+
 import { API_ROUTES, tokenUtils } from '../config/api.js'
 import { confirmarModal } from '../utils/modales.js'
 import { requireAuth } from './auth-guard.js'

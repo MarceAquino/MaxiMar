@@ -1,6 +1,16 @@
 /**
- * Gestor de ventas del dashboard
- * Maneja la carga, renderizado y ordenamiento de ventas
+ * Módulo de gestión de ventas del dashboard
+ *
+ * FUNCIONALIDAD PRINCIPAL:
+ * - Carga el historial de ventas desde el servidor.
+ * - Renderiza las tarjetas de cada venta en la interfaz.
+ * - Permite ordenar las ventas por fecha o importe (ascendente y descendente).
+ * - Muestra los detalles de cada venta con productos, cantidades y totales.
+ * - Maneja errores de carga y estados visuales (cargando, error, vacío).
+ *
+ * DEPENDENCIAS:
+ * - API_ROUTES y tokenUtils: Para realizar peticiones autenticadas a la API
+ * - dashboard-state.js: Para acceder y modificar el estado global de ventas
  */
 
 import { API_ROUTES, tokenUtils } from '../../config/api.js'

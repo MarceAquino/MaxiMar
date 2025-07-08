@@ -1,7 +1,17 @@
 /**
- * Gestor de interfaz del dashboard
- * Maneja la configuración de la interfaz según el rol del usuario
- * y la navegación entre diferentes secciones
+ * Módulo de gestión de la interfaz del dashboard de administración
+ *
+ * FUNCIONALIDAD PRINCIPAL:
+ * - Configura la interfaz según el rol del usuario logueado (admin o superadmin).
+ * - Habilita o deshabilita accesos en el sidebar dependiendo del rol.
+ * - Controla la navegación entre secciones del dashboard (productos, ventas, administradores).
+ * - Define event listeners para filtros y navegación.
+ *
+ * DEPENDENCIAS:
+ * - admins-manager.js: Para cargar y renderizar administradores
+ * - products-manager.js: Para aplicar filtros de productos
+ * - sales-manager.js: Para cargar y mostrar ventas
+ * - dashboard-state.js: Para acceder y actualizar el estado global del dashboard
  */
 
 import { cargarAdministradores, renderizarAdministradores } from './admins-manager.js'

@@ -1,8 +1,23 @@
-// Servidor principal de MaxiMar Pet Store (backend)
-// - Expone la API REST bajo /api
-// - Sirve archivos estáticos del frontend
-// - Conecta y sincroniza la base de datos Sequelize
-// - Usa middlewares para CORS y JSON
+/**
+ * Servidor principal del backend de MaxiMar Pet Store
+ *
+ * FUNCIONALIDADES:
+ * - Inicia y configura el servidor Express
+ * - Expone la API REST bajo la ruta base `/api`
+ * - Sirve archivos estáticos del frontend desde `/front-end`
+ * - Conecta y sincroniza la base de datos mediante Sequelize
+ * - Utiliza middlewares para manejo de CORS y JSON
+ * - Manejo de errores de conexión y logs del servidor
+ *
+ * DEPENDENCIAS:
+ * - express: Framework web para Node.js
+ * - cors: Middleware para habilitar CORS
+ * - dotenv: Variables de entorno
+ * - sequelize: ORM para manejar la base de datos
+ * - ./src/models: Modelos Sequelize
+ * - ./src/config/constantes: Configuración general (PORT)
+ * - ./src/routers/index: Rutas principales de la API
+ */
 
 require('dotenv').config()
 const express = require('express')
