@@ -452,15 +452,36 @@ JWT_SECRET=clave_super_segura_de_produccion
 2. Registra nuevos administradores
 3. Gestiona estados de admins, activa o desactiva
 4. Revisa reportes de ventas completos
-5. Administra productos con permisos totales, creacion, modificacion y eliminacion
+5. Administra productos con permisos totales: creación, modificación y eliminación
+
+---
+
+## 🛠️ Seeder de Superadmin
+
+Para crear un usuario superadmin inicial en la base de datos, ejecuta el siguiente comando desde la raíz del proyecto:
+
+```bash
+node back-end/seeder/superadminSeeder.js
+```
+
+**¿Qué hace este script?**
+
+- Crea un usuario con:
+  - **Email:** superadmin@maximar.com
+  - **Contraseña:** SuperAdmin123!
+  - **Nombre:** Super Admin
+  - **Rol:** superadmin
+- Si ya existe un usuario con ese email, no se creará otro.
+- Puedes modificar el email y la contraseña en el archivo antes de ejecutarlo.
+
+> Ejecuta este script solo una vez para inicializar el superadmin.
 
 ---
 
 ## 👥 Equipo de Desarrollo
 
-### 👨‍💻 **Marcelo Aquino**
-
-### 👨‍💻 **Maximiliano Arcieri**
+- 👨‍💻 **Marcelo Aquino**
+- 👨‍💻 **Maximiliano Arcieri**
 
 ---
 
