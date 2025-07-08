@@ -1,19 +1,3 @@
-/**
- * Maneja la creación de nuevos productos en el panel de administración.
- *
- * FUNCIONALIDADES:
- * - Preview de imágenes antes de subir
- * - Validación de imágenes (tipo, tamaño, cantidad)
- * - Creación de productos con atributos específicos
- * - Confirmación mediante modal
- * - Redirección post-creación
- *
- * VARIABLES GLOBALES:
- * - form: Formulario de creación
- * - imageInput: Input para subir imágenes
- * - previewContainer: Contenedor para previsualización
- */
-
 import { API_ROUTES, tokenUtils } from '../config/api.js'
 import { confirmarModal } from '../utils/modales.js'
 import { requireAuth } from './auth-guard.js'
@@ -22,6 +6,43 @@ import { configurarCamposDinamicosProducto } from './utils/unified-form-utils.js
 const form = document.getElementById('formCrearProducto')
 const imageInput = document.getElementById('imagenesCrear')
 const previewContainer = document.getElementById('previewImagenes')
+
+// Contenedor para mostrar errores en HTML
+const contenedorErrores = document.getElementById('erroresGlobales')
+
+/**
+ * Muestra mensajes de error en el contenedor HTML
+ * @param {Array|string} errores - Lista o texto con errores
+ */
+function mostrarErrores (errores) {
+  if (!contenedorErrores) return
+
+  contenedorErrores.innerHTML = ''
+
+  if (typeof errores === 'string') {
+    errores = [errores]
+  }
+
+  const ul = document.createElement('ul')
+  ul.classList.add('alert', 'alert-danger', 'p-2')
+  errores.forEach(error => {
+    const li = document.createElement('li')
+    li.textContent = error
+    ul.appendChild(li)
+  })
+
+  contenedorErrores.appendChild(ul)
+  contenedorErrores.style.display = 'block'
+}
+
+/**
+ * Limpia el contenedor de errores
+ */
+function limpiarErrores () {
+  if (!contenedorErrores) return
+  contenedorErrores.innerHTML = ''
+  contenedorErrores.style.display = 'none'
+}
 
 /**
  * Muestra preview de las imágenes seleccionadas
@@ -57,13 +78,13 @@ function mostrarPreview (files) {
  * @returns {Array} Lista de errores encontrados
  */
 function validarImagenes (files) {
-  if (!files.length) return ['Selecciona al menos una imagen']
-  if (files.length > 5) return ['Máximo 5 imágenes']
-
   const errores = []
+  if (!files.length) errores.push('Selecciona al menos una imagen')
+  if (files.length > 5) errores.push('Máximo 5 imágenes')
+
   Array.from(files).forEach(file => {
     if (!file.type.startsWith('image/')) {
-      errores.push(`${file.name} no es una imagen`)
+      errores.push(`${file.name} no es una imagen válida`)
     }
     if (file.size > 5 * 1024 * 1024) {
       errores.push(`${file.name} es muy grande (máximo 5MB)`)
@@ -75,10 +96,11 @@ function validarImagenes (files) {
 // Evento para mostrar preview al seleccionar imágenes
 if (imageInput) {
   imageInput.addEventListener('change', (e) => {
+    limpiarErrores()
     const files = e.target.files
     const errores = validarImagenes(files)
     if (errores.length) {
-      alert(errores.join('\n'))
+      mostrarErrores(errores)
       imageInput.value = ''
       previewContainer.style.display = 'none'
       return
@@ -93,46 +115,90 @@ if (imageInput) {
  */
 async function crearProducto (e) {
   e.preventDefault()
+  limpiarErrores()
+
   try {
     const files = imageInput.files
-    const errores = validarImagenes(files)
-    if (errores.length) {
-      alert(errores.join('\n'))
-      return
-    }
+    const errores = []
+    // Validar imágenes
+    errores.push(...validarImagenes(files))
 
-    // Sincronizar categoría
+    // Validar campos básicos (incluyendo código)
+    const codigo = document.getElementById('codigoCrear')?.value?.trim()
+    const nombre = document.getElementById('nombreCrear')?.value?.trim()
+    const marca = document.getElementById('marcaCrear')?.value?.trim()
+    const precio = document.getElementById('precioCrear')?.value
+    const stock = document.getElementById('stockCrear')?.value
     const tipoProducto = document.getElementById('tipoProducto')
     const categoria = document.getElementById('categoriaCrear')
     if (tipoProducto && categoria) {
       categoria.value = tipoProducto.value
     }
 
+    // Validaciones según requerimiento
+    if (!codigo || codigo.length < 3) {
+      errores.push('El código debe tener entre 3 y 20 caracteres.')
+    } else if (codigo.length > 20) {
+      errores.push('El código debe tener entre 3 y 20 caracteres.')
+    }
+    if (!nombre || nombre.length < 3) {
+      errores.push('El nombre debe tener entre 3 y 100 caracteres.')
+    } else if (nombre.length > 100) {
+      errores.push('El nombre debe tener entre 3 y 100 caracteres.')
+    }
+    if (!marca || marca.length < 2) {
+      errores.push('La marca debe tener entre 2 y 50 caracteres.')
+    } else if (marca.length > 50) {
+      errores.push('La marca debe tener entre 2 y 50 caracteres.')
+    }
+    if (!tipoProducto?.value) errores.push('Debes seleccionar un tipo de producto.')
+    if (!document.getElementById('tipoMascotaCrear')?.value) errores.push('Debes seleccionar un tipo de mascota.')
+    if (!precio || isNaN(parseFloat(precio)) || parseFloat(precio) < 0.01) errores.push('El precio debe ser un número mayor o igual a 0.01.')
+    if (!stock || isNaN(parseInt(stock)) || parseInt(stock) < 0) errores.push('El stock debe ser un número igual o mayor a 0.')
+
+    // Validar atributos específicos obligatorios
+    const atributosObj = {}
+    if (tipoProducto?.value === 'alimento') {
+      const edad = document.getElementById('edadCrear')?.value?.trim()
+      const peso = document.getElementById('pesoCrear')?.value?.trim()
+      const sabor = document.getElementById('saborCrear')?.value?.trim()
+      if (!edad) errores.push('El campo "edad" es obligatorio para productos de tipo alimento.')
+      if (!peso) errores.push('El campo "peso" es obligatorio para productos de tipo alimento.')
+      if (!sabor) errores.push('El campo "sabor" es obligatorio para productos de tipo alimento.')
+      if (edad && peso && sabor) {
+        atributosObj.edad = edad
+        atributosObj.peso = peso
+        atributosObj.sabor = sabor
+      }
+    } else if (tipoProducto?.value === 'juguete') {
+      const tamano = document.getElementById('tamanoCrear')?.value?.trim()
+      const material = document.getElementById('materialCrear')?.value?.trim()
+      if (!tamano) errores.push('El campo "tamaño" es obligatorio para productos de tipo juguete.')
+      if (!material) errores.push('El campo "material" es obligatorio para productos de tipo juguete.')
+      if (tamano && material) {
+        atributosObj.tamano = tamano
+        atributosObj.material = material
+      }
+    }
+
+    if (errores.length > 0) {
+      mostrarErrores(errores)
+      return
+    }
+
     // Crear FormData con todos los campos del formulario
     const formData = new FormData(form)
-
-    // Agregar atributos específicos si existen
-    const atributos = {}
-    if (tipoProducto.value === 'alimento') {
-      const edad = document.getElementById('edadCrear')?.value
-      const peso = document.getElementById('pesoCrear')?.value
-      const sabor = document.getElementById('saborCrear')?.value
-      if (edad) atributos.edad = edad
-      if (peso) atributos.peso = peso
-      if (sabor) atributos.sabor = sabor
-    } else if (tipoProducto.value === 'juguete') {
-      const tamano = document.getElementById('tamanoCrear')?.value
-      const material = document.getElementById('materialCrear')?.value
-      if (tamano) atributos.tamano = tamano
-      if (material) atributos.material = material
+    if (Object.keys(atributosObj).length > 0) {
+      formData.set('atributos_especificos', JSON.stringify(atributosObj))
     }
 
-    if (Object.keys(atributos).length > 0) {
-      formData.set('atributos_especificos', JSON.stringify(atributos))
-    }
-
-    // Confirmar creacion de producto con modal.
-    const confirmar = await confirmarModal('Crear Producto', '¿Estás seguro que desea crear el producto?', 'Crear', 'confirmar')
+    // Confirmar creación de producto con modal
+    const confirmar = await confirmarModal(
+      'Crear Producto',
+      '¿Estás seguro que desea crear el producto?',
+      'Crear',
+      'confirmar'
+    )
     if (!confirmar) {
       return
     }
@@ -146,28 +212,30 @@ async function crearProducto (e) {
 
     if (!response.ok) {
       const error = await response.json()
-      throw new Error(error.error || 'Error del servidor')
+      mostrarErrores(error.error || 'Error del servidor')
+      return
     }
 
     const resultado = await response.json()
+
+    // Mensaje éxito (podés reemplazar alert por mostrar en HTML si querés)
     alert(`Producto creado exitosamente! ID: ${resultado.producto.producto_id}`)
 
-    // Limpiar formulario
+    // Limpiar formulario y preview
     form.reset()
     previewContainer.innerHTML = ''
     previewContainer.style.display = 'none'
 
-    // Redirección con pequeño delay para asegurar que el alert se vea
-    console.log('Preparando redirección...')
+    // Redirigir después de 1 seg
     setTimeout(() => {
-      console.log('Redirigiendo ahora...')
       window.location.href = '/front-end/html/admin/dashboard.html'
-    })
+    }, 1000)
   } catch (error) {
     console.error('Error completo:', error)
-    alert(`Error: ${error.message}`)
+    mostrarErrores(error.message || 'Error inesperado')
   }
-  return false // ← Añade esto para prevenir el envío tradicional
+
+  return false // Previene envío tradicional
 }
 
 // Configurar página
@@ -183,9 +251,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   // Event listener del formulario
   if (form) {
-    form.addEventListener('submit', (e) => {
-      e.preventDefault()
-      crearProducto(e).catch(console.error)
-    })
+    form.addEventListener('submit', crearProducto)
   }
 })

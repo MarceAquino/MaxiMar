@@ -8,6 +8,7 @@
  * - Confirmación mediante modal
  * - Actualización en base de datos
  * - Redirección dashboard post-actualización
+ * - Manejo de errores globales
  *
  * DEPENDENCIAS:
  * - API_ROUTES: Endpoints de la API
@@ -29,6 +30,40 @@ import { configurarCamposDinamicosProducto, llenarFormularioProducto } from './u
  */
 
 const form = document.getElementById('formModificarProducto')
+
+/**
+ * Limpia los errores globales
+ */
+function limpiarErrores () {
+  const erroresDiv = document.getElementById('erroresGlobales')
+  if (erroresDiv) {
+    erroresDiv.style.display = 'none'
+    erroresDiv.innerHTML = ''
+  }
+}
+
+/**
+ * Muestra errores globales
+ * @param {string|Array} errores - Error o array de errores
+ */
+function mostrarErrores (errores) {
+  const erroresDiv = document.getElementById('erroresGlobales')
+  if (!erroresDiv) return
+
+  // Convertir a array si es string
+  const erroresArray = Array.isArray(errores) ? errores : [errores]
+
+  let html = ''
+  erroresArray.forEach(error => {
+    html += `<div class="mb-2"><i class="fas fa-exclamation-triangle me-2"></i>${error}</div>`
+  })
+
+  erroresDiv.innerHTML = html
+  erroresDiv.style.display = 'block'
+
+  // Scroll hacia arriba para mostrar los errores
+  erroresDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
+}
 
 /**
  * Obtiene el ID del producto desde la URL
@@ -55,8 +90,119 @@ async function cargarProducto (id) {
     llenarFormularioProducto('formModificarProducto', producto)
   } catch (error) {
     console.error('Error al cargar producto:', error)
-    alert('Error al cargar el producto: ' + error.message)
+    mostrarErrores('Error al cargar el producto: ' + error.message)
   }
+}
+
+/**
+ * Recopila todos los datos del formulario como objeto
+ * @returns {Object} Datos del formulario
+ */
+function recopilarDatosFormulario () {
+  const datos = {}
+  const atributosEspecificos = {}
+
+  // Obtener elementos del formulario
+  const codigo = document.getElementById('codigo')?.value?.trim()
+  const nombre = document.getElementById('nombre')?.value?.trim()
+  const precio = document.getElementById('precio')?.value
+  const marca = document.getElementById('marca')?.value?.trim()
+  const stock = document.getElementById('stock')?.value
+  const tipoProducto = document.getElementById('tipoProductoHidden')?.value ||
+                       document.getElementById('tipoProducto')?.value
+  const tipoMascota = document.getElementById('tipoMascotaHidden')?.value ||
+                      document.getElementById('tipoMascota')?.value
+
+  // Asignar datos básicos
+  if (codigo) datos.codigo = codigo
+  if (nombre) datos.nombre = nombre
+  if (marca) datos.marca = marca
+  if (tipoProducto) datos.categoria = tipoProducto
+  if (tipoMascota) datos.tipo_mascota = tipoMascota
+
+  // Validar y asignar precio
+  if (precio) {
+    const precioNum = parseFloat(precio)
+    if (isNaN(precioNum) || precioNum < 0.01) {
+      throw new Error('El precio debe ser un número mayor o igual a 0.01')
+    }
+    datos.precio = precioNum
+  }
+
+  // Validar y asignar stock
+  if (stock) {
+    const stockNum = parseInt(stock)
+    if (isNaN(stockNum) || stockNum < 0) {
+      throw new Error('El stock debe ser un número igual o mayor a 0')
+    }
+    datos.stock = stockNum
+  }
+
+  // Capturar atributos específicos según el tipo
+  if (tipoProducto === 'alimento') {
+    const edad = document.getElementById('edad')?.value?.trim()
+    const peso = document.getElementById('peso')?.value?.trim()
+    const sabor = document.getElementById('sabor')?.value?.trim()
+
+    if (!edad) throw new Error('Debes seleccionar la edad para alimentos')
+    if (!peso) throw new Error('Debes seleccionar el peso para alimentos')
+    if (!sabor) throw new Error('Debes seleccionar el sabor para alimentos')
+
+    atributosEspecificos.edad = edad
+    atributosEspecificos.peso = peso
+    atributosEspecificos.sabor = sabor
+  } else if (tipoProducto === 'juguete') {
+    const tamano = document.getElementById('tamano')?.value?.trim()
+    const material = document.getElementById('material')?.value?.trim()
+
+    if (!tamano) throw new Error('Debes seleccionar el tamaño para juguetes')
+    if (!material) throw new Error('Debes seleccionar el material para juguetes')
+
+    atributosEspecificos.tamano = tamano
+    atributosEspecificos.material = material
+  }
+
+  // Agregar atributos específicos si existen
+  if (Object.keys(atributosEspecificos).length > 0) {
+    datos.atributos_especificos = atributosEspecificos
+  }
+
+  return datos
+}
+
+/**
+ * Valida los datos del formulario
+ * @param {Object} datos - Datos a validar
+ * @returns {Array} Array de errores
+ */
+function validarDatos (datos) {
+  const errores = []
+
+  if (!datos.nombre || datos.nombre.length < 3) {
+    errores.push('El nombre debe tener al menos 3 caracteres')
+  }
+
+  if (!datos.marca || datos.marca.length < 2) {
+    errores.push('La marca debe tener al menos 2 caracteres')
+  }
+
+  if (!datos.categoria) {
+    errores.push('Debe seleccionar un tipo de producto')
+  }
+
+  if (!datos.tipo_mascota) {
+    errores.push('Debe seleccionar un tipo de mascota')
+  }
+
+  if (datos.precio !== undefined && (isNaN(datos.precio) || datos.precio < 0.01)) {
+    errores.push('El precio debe ser un número mayor o igual a 0.01')
+  }
+
+  if (datos.stock !== undefined && (isNaN(datos.stock) || datos.stock < 0)) {
+    errores.push('El stock debe ser un número igual o mayor a 0')
+  }
+
+  return errores
 }
 
 /**
@@ -65,107 +211,62 @@ async function cargarProducto (id) {
  */
 async function actualizarProducto (e) {
   e.preventDefault()
+  limpiarErrores()
+
   const id = getIdFromURL()
+  if (!id) {
+    mostrarErrores('ID de producto no encontrado')
+    return
+  }
 
   try {
-    const authHeaders = {
-      ...tokenUtils.getAuthHeaders(),
-      'Content-Type': 'application/json'
+    // Recopilar datos del formulario y validar todo en un solo flujo
+    const errores = []
+    let datos = {}
+    try {
+      datos = recopilarDatosFormulario()
+    } catch (err) {
+      errores.push(err.message)
     }
 
-    // Recopilar datos del formulario como objeto simple
-    const formData = new FormData(form)
-    const datos = {}
-    const atributosEspecificos = {}
-
-    // Procesar datos básicos del formulario
-    for (const [key, value] of formData.entries()) {
-      if (key === 'precio') {
-        const precio = parseFloat(value)
-        if (isNaN(precio) || precio < 0.01) {
-          throw new Error('El precio debe ser un número mayor o igual a 0.01')
-        }
-        datos.precio = precio
-      } else if (key === 'stock') {
-        const stock = parseInt(value)
-        if (isNaN(stock) || stock < 0) {
-          throw new Error('El stock debe ser un número igual o mayor a 0')
-        }
-        datos.stock = stock
-      } else if (key === 'tipo_producto') {
-        // El servidor espera 'categoria'
-        datos.categoria = value
-      } else if (key === 'edad' || key === 'peso' || key === 'sabor' || key === 'tamano' || key === 'material') {
-        // Ignorar atributos específicos aquí - se capturan por separado
-        continue
-      } else if (!key.endsWith('_display') && !key.includes('Hidden')) {
-        // Omitir campos de display y hidden
-        datos[key] = value.trim()
-      }
+    // Validar datos básicos
+    if (Object.keys(datos).length > 0) {
+      errores.push(...validarDatos(datos))
     }
 
-    // Capturar atributos específicos según el tipo de producto
-    const tipoProducto = datos.categoria || formData.get('tipoProductoHidden')
-
-    if (tipoProducto === 'alimento') {
-      // Capturar atributos de alimento
-      const edadField = document.getElementById('edad')
-      const pesoField = document.getElementById('peso')
-      const saborField = document.getElementById('sabor')
-
-      if (edadField && edadField.value && edadField.value.trim()) {
-        atributosEspecificos.edad = edadField.value.trim()
-      }
-      if (pesoField && pesoField.value && pesoField.value.trim()) {
-        atributosEspecificos.peso = pesoField.value.trim()
-      }
-      if (saborField && saborField.value && saborField.value.trim()) {
-        atributosEspecificos.sabor = saborField.value.trim()
-      }
-    } else if (tipoProducto === 'juguete') {
-      // Capturar atributos de juguete
-      const tamanoField = document.getElementById('tamano')
-      const materialField = document.getElementById('material')
-
-      if (tamanoField && tamanoField.value && tamanoField.value.trim()) {
-        atributosEspecificos.tamano = tamanoField.value.trim()
-      }
-      if (materialField && materialField.value && materialField.value.trim()) {
-        atributosEspecificos.material = materialField.value.trim()
-      }
+    if (errores.length > 0) {
+      mostrarErrores(errores)
+      return
     }
 
-    // Agregar atributos específicos al objeto principal
-    if (Object.keys(atributosEspecificos).length > 0) {
-      datos.atributos_especificos = atributosEspecificos
-    }
-
-    // Validaciones básicas
-    if (!datos.nombre || datos.nombre.length < 3) {
-      throw new Error('El nombre debe tener al menos 3 caracteres')
-    }
-    if (!datos.marca || datos.marca.length < 2) {
-      throw new Error('La marca debe tener al menos 2 caracteres')
-    }
-
-    // Creacion de modal para confirmar modificacion producto.
-    const confirmar = await confirmarModal('Modificar producto', '¿Estás seguro que desea modificar el producto?', 'Modificar', 'confirmar')
+    // Confirmación mediante modal
+    const confirmar = await confirmarModal(
+      'Modificar producto',
+      '¿Estás seguro que desea modificar el producto?',
+      'Modificar',
+      'confirmar'
+    )
     if (!confirmar) {
       return
     }
 
+    // Enviar solicitud al servidor
     const response = await fetch(API_ROUTES.actualizarProducto(id), {
       method: 'PUT',
-      headers: authHeaders,
+      headers: {
+        ...tokenUtils.getAuthHeaders(),
+        'Content-Type': 'application/json'
+      },
       body: JSON.stringify(datos)
     })
 
     if (!response.ok) {
-      const errorText = await response.text()
-      throw new Error(`Error al actualizar producto: ${response.status} - ${errorText}`)
+      const error = await response.json()
+      mostrarErrores(error.error || `Error del servidor: ${response.status}`)
+      return
     }
 
-    // Mostrar mensaje de éxito detallado
+    // Mostrar mensaje de éxito
     alert(`¡Producto actualizado con éxito!\n\nEl producto "${datos.nombre}" ha sido actualizado correctamente.`)
 
     // Redirigir al dashboard después de un breve delay
@@ -173,9 +274,11 @@ async function actualizarProducto (e) {
       window.location.href = '/front-end/html/admin/dashboard.html'
     }, 1000)
   } catch (error) {
-    console.error('Error:', error)
-    alert('Error al actualizar el producto: ' + error.message)
+    console.error('Error completo:', error)
+    mostrarErrores(error.message || 'Error inesperado al actualizar el producto')
   }
+
+  return false // Previene envío tradicional
 }
 
 /**
@@ -188,8 +291,10 @@ document.addEventListener('DOMContentLoaded', async () => {
   // Cargar producto
   const id = getIdFromURL()
   if (!id) {
-    alert('ID de producto no encontrado')
-    window.location.href = '/front-end/html/admin/dashboard.html'
+    mostrarErrores('ID de producto no encontrado')
+    setTimeout(() => {
+      window.location.href = '/front-end/html/admin/dashboard.html'
+    }, 2000)
     return
   }
 
