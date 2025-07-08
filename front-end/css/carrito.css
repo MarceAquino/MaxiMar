@@ -47,3 +47,19 @@
     justify-content: center;
 }
 
+#btn-finalizar-compra {
+    background: var(--primary-orange);
+    border-color: var(--text-dark);
+    color: var(--text-dark);
+    padding: 10px 20px;
+    border-radius: 50px;
+    font-weight: bold;
+}
+
+#btn-finalizar-compra:hover {
+    background: var(--primary-orange-hover);
+    border-color: var(--text-dark);
+    color: var(--text-dark);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-medium);
+}

@@ -1,7 +1,11 @@
-// ======================================================================
-// Middleware: Validar stock mayor a cero para activar producto
-// ======================================================================
-// Este middleware verifica que el producto tenga stock > 0 antes de permitir su activación.
+/**
+ * Middleware para validación de stock en activación de productos.
+ *
+ * FUNCIONALIDADES:
+ * - Verifica existencia del producto
+ * - Valida que el stock sea mayor a cero
+ * - Impide la activación si stock es cero
+ */
 
 const { Producto } = require('../models')
 

@@ -1,5 +1,13 @@
-// Lista todos los administradores (solo para superadmin).
-// Responde con un array de admins.
+/**
+ * Controlador para listar todos los administradores registrados.
+ *
+ * FUNCIONALIDADES:
+ * - Obtiene lista completa de administradores
+ * - Filtra password para que no se muestren
+ * - Ordena por fecha de creación, default mas reciente primero
+ * - El acceso es solo para superadmins
+ */
+
 const { Admin } = require('../../models')
 
 module.exports = async function listarAdmins (req, res) {

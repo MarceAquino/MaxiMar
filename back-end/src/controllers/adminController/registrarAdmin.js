@@ -1,6 +1,6 @@
 /**
  * Controlador para registrar un nuevo administrador (solo SuperAdmin).
- * - Valida datos básicos.
+ * - Valida datos básicos para registro.
  * - Solo permite registrar si el usuario es superadmin.
  * - Responde con el nuevo admin creado o error.
  */

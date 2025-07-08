@@ -1,6 +1,11 @@
 /**
- * Activa o desactiva un administrador (no superadmin).
- * Cambia el estado de activo y responde con el admin actualizado.
+ * Controlador para activar/desactivar cuentas de administradores.
+ *
+ * FUNCIONALIDADES:
+ * - Cambia el estado 'activo / desactivado' de administradores
+ * - Protege cuentas de superadministradores
+ * - Valida la existencia del administrador
+ * - Retorna el nuevo estado y datos básicos del admin
  */
 const { Admin } = require('../../models')
 

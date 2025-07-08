@@ -1,13 +1,18 @@
-// Crea un nuevo producto en la base de datos y guarda los nombres de la ruta de las imágenes subidas.
+/**
+ * Controlador para creación de nuevos productos.
+ *
+ * FUNCIONALIDADES:
+ * - Crea nuevos productos en la base de datos
+ * - Valida datos de entrada antes de crear
+ * - Maneja carga de imágenes asociadas
+ * - Convierte y parsea tipos de datos
+ * - Gestiona errores específicos de validación y duplicados
+ */
 
 const validarProducto = require('../../utils/validarProducto.js')
 const { Producto } = require('../../models')
 
-/**
- * Crea un nuevo producto.
- * Valida los datos y guarda las imágenes si existen.
- * Respuesta: { ok, mensaje, producto }
- */
+// Creacion de producto
 const crearProducto = async (req, res) => {
   try {
     const datos = { ...req.body }

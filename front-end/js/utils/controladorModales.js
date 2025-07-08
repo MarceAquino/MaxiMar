@@ -116,7 +116,7 @@ function resolverModal (resultado, resolve) {
 }
 
 /**
- * Cierra el modal actual (para uso externo si es necesario)
+ * Cierra el modal actual.
  */
 function cerrarModal () {
   if (modalActual) {

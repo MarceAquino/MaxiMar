@@ -15,7 +15,7 @@ const {
 
 // Rutas de autenticación
 router.post('/auth/login', loginAdmin) // Login de admin
-router.get('/auth/verify', authenticateToken, verificarToken) // Verifica token JWT
+router.get('/auth/verify', authenticateToken, verificarToken) // Verifica si el token JWT es valido y a que admin pertenece.
 
 // Registro y gestión de administradores (solo superadmin)
 router.post('/auth/register', authenticateToken, requireRole(['superadmin']), registrarAdmin) // Registrar admin

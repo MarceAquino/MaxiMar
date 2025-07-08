@@ -70,7 +70,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     atributos_especificos: {
       type: DataTypes.JSON,
-      allowNull: true
+      allowNull: false
     },
     activo: {
       type: DataTypes.BOOLEAN,
