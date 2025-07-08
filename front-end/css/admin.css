@@ -1,13 +1,16 @@
 /* ======================
    SPANS DE ERROR DE FORMULARIO
+   - Estilos para mensajes de error debajo de inputs
 ====================== */
 [id^="error-"] {
   display: block;
   margin-top: 0.25rem;
   min-height: 1.2em;
 }
+
 /* ======================
    SIDEBAR NAVIGATION
+   - Enlaces del menú lateral izquierdo
 ====================== */
 .sidebar-link {
   color: var(--text-dark);
@@ -43,7 +46,8 @@
 }
 
 /* ======================
- TARJETAS PRINCIPALES
+   TARJETAS PRINCIPALES
+   - Estilos para tarjetas de productos, admins y ventas
 ====================== */
 .producto-card,
 .admin-card,
@@ -67,7 +71,7 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
-/* Tarjetas inactivas */
+/* Tarjetas de productos inactivos */
 .producto-card.inactivo {
   opacity: 0.7;
   background-color: var(--bg-light);
@@ -78,7 +82,8 @@
 }
 
 /* ======================
- HEADERS Y CONTENIDO
+   HEADERS Y CONTENIDO
+   - Encabezado y cuerpo de tarjetas
 ====================== */
 .producto-card-header {
   background: var(--primary-orange);
@@ -96,7 +101,8 @@
 }
 
 /* ======================
- BADGES Y ETIQUETAS
+   BADGES Y ETIQUETAS
+   - Chips para categorizar productos y estados de admin
 ====================== */
 .producto-badge {
   font-size: 0.75rem;
@@ -133,7 +139,8 @@
 }
 
 /* ======================
- PRECIOS Y STOCK
+   PRECIOS Y STOCK
+   - Estilos para mostrar precios y niveles de stock
 ====================== */
 .producto-precio,
 .venta-total {
@@ -168,7 +175,8 @@
 }
 
 /* ======================
- ACCIONES Y BOTONES
+   ACCIONES Y BOTONES
+   - Acciones dentro de tarjetas y estilos de botones
 ====================== */
 .producto-acciones {
   display: flex;
@@ -177,13 +185,14 @@
   margin-top: 1rem;
 }
 
-/* Personalización de botones con tema naranja */
+/* Personalización de badges Bootstrap */
 .badge.bg-info,
 .badge.bg-primary {
   background-color: var(--primary-orange) !important;
   color: white;
 }
 
+/* Hover para botones outline */
 .btn-outline-secondary:hover,
 .btn-outline-primary:hover {
   background-color: var(--primary-orange-hover);
@@ -191,21 +200,25 @@
   color: var(--text-dark);
 }
 
+/* Botón outline personalizado */
 .btn-outline-primary {
   color: var(--primary-orange);
   border-color: var(--primary-orange);
 }
 
+/* Estado activo de botones tipo radio/check */
 .btn-check:checked+.btn-outline-secondary {
   background-color: var(--primary-orange);
   border-color: var(--primary-orange);
   color: white;
 }
 
+/* Botón hamburguesa para menú mobile */
 .botonHamburguesa {
   z-index: 1045;
 }
 
+/* Botón para crear/modificar */
 .crearModificar {
   border-color: var(--text-dark);
   background-color: var(--primary-orange);
@@ -218,7 +231,8 @@
 }
 
 /* ======================
- FILTROS Y CONTROLES
+   FILTROS Y CONTROLES
+   - Contenedores de filtros y vistas del dashboard
 ====================== */
 .filtro-section {
   background: var(--card-bg);
@@ -240,7 +254,8 @@
 }
 
 /* ======================
- DETALLE DE VENTAS
+   DETALLE DE VENTAS
+   - Estructura para mostrar info detallada de ventas
 ====================== */
 .detalle-venta-content {
   font-size: 0.9rem;
@@ -299,9 +314,9 @@
 }
 
 /* ======================
- REGLAS GENERALES DEL DASHBOARD
+   REGLAS GENERALES DEL DASHBOARD
+   - Estilos estructurales del layout
 ====================== */
-/* Sidebar fija en escritorio, offcanvas en mobile */
 .sidebar {
   width: 250px;
   min-height: calc(100vh - 70px);
@@ -314,13 +329,12 @@
   }
 }
 
-/* Main content con margen izquierdo en escritorio */
 .dashboard-main {
   background-color: var(--orange-bg);
   min-height: calc(100vh - 70px);
 }
 
-/* Evitar que la última tarjeta se corte en grid */
+/* Margen inferior para evitar corte de tarjeta */
 .row.g-4 {
   margin-bottom: 0 !important;
 }
@@ -329,13 +343,13 @@
   margin-bottom: 2rem;
 }
 
-/* Ajuste para que el logo flotante no tape el botón hamburguesa */
+/* Evita superposición del logo flotante con botón hamburguesa */
 .floating-logo {
   z-index: 1030;
-  margin-left: 60px
+  margin-left: 60px;
 }
 
-/* ===== LOGO FLOTANTE ===== */
+/* Logo flotante específico para crear/modificar */
 .floating-logo-crear {
   position: absolute;
   top: 5px;
@@ -344,10 +358,12 @@
   z-index: 1050;
 }
 
+/* Estilo base para todas las cards */
 .card {
-  background-color: var(--primary-orange-light)
+  background-color: var(--primary-orange-light);
 }
 
+/* Botón de registrar */
 .btn-registrar {
   background: var(--primary-orange);
   border-color: var(--text-dark);
@@ -365,6 +381,8 @@
   box-shadow: var(--shadow-medium);
 }
 
-.offcanvas-body, .offcanvas-header {
+/* Colores personalizados para offcanvas */
+.offcanvas-body,
+.offcanvas-header {
   background-color: var(--card-bg);
 }

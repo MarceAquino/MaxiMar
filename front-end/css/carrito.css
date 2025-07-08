@@ -1,44 +1,54 @@
-/* Estilos para los items del carrito */
-.form-control{
+/* Estilos generales de los campos de formulario (inputs del carrito) */
+.form-control {
     background: var(--bg-light);
     color: var(--text-dark);
     border-color: var(--border-light);
 }
 
-.card-body{
+/* Cuerpo de las tarjetas del carrito */
+.card-body {
     background: var(--card-bg);
     color: var(--text-dark);
-
 }
-.card-title{
+
+/* Título de las tarjetas del carrito */
+.card-title {
     color: var(--text-dark);
 }
-.card-header{
+
+/* Encabezado de las tarjetas (ej. nombre del producto o sección) */
+.card-header {
     background: var(--primary-orange);
     color: var(--text-dark);
 }
+
+/* Contenedor principal de cada item del carrito */
 .carrito-item {
     transition: all 0.3s ease;
     border-radius: 8px;
-    overflow: hidden var(--border-radius); ;
+    overflow: hidden var(--border-radius);
+    /* (posible error de sintaxis en overflow) */
 }
 
+/* Sombra en hover para destacar el item */
 .carrito-item:hover {
     box-shadow: 0 5px 15px var(--shadow-medium);
 }
 
+/* Imagen del producto dentro del carrito */
 .carrito-item-img {
     width: 100%;
     height: 120px;
     object-fit: cover;
 }
 
+/* Campo de cantidad del producto */
 .carrito-item-cantidad {
     width: 40px;
     text-align: center;
 }
 
-/* Botones de cantidad */
+/* Botones para sumar/restar cantidad */
 .btn-cantidad {
     width: 32px;
     height: 32px;
@@ -47,6 +57,7 @@
     justify-content: center;
 }
 
+/* Botón para finalizar la compra */
 #btn-finalizar-compra {
     background: var(--primary-orange);
     border-color: var(--text-dark);
@@ -56,6 +67,7 @@
     font-weight: bold;
 }
 
+/* Hover del botón de finalizar compra */
 #btn-finalizar-compra:hover {
     background: var(--primary-orange-hover);
     border-color: var(--text-dark);

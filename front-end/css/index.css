@@ -1,44 +1,48 @@
 /* ===== CARRUSEL ===== */
-/* Estilo base para las flechas del carrusel */
+
+/* Estilo base para las flechas de navegación del carrusel */
 .carousel-control-prev-icon,
 .carousel-control-next-icon {
-    background-color:rgb(0, 0, 0);
+    background-color: rgb(0, 0, 0);
     border-radius: 50%;
     width: 2.2rem;
     height: 2.2rem;
-
 }
 
+/* Posición izquierda de la flecha "anterior" */
 .carousel-control-prev {
     left: -1.1rem;
 }
 
+/* Posición derecha de la flecha "siguiente" */
 .carousel-control-next {
     right: -1.1rem;
 }
 
-
-
-
+/* Adaptación del carrusel en pantallas pequeñas */
 @media (max-width: 768px) {
 
+    /* Tamaño reducido de las flechas */
     .carousel-control-prev-icon,
     .carousel-control-next-icon {
         width: 1.5rem;
         height: 1.5rem;
     }
 
+    /* Ajuste de la posición izquierda */
     .carousel-control-prev {
         left: -0.8rem;
-
     }
 
+    /* Ajuste de la posición derecha */
     .carousel-control-next {
         right: -0.8rem;
     }
 }
 
 /* ===== CARD DE LOGIN MODERNA ===== */
+
+/* Contenedor del login con estilo moderno y transparente */
 .login-card {
     background: transparent;
     border: 2.5px solid var(--border-light);
@@ -49,10 +53,12 @@
     color: var(--text-dark);
 }
 
+/* Cambio de color del borde al hacer hover */
 .login-card:hover {
     border-color: var(--primary-orange);
 }
 
+/* Campo de formulario con foco */
 .form-control:focus {
     border-color: var(--primary-orange);
     box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.1);
@@ -60,12 +66,14 @@
     color: var(--text-dark);
 }
 
+/* Campo de formulario en estado normal */
 .form-control {
     background: var(--card-bg);
     color: var(--text-dark);
     border-color: var(--border-light);
 }
 
+/* Botón naranja reutilizable */
 .btn-orange {
     background: var(--primary-orange);
     border-color: var(--text-dark);
@@ -75,6 +83,7 @@
     font-weight: bold;
 }
 
+/* Hover del botón naranja */
 .btn-orange:hover {
     background: var(--primary-orange-hover);
     border-color: var(--text-dark);
@@ -84,6 +93,8 @@
 }
 
 /* ===== BOTÓN ADMIN OCULTO ===== */
+
+/* Botón inicialmente oculto con animación y transformación */
 #secretButton {
     transform: scale(0.5) rotate(180deg);
     visibility: hidden;
@@ -99,18 +110,20 @@
     transform-origin: center;
 }
 
+/* Clase que lo muestra con animación */
 #secretButton.show {
     opacity: 1;
     transform: scale(1) rotate(0deg);
     visibility: visible;
 }
 
+/* Hover del botón oculto */
 #secretButton:hover {
     background: var(--primary-orange-hover);
     transform: translateY(-1.5px);
 }
 
-
+/* Mensajes de validación inválida siempre visibles */
 .invalid-feedback {
-    display: block
+    display: block;
 }
